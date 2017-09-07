@@ -29,9 +29,9 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="lasttName", type="text", length=255)
+     * @ORM\Column(name="lastName", type="text", length=255)
      */
-    private $lasttName;
+    private $lastName;
 
     public function __construct()
     {
@@ -86,5 +86,29 @@ class User extends BaseUser
     public function getLasttName()
     {
         return $this->lasttName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 }

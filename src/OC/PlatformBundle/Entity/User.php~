@@ -29,14 +29,62 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="lasttName", type="text", length=255)
+     * @ORM\Column(name="lastName", type="text", length=255)
      */
-    private $lasttName;
+    private $lastName;
 
     public function __construct()
     {
         parent::__construct();
         
         $this->roles[] = 'ROLE_USER';
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lasttName
+     *
+     * @param string $lasttName
+     *
+     * @return User
+     */
+    public function setLasttName($lasttName)
+    {
+        $this->lasttName = $lasttName;
+
+        return $this;
+    }
+
+    /**
+     * Get lasttName
+     *
+     * @return string
+     */
+    public function getLasttName()
+    {
+        return $this->lasttName;
     }
 }
