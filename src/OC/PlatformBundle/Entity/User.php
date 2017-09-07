@@ -5,6 +5,7 @@ namespace OC\PlatformBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -33,10 +34,16 @@ class User extends BaseUser
      */
     private $lastName;
 
+    /**
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Observation", mappedBy="user")
+    */
+    private $observations;
+
     public function __construct()
     {
         parent::__construct();
         
+        $this->observations = new ArrayCollection();
         $this->roles[] = 'ROLE_USER';
     }
 
@@ -110,5 +117,39 @@ class User extends BaseUser
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * Add observation
+     *
+     * @param \OC\PlatformBundle\Entity\Observation $observation
+     *
+     * @return User
+     */
+    public function addObservation(\OC\PlatformBundle\Entity\Observation $observation)
+    {
+        $this->observations[] = $observation;
+
+        return $this;
+    }
+
+    /**
+     * Remove observation
+     *
+     * @param \OC\PlatformBundle\Entity\Observation $observation
+     */
+    public function removeObservation(\OC\PlatformBundle\Entity\Observation $observation)
+    {
+        $this->observations->removeElement($observation);
+    }
+
+    /**
+     * Get observations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getObservations()
+    {
+        return $this->observations;
     }
 }
