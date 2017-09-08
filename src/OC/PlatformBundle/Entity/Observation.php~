@@ -22,16 +22,16 @@ class Observation
     private $id;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="latitude", type="integer")
+     * @ORM\Column(name="latitude", type="float")
      */
     private $latitude;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="longitude", type="integer")
+     * @ORM\Column(name="longitude", type="float")
      */
     private $longitude;
 
