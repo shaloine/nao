@@ -39,6 +39,13 @@ class User extends BaseUser
     */
     private $observations;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="naturalist", type="boolean")
+     */
+    private $naturalist;
+
     public function __construct()
     {
         parent::__construct();
@@ -151,5 +158,29 @@ class User extends BaseUser
     public function getObservations()
     {
         return $this->observations;
+    }
+
+    /**
+     * Set naturalist
+     *
+     * @param boolean $naturalist
+     *
+     * @return User
+     */
+    public function setNaturalist($naturalist)
+    {
+        $this->naturalist = $naturalist;
+
+        return $this;
+    }
+
+    /**
+     * Get naturalist
+     *
+     * @return boolean
+     */
+    public function getNaturalist()
+    {
+        return $this->naturalist;
     }
 }

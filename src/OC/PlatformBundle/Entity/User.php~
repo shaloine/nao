@@ -39,6 +39,13 @@ class User extends BaseUser
     */
     private $observations;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="naturalist", type="boolean")
+     */
+    private $naturalist;
+
     public function __construct()
     {
         parent::__construct();
