@@ -1054,5 +1054,9 @@ class Taxref
         return $this->cli;
     }
 
-
+    public function speciesToSearch()
+    {
+        $speciesToSearch = $this->nomVern . '  -  ' . $this->lbNom;
+        return $speciesToSearch;
+    }
 }

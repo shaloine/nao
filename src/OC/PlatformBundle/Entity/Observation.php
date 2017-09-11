@@ -2,7 +2,11 @@
 
 namespace OC\PlatformBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use OC\PlatformBundle\Entity\Picture;
+use OC\PlatformBundle\Entity\Taxref;
+use OC\PlatformBundle\Entity\User;
 
 /**
  * Picture
@@ -36,12 +40,12 @@ class Observation
     private $longitude;
 
     /**
-    * @ORM\OneToOne(targetEntity="OC\PlatformBundle\Entity\Picture", cascade={"persist"})
+    * @ORM\OneToOne(targetEntity="OC\PlatformBundle\Entity\Picture", cascade={"persist", "remove"})
     */
     private $picture;
 
     /**
-    * @ORM\OneToOne(targetEntity="OC\PlatformBundle\Entity\Taxref")
+    * @ORM\ManyToOne(targetEntity="OC\PlatformBundle\Entity\Taxref")
     * @ORM\JoinColumn(nullable=false)
     */
     private $taxref;
@@ -51,6 +55,13 @@ class Observation
     * @ORM\JoinColumn(nullable=false)
     */
     private $user;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
 
     /**
      * Get id
@@ -113,11 +124,11 @@ class Observation
     /**
      * Set picture
      *
-     * @param \OC\PlatformBundle\Entity\Picture $picture
+     * @param Picture $picture
      *
      * @return Observation
      */
-    public function setPicture(\OC\PlatformBundle\Entity\Picture $picture = null)
+    public function setPicture(Picture $picture = null)
     {
         $this->picture = $picture;
 
@@ -127,7 +138,7 @@ class Observation
     /**
      * Get picture
      *
-     * @return \OC\PlatformBundle\Entity\Picture
+     * @return Picture
      */
     public function getPicture()
     {
@@ -137,11 +148,11 @@ class Observation
     /**
      * Set taxref
      *
-     * @param \OC\PlatformBundle\Entity\Taxref $taxref
+     * @param Taxref $taxref
      *
      * @return Observation
      */
-    public function setTaxref(\OC\PlatformBundle\Entity\Taxref $taxref)
+    public function setTaxref(Taxref $taxref)
     {
         $this->taxref = $taxref;
 
@@ -151,7 +162,7 @@ class Observation
     /**
      * Get taxref
      *
-     * @return \OC\PlatformBundle\Entity\Taxref
+     * @return Taxref
      */
     public function getTaxref()
     {
@@ -161,11 +172,11 @@ class Observation
     /**
      * Set user
      *
-     * @param \OC\PlatformBundle\Entity\User $user
+     * @param User $user
      *
      * @return Observation
      */
-    public function setUser(\OC\PlatformBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -175,10 +186,35 @@ class Observation
     /**
      * Get user
      *
-     * @return \OC\PlatformBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
         return $this->user;
     }
+
+    /**
+     * Set date
+     *
+     * @param DateTime $date
+     *
+     * @return Observation
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
 }
