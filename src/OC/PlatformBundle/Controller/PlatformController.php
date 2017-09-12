@@ -21,6 +21,20 @@ class PlatformController extends Controller
 	}
 
 	/**
+     * @Route("/blog", name="oc_platform_blog")
+     */
+	public function blogAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$articles = $em->getRepository('OCPlatformBundle:Article')->findAll();
+
+		return $this->render('OCPlatformBundle:Default:blog.html.twig', array(
+			'articles' => $articles,
+			));
+	}
+
+	/**
      * @Route("/creation", name="oc_platform_creation")
      */
 	public function creationAction(Request $request)
@@ -68,6 +82,17 @@ class PlatformController extends Controller
 
 		return $this->render('OCPlatformBundle:Default:edition.html.twig', array(
 			'form' => $form->createView(),
+			));
+	}
+
+	/**
+     * @Route("/article/{id}", name="oc_platform_article")
+     */
+	public function articleAction(article $article, $id)
+	{
+
+		return $this->render('OCPlatformBundle:Default:article.html.twig', array(
+			'article' => $article
 			));
 	}
 }
