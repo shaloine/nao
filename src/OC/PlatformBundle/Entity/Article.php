@@ -50,7 +50,7 @@ class Article
     private $user;
 
     /**
-    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="article")
+        $this->datePost = new Datetime();
     */
     private $comments;
 
