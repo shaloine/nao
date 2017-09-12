@@ -46,4 +46,28 @@ class PlatformController extends Controller
 			'form' => $form->createView(),
 			));
 	}
+
+	/**
+     * @Route("/edition/{id}", name="oc_platform_edition")
+     */
+	public function editionAction(Request $request,article $article, $id)
+	{
+		
+		$form   = $this->get('form.factory')->create(ArticleType::class, $article);
+
+		if ($request->isMethod('POST')) {
+			
+			$form->handleRequest($request);
+
+			if ($form->isValid()) {
+
+				$em = $this->getDoctrine()->getManager();
+				$em->flush();
+			}
+		}
+
+		return $this->render('OCPlatformBundle:Default:edition.html.twig', array(
+			'form' => $form->createView(),
+			));
+	}
 }
