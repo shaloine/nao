@@ -47,6 +47,10 @@ class Comment
     */
     private $article;
 
+    public function __construct()
+    {
+        $this->datePost = new Datetime();
+    }
 
     /**
      * Get id
