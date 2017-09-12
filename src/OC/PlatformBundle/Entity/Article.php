@@ -50,13 +50,14 @@ class Article
     private $user;
 
     /**
-        $this->datePost = new Datetime();
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="article", cascade={"remove"})
     */
     private $comments;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->datePost = new Datetime();
     }
 
 
