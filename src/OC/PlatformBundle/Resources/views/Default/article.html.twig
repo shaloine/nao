@@ -1,0 +1,15 @@
+{# src/OC/PlatformBundle/Resources/views/Default/article.html.twig #}
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+
+{% block body %}
+
+	
+		<h3>{{ article.title }}</h3>
+		<p>{{ article.datePost|date('d/m/Y H:i') }}</p>
+		<p>{{ article.content }}</p>
+		
+{% endblock %}
+
+
+
