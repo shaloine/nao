@@ -46,11 +46,23 @@ class User extends BaseUser
      */
     private $naturalist;
 
+    /**
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Article", mappedBy="user")
+    */
+    private $articles;
+
+    /**
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="user")
+    */
+    private $comments;
+
     public function __construct()
     {
         parent::__construct();
         
         $this->observations = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->roles[] = 'ROLE_USER';
     }
 
@@ -182,5 +194,73 @@ class User extends BaseUser
     public function getNaturalist()
     {
         return $this->naturalist;
+    }
+
+    /**
+     * Add article
+     *
+     * @param \OC\PlatformBundle\Entity\Article $article
+     *
+     * @return User
+     */
+    public function addArticle(\OC\PlatformBundle\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param \OC\PlatformBundle\Entity\Article $article
+     */
+    public function removeArticle(\OC\PlatformBundle\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \OC\PlatformBundle\Entity\Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(\OC\PlatformBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \OC\PlatformBundle\Entity\Comment $comment
+     */
+    public function removeComment(\OC\PlatformBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
