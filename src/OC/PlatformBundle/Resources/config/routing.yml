@@ -2,3 +2,8 @@ oc_platform_homepage:
     path:     /
     defaults:
         _controller: OCPlatformBundle:Platform:index
+
+oc_platform_creation:
+    path:     /creation
+    defaults:
+        _controller: OCPlatformBundle:Platform:creation
