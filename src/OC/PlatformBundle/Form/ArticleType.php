@@ -18,8 +18,7 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array('label' => 'Titre'))
-            ->add('content', TextareaType::class, array('label' => 'Article'))
-            ->add('save', SubmitType::class, array('label' => 'Enregistrer'));
+            ->add('content', TextareaType::class, array('label' => 'Article'));
     }
     
     /**
