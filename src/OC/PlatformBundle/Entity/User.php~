@@ -46,11 +46,23 @@ class User extends BaseUser
      */
     private $naturalist;
 
+    /**
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Article", mappedBy="user")
+    */
+    private $articles;
+
+    /**
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="user")
+    */
+    private $comments;
+
     public function __construct()
     {
         parent::__construct();
         
         $this->observations = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->roles[] = 'ROLE_USER';
     }
 
@@ -158,5 +170,63 @@ class User extends BaseUser
     public function getObservations()
     {
         return $this->observations;
+    }
+
+    /**
+     * Set naturalist
+     *
+     * @param boolean $naturalist
+     *
+     * @return User
+     */
+    public function setNaturalist($naturalist)
+    {
+        $this->naturalist = $naturalist;
+
+        return $this;
+    }
+
+    /**
+     * Get naturalist
+     *
+     * @return boolean
+     */
+    public function getNaturalist()
+    {
+        return $this->naturalist;
+    }
+
+    /**
+     * Add article
+     *
+     * @param \OC\PlatformBundle\Entity\Article $article
+     *
+     * @return User
+     */
+    public function addArticle(\OC\PlatformBundle\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param \OC\PlatformBundle\Entity\Article $article
+     */
+    public function removeArticle(\OC\PlatformBundle\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }
