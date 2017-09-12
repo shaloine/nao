@@ -35,7 +35,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/creation", name="oc_platform_creation")
+     * @Route("/blog/creation", name="oc_platform_creation")
      */
 	public function creationAction(Request $request)
 	{
@@ -62,7 +62,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/edition/{id}", name="oc_platform_edition")
+     * @Route("/blog/edition/{id}", name="oc_platform_edition")
      */
 	public function editionAction(Request $request,article $article, $id)
 	{
@@ -86,7 +86,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/article/{id}", name="oc_platform_article")
+     * @Route("/blog/article/{id}", name="oc_platform_article")
      */
 	public function articleAction(article $article, $id)
 	{
