@@ -20,6 +20,39 @@ class PlatformController extends Controller
 		return $this->render('OCPlatformBundle:Default:index.html.twig');
 	}
 
+    /**
+     * @Route("/observation", name="oc_platform_observation")
+     */
+    public function observAction(Request $request)
+    {
+        $observation = new Observation();
+        $user = $this->getUser();
+        $form = $this->get('form.factory')->create(ObservationType::class , $observation);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $observation->setUser($user);
+            $em->persist($observation);
+
+            $picture = $observation->getPicture();
+            if ($picture !== null)
+            {
+                $picture->setAlt($observation->getTaxref()->getNomVern());
+                $em->persist($picture);
+            }
+
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
+            return $this->redirectToRoute('oc_platform_homepage');
+        }
+
+        return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
 	/**
      * @Route("/blog", name="oc_platform_blog")
      */
