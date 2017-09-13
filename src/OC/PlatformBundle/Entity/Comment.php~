@@ -3,6 +3,7 @@
 namespace OC\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \DateTime;
 
 /**
  * Comment
@@ -36,6 +37,13 @@ class Comment
     private $datePost;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="warning", type="boolean")
+     */
+    private $warning;
+
+    /**
     * @ORM\ManyToOne(targetEntity="OC\PlatformBundle\Entity\User", inversedBy="comments")
     * @ORM\JoinColumn(nullable=false)
     */
@@ -47,6 +55,12 @@ class Comment
     */
     private $article;
 
+    public function __construct()
+    {
+        $this->datePost = new Datetime();
+        $this->warning = false;
+   
+    }
 
     /**
      * Get id
@@ -105,4 +119,55 @@ class Comment
     {
         return $this->datePost;
     }
+
+    /**
+     * Set user
+     *
+     * @param \OC\PlatformBundle\Entity\User $user
+     *
+     * @return Comment
+     */
+    public function setUser(\OC\PlatformBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \OC\PlatformBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \OC\PlatformBundle\Entity\Article $article
+     *
+     * @return Comment
+     */
+    public function setArticle(\OC\PlatformBundle\Entity\Article $article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \OC\PlatformBundle\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    
+
 }
