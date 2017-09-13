@@ -37,6 +37,13 @@ class Comment
     private $datePost;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="warning", type="boolean")
+     */
+    private $warning;
+
+    /**
     * @ORM\ManyToOne(targetEntity="OC\PlatformBundle\Entity\User", inversedBy="comments")
     * @ORM\JoinColumn(nullable=false)
     */
@@ -51,6 +58,8 @@ class Comment
     public function __construct()
     {
         $this->datePost = new Datetime();
+        $this->warning = false;
+   
     }
 
     /**
@@ -157,5 +166,32 @@ class Comment
     public function getArticle()
     {
         return $this->article;
+    }
+
+    
+
+
+    /**
+     * Set warning
+     *
+     * @param boolean $warning
+     *
+     * @return Comment
+     */
+    public function setWarning($warning)
+    {
+        $this->warning = $warning;
+
+        return $this;
+    }
+
+    /**
+     * Get warning
+     *
+     * @return boolean
+     */
+    public function getWarning()
+    {
+        return $this->warning;
     }
 }

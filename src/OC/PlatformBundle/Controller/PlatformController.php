@@ -136,7 +136,7 @@ class PlatformController extends Controller
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-			$comment->setUser( $this->getUser());
+			$comment->setUser($this->getUser());
 			$comment->setArticle($article);
 			$em->persist($comment);
 			$em->flush();
@@ -146,7 +146,7 @@ class PlatformController extends Controller
 			$form   = $this->get('form.factory')->create(CommentType::class, $comment);
 		}
 
-		$comments = $em->getRepository('OCPlatformBundle:Comment')->findBY(array('article' => $article)); 
+		$comments = $em->getRepository('OCPlatformBundle:Comment')->findBY(array('article' => $article),array('id' => 'desc')); 
 
 		return $this->render('OCPlatformBundle:Default:article.html.twig', array(
 			'article' => $article,
@@ -154,4 +154,21 @@ class PlatformController extends Controller
 			'comments' => $comments,
 			));
 	}
+
+	/**
+     * @Route("/blog/comment/{id}", name="oc_platform_signalComment")
+     */
+	public function signalCommentAction(Comment $comment, $id)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$comment->setWarning(true);
+		$em->flush();
+
+		$request->getSession()->getFlashBag()->add('info', 'Le commentaire a été signalé.');
+
+		return $this->redirectToRoute('oc_platform_article', array('id' => $comment->getArticle()->getId()));
+
+	}
+
 }
