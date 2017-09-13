@@ -11,6 +11,9 @@ use OC\PlatformBundle\Entity\User;
 use OC\PlatformBundle\Form\ArticleType;
 use OC\PlatformBundle\Entity\Comment;
 use OC\PlatformBundle\Form\CommentType;
+use OC\PlatformBundle\Entity\Observation;
+use OC\PlatformBundle\Form\ObservationType;
+
 
 class PlatformController extends Controller
 {	
