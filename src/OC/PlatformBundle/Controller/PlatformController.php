@@ -24,6 +24,32 @@ class PlatformController extends Controller
 	{
 		return $this->render('OCPlatformBundle:Default:index.html.twig');
 	}
+    
+    /**
+     * @Route("/consultation", name="oc_platform_consultation")
+     */
+    public function consultAction(Request $request)
+    {
+        $search = new Taxref();
+        $form   = $this->get('form.factory')->create(TaxrefType::class, $search);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $id = $search->getNomVern()->getId();
+            $em = $this->getDoctrine()->getManager();
+            $bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
+            $observs = $em->getRepository('OCPlatformBundle:Observation')->findByTaxref($id);
+
+            return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
+                'form' => $form->createView(),
+                'bird' => $bird,
+                'observs' => $observs,
+            ));
+        }
+
+        return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 
     /**
      * @Route("/observation", name="oc_platform_observation")
