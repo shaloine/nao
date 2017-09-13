@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use OC\PlatformBundle\Entity\Article;
 use OC\PlatformBundle\Entity\User;
 use OC\PlatformBundle\Form\ArticleType;
+use OC\PlatformBundle\Entity\Comment;
+use OC\PlatformBundle\Form\CommentType;
 
 class PlatformController extends Controller
 {	
@@ -25,32 +27,32 @@ class PlatformController extends Controller
      */
     public function observAction(Request $request)
     {
-        $observation = new Observation();
-        $user = $this->getUser();
-        $form = $this->get('form.factory')->create(ObservationType::class , $observation);
+    	$observation = new Observation();
+    	$user = $this->getUser();
+    	$form = $this->get('form.factory')->create(ObservationType::class , $observation);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+    	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+    		$em = $this->getDoctrine()->getManager();
 
-            $observation->setUser($user);
-            $em->persist($observation);
+    		$observation->setUser($user);
+    		$em->persist($observation);
 
-            $picture = $observation->getPicture();
-            if ($picture !== null)
-            {
-                $picture->setAlt($observation->getTaxref()->getNomVern());
-                $em->persist($picture);
-            }
+    		$picture = $observation->getPicture();
+    		if ($picture !== null)
+    		{
+    			$picture->setAlt($observation->getTaxref()->getNomVern());
+    			$em->persist($picture);
+    		}
 
-            $em->flush();
+    		$em->flush();
 
-            $request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
-            return $this->redirectToRoute('oc_platform_homepage');
-        }
+    		$request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
+    		return $this->redirectToRoute('oc_platform_homepage');
+    	}
 
-        return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
-            'form' => $form->createView()
-        ));
+    	return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
+    		'form' => $form->createView()
+    		));
     }
 
 	/**
@@ -72,26 +74,29 @@ class PlatformController extends Controller
      */
 	public function creationAction(Request $request)
 	{
-		$article = new Article();
-		$form   = $this->get('form.factory')->create(ArticleType::class, $article);
+		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 
-		if ($request->isMethod('POST')) {
-			
-			$form->handleRequest($request);
+			$article = new Article();
+			$form   = $this->get('form.factory')->create(ArticleType::class, $article);
 
-			if ($form->isValid()) {
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
 				$article->setUser( $this->getUser());
 
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($article);
 				$em->flush();
+
+				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistrée.');
+
 			}
+
+			return $this->render('OCPlatformBundle:Default:creation.html.twig', array(
+				'form' => $form->createView(),
+				));
 		}
 
-		return $this->render('OCPlatformBundle:Default:creation.html.twig', array(
-			'form' => $form->createView(),
-			));
+		return $this->redirectToRoute('oc_platform_homepage');
 	}
 
 	/**
@@ -99,33 +104,54 @@ class PlatformController extends Controller
      */
 	public function editionAction(Request $request,article $article, $id)
 	{
-		
-		$form   = $this->get('form.factory')->create(ArticleType::class, $article);
+		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 
-		if ($request->isMethod('POST')) {
-			
-			$form->handleRequest($request);
+			$form   = $this->get('form.factory')->create(ArticleType::class, $article);
 
-			if ($form->isValid()) {
+			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
 				$em = $this->getDoctrine()->getManager();
 				$em->flush();
-			}
-		}
 
-		return $this->render('OCPlatformBundle:Default:edition.html.twig', array(
-			'form' => $form->createView(),
-			));
+				$request->getSession()->getFlashBag()->add('info', 'Votre commentaire a bien été enregistrée.');
+
+			}
+
+			return $this->render('OCPlatformBundle:Default:edition.html.twig', array(
+				'form' => $form->createView(),
+				));
+		}
+		return $this->redirectToRoute('oc_platform_homepage');
 	}
 
 	/**
      * @Route("/blog/article/{id}", name="oc_platform_article")
      */
-	public function articleAction(article $article, $id)
+	public function articleAction(Request $request, article $article, $id)
 	{
+		$comment = new Comment();
+		$form   = $this->get('form.factory')->create(CommentType::class, $comment);
+
+		$em = $this->getDoctrine()->getManager();
+
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+			$comment->setUser( $this->getUser());
+			$comment->setArticle($article);
+			$em->persist($comment);
+			$em->flush();
+			
+			// to clear the form
+			$comment = new Comment();
+			$form   = $this->get('form.factory')->create(CommentType::class, $comment);
+		}
+
+		$comments = $em->getRepository('OCPlatformBundle:Comment')->findBY(array('article' => $article)); 
 
 		return $this->render('OCPlatformBundle:Default:article.html.twig', array(
-			'article' => $article
+			'article' => $article,
+			'form' => $form->createView(),
+			'comments' => $comments,
 			));
 	}
 }
