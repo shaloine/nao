@@ -4,6 +4,8 @@ namespace OC\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use \DateTime;
 
 /**
  * Article
@@ -33,6 +35,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
@@ -50,13 +53,14 @@ class Article
     private $user;
 
     /**
-    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="article")
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="article", cascade={"remove"})
     */
     private $comments;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->datePost = new Datetime();
     }
 
 
@@ -164,5 +168,39 @@ class Article
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \OC\PlatformBundle\Entity\Comment $comment
+     *
+     * @return Article
+     */
+    public function addComment(\OC\PlatformBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \OC\PlatformBundle\Entity\Comment $comment
+     */
+    public function removeComment(\OC\PlatformBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
