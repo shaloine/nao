@@ -13,6 +13,8 @@ use OC\PlatformBundle\Entity\Comment;
 use OC\PlatformBundle\Form\CommentType;
 use OC\PlatformBundle\Entity\Observation;
 use OC\PlatformBundle\Form\ObservationType;
+use OC\PlatformBundle\Entity\Taxref;
+use OC\PlatformBundle\Form\TaxrefType;
 
 
 class PlatformController extends Controller
