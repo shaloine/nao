@@ -46,6 +46,11 @@ class ArticlePicture
 
     private $file;
 
+    /**
+    * @ORM\OneToOne(targetEntity="OC\PlatformBundle\Entity\Article", inversedBy="articlePicture")
+    */
+    private $article;
+
     public function getUploadRootDir()
     {
         return __dir__.'/../../../../web/uploads/articlesPictures';
@@ -199,4 +204,28 @@ class ArticlePicture
         return $this->random;
     }
 
+
+    /**
+     * Set article
+     *
+     * @param \OC\PlatformBundle\Entity\Article $article
+     *
+     * @return ArticlePicture
+     */
+    public function setArticle(\OC\PlatformBundle\Entity\Article $article = null)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \OC\PlatformBundle\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
 }
