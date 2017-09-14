@@ -5,7 +5,9 @@ namespace OC\PlatformBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +30,7 @@ class ObservationType extends AbstractType
                         ->orderBy("t.nomVern", "ASC");
                     return $qb;
                 },
-                'placeholder' => 'Sélectionner une espèce ci-dessous',
+                'placeholder' => 'Sélectionnez une espèce ci-dessous ou saisissez son nom',
                 'choice_label' => 'speciesToSearch',
             ))
             ->add('latitude', TextType::class)
@@ -38,6 +40,11 @@ class ObservationType extends AbstractType
                 'format' => 'dd/MM/yyyy'
             ))
             ->add('picture', PictureType::class, array(
+                'required' => false))
+            ->add('flying', CheckboxType::class, array(
+                'required' => false
+            ))
+            ->add('comment', TextareaType::class, array(
                 'required' => false));
     }
     

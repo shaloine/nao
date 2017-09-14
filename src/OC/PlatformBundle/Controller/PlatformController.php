@@ -69,16 +69,29 @@ class PlatformController extends Controller
     		$em->persist($observation);
 
     		$picture = $observation->getPicture();
-    		if ($picture !== null)
-    		{
+    		if ($picture !== null) {
     			$picture->setAlt($observation->getTaxref()->getNomVern());
     			$em->persist($picture);
     		}
 
-    		$em->flush();
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
 
-    		$request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
-    		return $this->redirectToRoute('oc_platform_homepage');
+    		    $observation->setValidated(true);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
+
+            } else {
+                $observation->setValidated(false);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée mais doit être validée par un naturaliste.');
+            }
+
+            $observation = new Observation();
+            $form = $this->get('form.factory')->create(ObservationType::class , $observation);
+
+            return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
+                'form' => $form->createView()
+            ));
     	}
 
     	return $this->render('OCPlatformBundle:Default:observ.html.twig', array(

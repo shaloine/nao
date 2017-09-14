@@ -64,6 +64,27 @@ class Observation
     private $date;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="validated", type="boolean")
+     */
+    private $validated;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="flying", type="boolean")
+     */
+    private $flying;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
      * Get id
      *
      * @return integer
@@ -215,6 +236,78 @@ class Observation
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set validated
+     *
+     * @param boolean $validated
+     *
+     * @return Observation
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
+
+        return $this;
+    }
+
+    /**
+     * Get validated
+     *
+     * @return boolean
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * Set flying
+     *
+     * @param boolean $flying
+     *
+     * @return Observation
+     */
+    public function setFlying($flying)
+    {
+        $this->flying = $flying;
+
+        return $this;
+    }
+
+    /**
+     * Get flying
+     *
+     * @return bool
+     */
+    public function getFlying()
+    {
+        return $this->flying;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return Observation
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 
 }
