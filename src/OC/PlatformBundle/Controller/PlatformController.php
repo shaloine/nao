@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use OC\PlatformBundle\Entity\Article;
+use OC\PlatformBundle\Entity\ArticlePicture;
 use OC\PlatformBundle\Entity\User;
 use OC\PlatformBundle\Form\ArticleType;
 use OC\PlatformBundle\Entity\Comment;
@@ -26,31 +27,31 @@ class PlatformController extends Controller
 	{
 		return $this->render('OCPlatformBundle:Default:index.html.twig');
 	}
-    
+
     /**
      * @Route("/consultation", name="oc_platform_consultation")
      */
     public function consultAction(Request $request)
     {
-        $search = new Taxref();
-        $form   = $this->get('form.factory')->create(TaxrefType::class, $search);
+    	$search = new Taxref();
+    	$form   = $this->get('form.factory')->create(TaxrefType::class, $search);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $id = $search->getNomVern()->getId();
-            $em = $this->getDoctrine()->getManager();
-            $bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
-            $observs = $em->getRepository('OCPlatformBundle:Observation')->findByTaxref($id);
+    	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+    		$id = $search->getNomVern()->getId();
+    		$em = $this->getDoctrine()->getManager();
+    		$bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
+    		$observs = $em->getRepository('OCPlatformBundle:Observation')->findByTaxref($id);
 
-            return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
-                'form' => $form->createView(),
-                'bird' => $bird,
-                'observs' => $observs,
-            ));
-        }
+    		return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
+    			'form' => $form->createView(),
+    			'bird' => $bird,
+    			'observs' => $observs,
+    		));
+    	}
 
-        return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
-            'form' => $form->createView(),
-        ));
+    	return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
+    		'form' => $form->createView(),
+    	));
     }
 
     /**
@@ -96,7 +97,7 @@ class PlatformController extends Controller
 
     	return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
     		'form' => $form->createView()
-    		));
+    	));
     }
 
 	/**
@@ -110,7 +111,7 @@ class PlatformController extends Controller
 
 		return $this->render('OCPlatformBundle:Default:blog.html.twig', array(
 			'articles' => $articles,
-			));
+		));
 	}
 
 	/**
@@ -125,19 +126,30 @@ class PlatformController extends Controller
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-				$article->setUser( $this->getUser());
-
 				$em = $this->getDoctrine()->getManager();
+				$article->setUser( $this->getUser());
 				$em->persist($article);
+				
+				$articlePicture = $article->getArticlePicture();
+				if ($articlePicture !== null)
+				{
+					$articlePicture->setAlt($article->getTitle());
+					$articlePicture->setRandom(rand());
+					$em->persist($articlePicture);
+				}
+				
 				$em->flush();
 
 				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistrée.');
+
+				$article = new Article();
+			$form   = $this->get('form.factory')->create(ArticleType::class, $article);
 
 			}
 
 			return $this->render('OCPlatformBundle:Default:creation.html.twig', array(
 				'form' => $form->createView(),
-				));
+			));
 		}
 
 		return $this->redirectToRoute('oc_platform_homepage');
@@ -154,16 +166,27 @@ class PlatformController extends Controller
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
+				
 				$em = $this->getDoctrine()->getManager();
+				$articlePicture = $article->getArticlePicture();
+
+				if ($articlePicture !== null)
+				{
+					$articlePicture->setRandom(rand());
+					$articlePicture->setAlt($article->getTitle());
+					$em->persist($articlePicture);
+				}
+
 				$em->flush();
 
-				$request->getSession()->getFlashBag()->add('info', 'Votre commentaire a bien été enregistrée.');
+				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistrée.');
 
 			}
 
 			return $this->render('OCPlatformBundle:Default:edition.html.twig', array(
 				'form' => $form->createView(),
-				));
+				'article' => $article
+			));
 		}
 		return $this->redirectToRoute('oc_platform_homepage');
 	}
@@ -196,7 +219,7 @@ class PlatformController extends Controller
 			'article' => $article,
 			'form' => $form->createView(),
 			'comments' => $comments,
-			));
+		));
 	}
 
 	/**
@@ -271,6 +294,27 @@ class PlatformController extends Controller
 			$request->getSession()->getFlashBag()->add('info', "Le commentaire a bien été supprimé");
 
 			return $this->redirectToRoute('fos_user_profile_show');
+		}
+
+		return $this->redirectToRoute('oc_platform_homepage');
+
+	}
+
+	/**
+     * @Route("/blog/pictureSuppression/{id}/{articleId}", name="oc_platform_pictureSuppression")
+     */
+	public function pictureSuppressionAction(Request $request, ArticlePicture $articlePicture, $id, $articleId)
+	{
+		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+			
+			$em = $this->getDoctrine()->getManager();
+
+			$em->remove($articlePicture);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('info', "L'image à été supprimé");
+
+			return $this->redirectToRoute('oc_platform_edition',  array('id' => $articleId));
 		}
 
 		return $this->redirectToRoute('oc_platform_homepage');

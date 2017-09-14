@@ -2,6 +2,9 @@
 {% extends "OCPlatformBundle::layout.html.twig" %}
 
 {% block body %}
+	{% for message in app.session.flashbag.get('info') %}
+		<p>{{ message }}</p>
+	{% endfor %}
 
 	{{ form_start(form) }}
 
@@ -22,7 +25,9 @@
 		{% endif %}
 		{{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
 	</div>
-
+	<div class="form-group">
+		{{ form_widget(form.articlePicture) }}
+	</div>
 	<input type="submit" value="enregistrer" class="btn  btn-default">
 
 	{{ form_rest(form) }}

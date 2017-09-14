@@ -6,6 +6,9 @@
 
 	
 	<h3>{{ article.title }}</h3>
+	{% if article.articlePicture is not null %}
+		<img src="{{  asset('uploads/articlesPictures/'~article.articlePicture.path) }}" alt="{{ article.articlePicture.alt }}"/>
+	{% endif %}
 	<p>{{ article.datePost|date('d/m/Y H:i') }}</p>
 	<p>{{ article.content|raw }}</p>
 
