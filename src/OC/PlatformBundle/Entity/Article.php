@@ -57,6 +57,11 @@ class Article
     */
     private $comments;
 
+    /**
+    * @ORM\OneToOne(targetEntity="OC\PlatformBundle\Entity\ArticlePicture", cascade={"persist", "remove"})
+    */
+    private $articlePicture;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -202,5 +207,29 @@ class Article
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set articlePicture
+     *
+     * @param \OC\PlatformBundle\Entity\ArticlePicture $articlePicture
+     *
+     * @return Article
+     */
+    public function setArticlePicture(\OC\PlatformBundle\Entity\ArticlePicture $articlePicture = null)
+    {
+        $this->articlePicture = $articlePicture;
+
+        return $this;
+    }
+
+    /**
+     * Get articlePicture
+     *
+     * @return \OC\PlatformBundle\Entity\ArticlePicture
+     */
+    public function getArticlePicture()
+    {
+        return $this->articlePicture;
     }
 }
