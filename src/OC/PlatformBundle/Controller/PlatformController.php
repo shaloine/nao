@@ -40,18 +40,34 @@ class PlatformController extends Controller
     		$id = $search->getNomVern()->getId();
     		$em = $this->getDoctrine()->getManager();
     		$bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
-    		$observs = $em->getRepository('OCPlatformBundle:Observation')->findByTaxref($id);
+    		$observs = $em->getRepository('OCPlatformBundle:Observation')->getObservsValidated($id);
+    		$observsToValid = $em->getRepository('OCPlatformBundle:Observation')->getObservsToValid($id);
 
     		return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
     			'form' => $form->createView(),
     			'bird' => $bird,
     			'observs' => $observs,
+                'observsToValid' => $observsToValid
     		));
     	}
 
     	return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
     		'form' => $form->createView(),
     	));
+    }
+
+    /**
+     * @Route("/consult/{id}", name="oc_platform_single_consult")
+     */
+    public function consultSingleAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $observation = $em->getRepository('OCPlatformBundle:Observation')->find($id);
+
+        return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
+            'observation' => $observation,
+        ));
     }
 
     /**
@@ -98,6 +114,38 @@ class PlatformController extends Controller
     	return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
     		'form' => $form->createView()
     	));
+    }
+
+    /**
+     * @Route("/observation/valid/{id}", name="oc_platform_observValidation")
+     */
+    public function validObservAction(Request $request, Observation $observation, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $observation->setValidated(true);
+        $em->flush();
+
+        $request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été validée.');
+
+        return $this->redirectToRoute('oc_platform_single_consult', array('id' => $id));
+
+    }
+
+    /**
+     * @Route("/observation/suppr/{id}", name="oc_platform_observSuppression")
+     */
+    public function supprObservAction(Request $request, Observation $observation, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($observation);
+        $em->flush();
+
+        $request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été suprimée.');
+
+        return $this->redirectToRoute('oc_platform_homepage');
+
     }
 
 	/**
