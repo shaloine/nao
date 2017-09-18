@@ -1,0 +1,133 @@
+{% extends 'OCPlatformBundle::layout.html.twig'%}
+{% set consultationPage = true %}
+
+{% block title %}{{ parent() }} - Consultation{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #search {
+            background-color: rgba(231,231,231,0.65);
+            padding-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        #google-maps {
+            position: relative;
+            padding-bottom: 125%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        #google-maps iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+            {% for flashMessage in app.session.flashbag.get('info') %}
+                <div class="alert alert-success text-center">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <div class="col-lg-6 col-md-6" id="search" style="text-align: center;">
+                <h4><u>Observation</u> :</h4>
+                <h5><u><i><strong>Date</strong></i></u> : {{ observation.date|date('d/m/Y') }}</h5>
+                <i>Coordonnées GPS</i> : <span id="latlng" value="{{ observation.latitude }}, {{ observation.longitude }}"></span><br />
+                    Latitude : {{ observation.latitude }} - Longitude : {{ observation.longitude }}
+                <br /><br />
+                <i>Auteur de l'observation</i> : {{ observation.user.firstName }} {{ observation.user.lastName }}
+                <br /><br />
+                {% if observation.picture %}
+                    <a href="{{ asset(observation.picture.AssetPath) }}" alt="{{ observation.picture.alt }}" target="_blank">
+                        <img src="{{ asset(observation.picture.AssetPath) }}" style="max-height: 200px;" />
+                    </a>
+                    <br /><br />
+                {% endif %}
+                {% if observation.flying == true %}
+                    <i>Oiseau en vol</i><br /><br />
+                {% endif %}
+                {% if observation.comment %}
+                    <i>Commentaire</i> :
+                    {{ observation.comment }}
+                {% endif %}
+                <div style="text-align: center;">
+                    <br />
+                    <h4><u>Fiche détaillée :</u></h4>
+                    <i>Nom</i> : {{ observation.taxref.nomVern }}
+                    <br /><br />
+                    <i>Nom scientifique (et "auteur")</i> : {{ observation.taxref.lbNom }} ({{ observation.taxref.lbAuteur }})
+                    <br /><br />
+                    <i>Ordre</i> : {{ observation.taxref.ordre }}
+                    <br /><br />
+                    <i>Famille</i> : {{ observation.taxref.famille }}
+                    <br /><br />
+                    <i>Lien INPN :</i><a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
+                        {{ observation.taxref.nomVern }}</a>
+                </div>
+                <br />
+                {% if (observation.validated == false) and (is_granted('ROLE_NATURALIST')) %}
+                    <br />
+                    <p>
+                        <form action="{{ path('oc_platform_observValidation', { 'id': observation.id }) }}">
+                            <input type="submit" class="btn btn-success" style="float: left;" value="Valider"
+                                   onClick="{{ path('oc_platform_observValidation', { 'id': observation.id }) }}">
+                        </form>
+                        <form action="{{ path('oc_platform_observSuppression', { 'id': observation.id }) }}">
+                            <input type="submit" class="btn btn-danger" style="float: right;" value="Supprimer"
+                                   onClick="{{ path('oc_platform_observSuppression', { 'id': observation.id }) }}">
+                        </form>
+                    </p>
+                    <br /><br />
+                {% endif %}
+            </div>
+        <div class="col-lg-6 col-md-6">
+            <div id="google-maps">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="1000" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
+            type="text/javascript"></script>
+
+    <script>
+        function initMap() {
+            var latitude = {{ observation.latitude }};
+            var longitude = {{ observation.longitude }};
+            var center = {
+                lat: latitude,
+                lng: longitude
+            };
+
+            var mapOptions = {
+                center: center,
+                zoom: 10
+            };
+
+            var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
+
+            var mark = [
+                {lat: latitude, lng: longitude, title: "Lieu de l'observation"}
+            ];
+
+            var latLng = new google.maps.LatLng(latitude, longitude);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+        };
+    </script>
+{% endblock %}

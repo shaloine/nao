@@ -1,0 +1,272 @@
+{% extends 'OCPlatformBundle::layout.html.twig'%}
+
+{% block title %}{{ parent() }} - Consultation{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #search {
+            background-color: rgba(231,231,231,0.65);
+            padding-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        #google-maps {
+            position: relative;
+            padding-bottom: 125%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        #google-maps iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6" id="search">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                    <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.nomVern) }}</span>
+                    <div class="form-group">
+                        <div class="col-sm-12" style="text-align: center;">
+                            {{ form_label(form.nomVern, "Espèce recherchée :", {'label_attr': {'class': 'control-label',
+                                'style': 'font-size: 1.25em;'}}) }}
+                            <br /><br />
+                            {{ form_widget(form.nomVern, {'attr': {'class': 'form-control',
+                                'style': 'color: black; min-width: 300px; margin: auto;'
+                            }}) }}
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group" style="text-align: center;">
+                        <button type="submit" class="btn btn-primary" style="font-weight: bold; font-size: 1em;">Rechercher</button>
+                    </div>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+
+                {% if bird is defined %}
+                    <br />
+                    <div style="text-align: center;">
+                        <h4><u>Fiche détaillée :</u></h4>
+                        <i>Nom</i> : {{ bird.nomVern }}
+                        <br /><br />
+                        <i>Nom scientifique (et "auteur")</i> : {{ bird.lbNom }} ({{ bird.lbAuteur }})
+                        <br /><br />
+                        <i>Ordre</i> : {{ bird.ordre }}
+                        <br /><br />
+                        <i>Famille</i> : {{ bird.famille }}
+                        <br /><br />
+                        <i>Lien INPN :</i><a href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank">
+                            {{ bird.nomVern }}</a><br /><br />
+                        <i>Lien Wikipedia :</i><a href="https://fr.wikipedia.org/wiki/{{ bird.nomVern }}" target="_blank">
+                            {{ bird.nomVern }}</a><br /><br />
+                    </div>
+                    {% if observs or observsToValid %}
+                        {% if observs %}
+                            <div style="text-align: center;">
+                                <h4><u>Observations</u> :</h4>
+                                {% for observ in observs %}
+                                    {% if observ.validated == true %}
+                                        <p>
+                                            <a href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
+                                        </p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_NATURALIST') %}
+                            {% if observsToValid %}
+                                <div style="text-align: center;">
+                                    <h4><u>En attente de validation</u> :</h4>
+                                    {% for observ in observsToValid %}
+                                            <p>
+                                                <a href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
+                                            </p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <div style="text-align: center;">
+                            <h4><i>Aucune observation de cet oiseau n'a été effectuée pour l'instant.</i></h4>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div id="google-maps">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="1000" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
+            type="text/javascript"></script>
+
+    {% if not is_granted('ROLE_NATURALIST') and observs is defined %}
+        <script>
+            function initMap() {
+                {% for observ in observs %}
+                    if ({{ loop.length }} > 1) {
+                        var markersTable = [
+                            {% for observ in observs %}
+                            { lat:{{ observ.latitude }}, lng:{{ observ.longitude }} },
+                            {% endfor %}
+                        ];
+                        var markersZone = new google.maps.LatLngBounds();
+
+                        var mapDiv = new google.maps.Map( document.getElementById("google-maps"));
+
+                        markersTable.forEach(function(latlng){
+                            var latit = latlng.lat,
+                                longi = latlng.lng;
+                            var markerOptions = {
+                                map: mapDiv,
+                                position: new google.maps.LatLng(latit, longi)
+                            };
+                            var marker = new google.maps.Marker(markerOptions);
+                            markersZone.extend(marker.getPosition());
+                        })
+                        mapDiv.fitBounds(markersZone);
+
+                    } else {
+
+                        var latitude = {{ observ.latitude }};
+                        var longitude = {{ observ.longitude }};
+                        var center = {
+                            lat: latitude,
+                            lng: longitude
+                        };
+
+                        var mapOptions = {
+                            center: center,
+                            zoom: 10
+                        };
+
+                        var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
+
+                        var mark = [
+                            {lat: latitude, lng: longitude}
+                        ];
+
+                        var latLng = new google.maps.LatLng(latitude, longitude);
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: map,
+                            title: mark.title
+                        });
+                    }
+                {% endfor %}
+            }
+        </script>
+    {% elseif is_granted('ROLE_NATURALIST') and observs is defined %}
+        {% set observs = observs|merge(observsToValid) %}
+        <script>
+            function initMap() {
+                {% for observ in observs %}
+                if ({{ loop.length }} > 1) {
+                    var markersTable = [
+                        {% for observ in observs %}
+                        { lat:{{ observ.latitude }}, lng:{{ observ.longitude }} },
+                        {% endfor %}
+                    ];
+                    var markersZone = new google.maps.LatLngBounds();
+
+                    var mapDiv = new google.maps.Map( document.getElementById("google-maps"));
+
+                    markersTable.forEach(function(latlng){
+                        var latit = latlng.lat,
+                            longi = latlng.lng;
+                        var markerOptions = {
+                            map: mapDiv,
+                            position: new google.maps.LatLng(latit, longi)
+                        };
+                        var marker = new google.maps.Marker(markerOptions);
+                        markersZone.extend(marker.getPosition());
+                    })
+                    mapDiv.fitBounds(markersZone);
+
+                } else {
+
+                    var latitude = {{ observ.latitude }};
+                    var longitude = {{ observ.longitude }};
+                    var center = {
+                        lat: latitude,
+                        lng: longitude
+                    };
+
+                    var mapOptions = {
+                        center: center,
+                        zoom: 10
+                    };
+
+                    var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
+
+                    var mark = [
+                        {lat: latitude, lng: longitude, title: "Lieu de l'observation"}
+                    ];
+
+                    var latLng = new google.maps.LatLng(latitude, longitude);
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: mark.title
+                    });
+                }
+                {% endfor %}
+            }
+        </script>
+        {% else %}
+    <script>
+        function initMap() {
+            if(navigator.geolocation) {
+                function hasPosition(position) {
+                    var point = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                        myOptions = {
+                            zoom: 12,
+                            center: point,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        },
+                        mapDiv = document.getElementById("google-maps"),
+                        map = new google.maps.Map(mapDiv, myOptions),
+                        marker = new google.maps.Marker({
+                            position: point,
+                            map: map
+                        });
+
+                    google.maps.event.addListener(map, 'click', function(event) {
+                        placeMarker(event.latLng);
+                    });
+
+                    var marker;
+                    function placeMarker(location) {
+                        if(marker){ //on vérifie si le marqueur existe
+                            marker.setPosition(location); //on change sa position
+                        }else{
+                            marker = new google.maps.Marker({ //on créé le marqueur
+                                position: location,
+                                map: map
+                            });
+                        }
+                        document.getElementById("oc_platformbundle_observation_latitude").value=location.lat();
+                        document.getElementById("oc_platformbundle_observation_longitude").value=location.lng();
+                    }
+                }
+                navigator.geolocation.getCurrentPosition(hasPosition);
+            }
+        }
+    </script>
+    {% endif %}
+{% endblock %}
