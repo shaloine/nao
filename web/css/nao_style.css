@@ -102,7 +102,7 @@
     border-top-right-radius: 9px;
     border-top-left-radius: 9px;
     height: 50px;
-    color: #fff;
+    color: #38001C;
 }
 
 .panel-heading h3 {
@@ -116,7 +116,7 @@
 .panel-content {
     padding: 20px;
     font-family: 'Roboto', sans-serif;
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #046a65;
 }
 
@@ -328,6 +328,7 @@
     }
     #discover {
         top: 70%;
+        right: 33.3%;
     }
     .panel {
         height: 250px;
@@ -360,9 +361,18 @@
 @media screen and (max-width: 490px) {
     .navbar-default .navbar-form {
         height: 79px;
-        height: 79px;
         border: 0px;
         background-color: rgba(255, 255, 255, 0);
+    }
+    .navbar-brand {
+        position: absolute;
+        top: 0px;
+        left : 0px;
+    }
+    #burgerBtn {
+        position: absolute;
+        top: 0px;
+        right: 0px;
     }
     #logo {
         width: 120px;
