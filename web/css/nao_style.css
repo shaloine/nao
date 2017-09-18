@@ -360,6 +360,7 @@
 @media screen and (max-width: 490px) {
     .navbar-default .navbar-form {
         height: 79px;
+        height: 79px;
         border: 0px;
         background-color: rgba(255, 255, 255, 0);
     }
