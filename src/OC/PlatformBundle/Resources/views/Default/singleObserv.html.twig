@@ -72,7 +72,9 @@
                     <i>Famille</i> : {{ observation.taxref.famille }}
                     <br /><br />
                     <i>Lien INPN :</i><a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
-                        {{ observation.taxref.nomVern }}</a>
+                        {{ observation.taxref.nomVern }}</a><br /><br />
+                    <i>Lien Wikipedia :</i><a href="https://fr.wikipedia.org/wiki/{{ observation.taxref.nomVern }}" target="_blank">
+                        {{ observation.taxref.nomVern }}</a><br /><br />
                 </div>
                 <br />
                 {% if (observation.validated == false) and (is_granted('ROLE_NATURALIST')) %}
