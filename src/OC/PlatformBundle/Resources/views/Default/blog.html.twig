@@ -1,17 +1,26 @@
 {# src/OC/PlatformBundle/Resources/views/Default/blog.html.twig #}
 {% extends "OCPlatformBundle::layout.html.twig" %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('css/nao_blog.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
 
-	{% for article in articles|reverse %}
-		<h3>{{ article.title }}</h3>
-		{% if article.articlePicture is not null %}
-		<img src="{{  asset('uploads/articlesPictures/'~article.articlePicture.path) }}" alt="{{ article.articlePicture.alt }}"/>
-		{% endif %}
-		<p>{{ article.content|raw }}</p>
-		<p><a href="{{ path('oc_platform_article', { 'id': article.id }) }}">Aperçu</a></p>
-	{% endfor %}
+	<div class="container blogContainer">
+		{% for article in articles|reverse %}
+			<div class="blogArticle">
+			<h3 class="blogTitle">{{ article.title }}</h3>
+			<p>Posté le {{ article.datePost|date('d-m-Y') }}</p>
+			{% if article.articlePicture is not null %}
+				<img src="{{  asset('uploads/articlesPictures/'~article.articlePicture.path) }}" alt="{{ article.articlePicture.alt }}" class="img-responsive" />
+			{% endif %}
+			<p>{{ article.content|truncate(400, true)|raw }}</p>
+			<p class="blogButton"><a href="{{ path('oc_platform_article', { 'id': article.id }) }}" class="btn btn-default">Lire la suite</a></p>
+		</div>
+		{% endfor %}
+	</div>
 
 {% endblock %}
 
