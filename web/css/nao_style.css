@@ -1,0 +1,397 @@
+.navbar {
+    margin-bottom: 0px;
+}
+
+.navbar-default {
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0);
+    border : 0px;
+    z-index: 1000;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: 1.1em;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #38001C;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #38001C;
+    background-color: #FFA340;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>li>a:active {
+    color: #FFA340;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom: 0px;
+}
+
+#burgerBtn {
+    border: 0px;
+}
+
+#navH {
+    float: right;
+    margin-top: 10px;
+    margin-right: 5px;
+    z-index: 2000;
+}
+
+#imgAccueil {
+    position: relative;
+}
+
+#imgAccueil img {
+    margin: -79px 0px 0px 0px;
+    width: 100%;
+}
+
+#catchword {
+    position: absolute;
+    top: 10%;
+    text-align: center;
+    font-size: 4em;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px #3e3e3e;
+}
+
+#catchword span {
+    font-size: 2em;
+}
+
+#discover {
+    position: absolute;
+    top: 60%;
+    background-color: #017a74;
+    color: #fff;
+    border: 0px;
+    box-shadow: 1px 1px 2px #3e3e3e;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.2em;
+    transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+
+#discover:hover {
+    background-color: #046a65;
+}
+
+.panelContain a {
+    text-decoration: none;
+}
+
+.panel {
+    height: 300px;
+    margin-top: 30px;
+    border: #00C2BA 2px solid;
+    border-radius: 12px;
+}
+
+.panel-heading {
+    background-color: #00C2BA;
+    border-top-right-radius: 9px;
+    border-top-left-radius: 9px;
+    height: 50px;
+    color: #fff;
+}
+
+.panel-heading h3 {
+    padding-top: 5px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.panel-content {
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    color: #046a65;
+}
+
+.indexPanel {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+}
+
+#indexAbout {
+    background: url('../img/read-more.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#indexAbout:hover {
+    background: url('../img/read-more-h.png');
+}
+
+#indexObs {
+    background: url('../img/add-location-point.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#indexObs:hover {
+    background: url('../img/add-location-point-h.png');
+}
+
+#indexConsult {
+    background: url('../img/map_marker.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#indexConsult:hover {
+    background: url('../img/map_marker-h.png');
+}
+
+#indexSubscribe {
+    background: url('../img/creer-un-compte.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#indexSubscribe:hover {
+    background: url('../img/creer-un-compte-h.png');
+}
+
+#indexConnect {
+    background: url('../img/login.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#indexConnect:hover {
+    background: url('../img/login-h.png');
+}
+
+#indexBlog {
+    background: url('../img/news.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#indexBlog:hover {
+    background: url('../img/news-h.png');
+}
+
+.backTop {
+    width: 60px;
+    height: 60px;
+    margin: 15px auto;
+    border-radius: 90px;
+    background-color: #017a74;
+    position: relative;
+}
+
+.backTop a {
+    color: #fff;
+    font-size: 2em;
+    position: absolute;
+    top: 16%;
+    left: 26%;
+}
+
+.backTop:hover {
+    background-color: #046a65;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    height: auto;
+    margin-top: 20px;
+    padding: 10px;
+    color: #fff;
+    background-color: #38001C;
+    text-align: center;
+}
+
+.footer a {
+    color: #FFA340;   
+    list-style: none;
+    text-decoration: none;
+}
+
+#mentions,
+#copyright,
+#networks {
+    padding: 20px 0px;
+}
+
+#mentions {
+    margin-bottom: 10px;
+}
+
+#networks a {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .panel {
+        height: 350px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .navbar-default {
+        font-size: 1em;
+    }
+    .nav>li>a {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #logo {
+        width: 200px;
+        margin-left: 9%;
+    }
+    #catchword {
+        font-size: 3.5em;
+    }
+    #catchword span {
+        font-size: 2em;
+    }
+    #discover {
+        top: 60%;
+    }
+    .panel {
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    #logo {
+        width: 160px;
+    }
+    #catchword {
+        font-size: 2.5em;
+    }
+    #catchword span {
+        font-size: 2em;
+    }
+    .panel {
+        height: 450px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #navH {
+        display: none;
+    }
+    .navbar-default {
+        height: 60px;
+    }
+    .navbar-brand {
+        padding-top: 7px;
+    }
+    .navbar-header,
+    .navbar-default .navbar-toggle:focus {
+        background-color: rgba(255, 255, 255, 0);
+        border: 0px;
+    }
+    .navbar-default .navbar-toggle:hover {
+        background-color: #eee;
+    }
+    #navCollapse {
+        height: 280px;
+        width: 100%;
+    }
+    #imgAccueil {
+        margin-top: -49px;
+    }
+    #imgAccueil img {
+        margin-top: 0px;
+    }
+    #catchword {
+        top: 25%;
+        font-size: 2em;
+    }
+    #catchword span {
+        font-size: 2em;
+    }
+    #discover {
+        top: 70%;
+    }
+    .panel {
+        height: 250px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        border-radius: 0px;
+    }
+    .panelContain {
+        padding: 0px;
+    }
+    .panel-heading {
+        border-radius: 0px;
+    }
+    .backTop {
+        margin-top: 30px;
+    }
+    #mentions,
+    #copyright,
+    #networks {
+        padding: 0px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #navCollapse {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .navbar-default .navbar-form {
+        height: 79px;
+        border: 0px;
+        background-color: rgba(255, 255, 255, 0);
+    }
+    #logo {
+        width: 120px;
+        margin-left: 9%;
+    }
+    #imgAccueil {
+        overflow: hidden;
+    }
+    #imgAccueil img {
+        height: 280px;
+        width: auto;
+    }
+    #catchword {
+        top: 20%;
+        font-size: 1.7em;
+    }
+    #catchword span {
+        font-size: 1.7em;
+    }
+    #catchword {
+    }
+    #discover {
+        font-size: 1em;        
+    }
+    .panel {
+        height: 400px;
+    }
+    .indexPanel {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+}

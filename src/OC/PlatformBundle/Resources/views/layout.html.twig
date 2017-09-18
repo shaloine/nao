@@ -1,52 +1,148 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>{% block title %}NAO{% endblock %}</title>
+        <title>{% block title %}NAO{% endblock %}</title>
 
-	{% block stylesheets %}
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	{% endblock %}
-</head>
+        {% block stylesheets %}
+            <link href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+            <link href="{{ asset('css/nao_style.css') }}" rel="stylesheet">
+        {% endblock %}
 
-<body>
-	<nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="{{ path('oc_platform_homepage') }}">NAO</a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{ path('oc_platform_blog') }}">Blog</a></li>
-          {% if is_granted('ROLE_USER') %}
-            <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
-            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
-          {% else %}    
-            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
-            <li><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
+        <link href="{{ asset('img/logo-favicon.png') }}" rel="icon" type="image/x-icon"/>
+    </head>
 
-  <div class="container">
-    {% block body %}
-    {% endblock %}
-  </div>
-  
-  {% block javascripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  {% endblock %}
+    <body>
+       
+        <nav id="navH" class="navbar navbar-default">
+            <div class="container-fluid">
+                    {% set route = app.request.attributes.get('_route') %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
+                        <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Observation</a></li>
+                        <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Consultation</a></li>
+                        <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                        {% else %}    
+                            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                            <li><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
+                        {% endif %}
+                    </ul>
+            </div>
+        </nav>
+        
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button id="burgerBtn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false" aria-controls="navCollapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('oc_platform_homepage') }}">
+                        <img id="logo" src="{{ asset('img/logo-titre.png') }}" alt="Logo NAO" />
+                    </a>
 
-</body>
+                </div>
+            </div>
+        </nav>
+        <div id="navCollapse" class="collapse">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    {% set route = app.request.attributes.get('_route') %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
+                        <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Observation</a></li>
+                        <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Consultation</a></li>
+                        <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                        {% else %}    
+                            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                            <li><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        
+        {% block body %}
+        {% endblock %}
+        
+        <footer class="footer">
+            <div class="container">
+                <div id="mentions" class="col-xs-12 col-sm-4">
+                    <a href="{{ path('oc_platform_homepage') }}">Mentions légales | </a>
+                    <a href="{{ path('oc_platform_homepage') }}"> Contact | </a>
+                    <a href="{{ path('oc_platform_homepage') }}"> Admin</a>
+                </div>
+
+                <div id="copyright" class="col-xs-12 col-sm-4">
+                    <p>© NAO {{ 'now'|date('Y') }} | Tous droits réservés</p>
+                </div>
+                
+                <div id="networks" class="col-xs-12 col-sm-4">
+                    <a href="https://www.facebook.com/"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
+                    <a href="https://www.pinterest.fr/"><i class="fa fa-pinterest-square fa-3x" aria-hidden="true"></i></a>
+                    <a href="https://plus.google.com/"><i class="fa fa-google-plus-square fa-3x" aria-hidden="true"></i></a>
+                    <a href="https://twitter.com/?lang=fr"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </footer>
+        
+
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="{{ asset('lib/bootstrap/js/bootstrap.min.js') }}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.fr.min.js"></script>
+            <script src="{{ asset('js/datepicker.js') }}"></script>
+            <script src="https://use.fontawesome.com/59b5fb4587.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $('#discover, .up').on('click', function(e) {
+                        e.preventDefault();
+                        var hash = this.hash;
+                        $('html, body').animate({
+                            scrollTop: $(this.hash).offset().top
+                        }, 1000, function() {
+                            window.location.hash = hash;
+                        });
+                    });
+                });
+            </script>
+            
+            <script>
+                $(function())
+                    $('#burgerBtn').on('click', function() {
+                        $('#testb').collapse({
+                            show: true
+                        });
+                    });
+                });
+            </script>
+            
+            <script>
+                $(function() {
+                    $('.infoBulle').tooltip({
+                        delay: {
+                            show: 200,
+                            hide: 50
+                        }
+                    });
+                });
+            </script>
+
+        {% endblock %}
+
+    </body>
 </html>
