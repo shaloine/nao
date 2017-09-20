@@ -25,11 +25,31 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
 		// transforme les caractère spéciaux (accents etc) en caractère html
 		$content = htmlentities($content);
+
+		$words = explode(" ", $content);
+
+		$request = 'a.content LIKE :word OR a.title LIKE :word';
+
+		for($i = 1; $i < count($words); ++$i) {
+
+			$request = $request . ' OR a.content LIKE :word' . $i . ' OR a.title LIKE :word' . $i;
+			
+		}
 		
+		$qb
+		->where($request)
+		->setParameter('word', "%$words[0]%")
+		;
+
+		for($i = 1; $i < count($words); ++$i) {
+
+			$qb
+			->setParameter('word'. $i, "%$words[$i]%")
+			;
+			
+		}
 
 		$qb
-		->Where('a.content LIKE :mot')
-		->setParameter('mot', "%$content%")
 		->orderBy('a.id', 'DESC')
 		;
 
