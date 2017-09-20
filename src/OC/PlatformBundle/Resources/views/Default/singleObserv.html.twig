@@ -1,20 +1,36 @@
 {% extends 'OCPlatformBundle::layout.html.twig'%}
-{% set consultationPage = true %}
 
 {% block title %}{{ parent() }} - Consultation{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
+        body {
+            background: url({{ asset('img/consultation.jpg') }}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+        }
+
+        .bodyContent {
+            margin-top: 30px;
+            min-height: 77vh;
+        }
+
+        .titlePage {
+            margin-bottom: 40px;
+        }
+
         #search {
-            background-color: rgba(231,231,231,0.65);
+            background-color: rgba(255,255,255,0.75);
             padding-top: 20px;
             margin-bottom: 40px;
         }
 
         #google-maps {
             position: relative;
-            padding-bottom: 125%;
+            padding-bottom: 100%;
             height: 0;
             overflow: hidden;
         }
@@ -30,7 +46,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container bodyContent">
         <div class="row">
 
             {% for flashMessage in app.session.flashbag.get('info') %}
@@ -39,12 +55,15 @@
                 </div>
             {% endfor %}
 
-            <div class="col-lg-6 col-md-6" id="search" style="text-align: center;">
+            <div class="titlePage" style="text-align: center;"><h1><strong>Consultation des contributions</strong></h1></div>
+            <div class="col-lg-4 col-md-4" id="search" style="text-align: center;">
                 <h4><u>Observation</u> :</h4>
                 <h5><u><i><strong>Date</strong></i></u> : {{ observation.date|date('d/m/Y') }}</h5>
-                <i>Coordonnées GPS</i> : <span id="latlng" value="{{ observation.latitude }}, {{ observation.longitude }}"></span><br />
-                    Latitude : {{ observation.latitude }} - Longitude : {{ observation.longitude }}
-                <br /><br />
+                {% if is_granted('ROLE_NATURALIST') %}
+                    <i>Coordonnées GPS</i> : <span id="latlng" value="{{ observation.latitude }}, {{ observation.longitude }}"></span><br />
+                        Latitude : {{ observation.latitude }} - Longitude : {{ observation.longitude }}
+                    <br /><br />
+                {% endif %}
                 <i>Auteur de l'observation</i> : {{ observation.user.firstName }} {{ observation.user.lastName }}
                 <br /><br />
                 {% if observation.picture %}
@@ -71,10 +90,48 @@
                     <br /><br />
                     <i>Famille</i> : {{ observation.taxref.famille }}
                     <br /><br />
-                    <i>Lien INPN :</i><a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
-                        {{ observation.taxref.nomVern }}</a><br /><br />
-                    <i>Lien Wikipedia :</i><a href="https://fr.wikipedia.org/wiki/{{ observation.taxref.nomVern }}" target="_blank">
-                        {{ observation.taxref.nomVern }}</a><br /><br />
+                    <p>Vous trouverez des informations complètes sur cet oiseau en suivant l'un de ces liens :</p>
+                    {% if observation.taxref.nomVern == "" %}
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <img src="{{ asset('img/wiki.png') }}" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <br /><a href="https://fr.wikipedia.org/wiki/{{ observation.taxref.lbNom }}" target="_blank">
+                                    {{ observation.taxref.lbNom }}</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <img src="{{ asset('img/INPN.png') }}" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
+                                    {{ observation.taxref.lbNom }}</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <img src="{{ asset('img/wiki.png') }}" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <br /><a href="https://fr.wikipedia.org/wiki/{{ observation.taxref.nomVern }}" target="_blank">
+                                    {{ observation.taxref.nomVern }}</a>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <img src="{{ asset('img/INPN.png') }}" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                <a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
+                                    {{ observation.taxref.nomVern }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <br /><br />
                 </div>
                 <br />
                 {% if (observation.validated == false) and (is_granted('ROLE_NATURALIST')) %}
@@ -92,9 +149,9 @@
                     <br /><br />
                 {% endif %}
             </div>
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-8 col-md-8">
             <div id="google-maps">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="1000" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -106,31 +163,85 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
             type="text/javascript"></script>
 
-    <script>
-        function initMap() {
-            var latitude = {{ observation.latitude }};
-            var longitude = {{ observation.longitude }};
-            var center = {
-                lat: latitude,
-                lng: longitude
+    {% if is_granted('ROLE_NATURALIST') %}
+        <script>
+            function initMap() {
+                var latitude = {{ observation.latitude }};
+                var longitude = {{ observation.longitude }};
+                var center = {
+                    lat: latitude,
+                    lng: longitude
+                };
+
+                var mapOptions = {
+                    center: center,
+                    zoom: 10
+                };
+
+                var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
+
+                var contentString = '<div id="content" class="text-center">'+
+                    '<h1 id="firstHeading" class="firstHeading">{{ observation.taxref.nomVern }}</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Observé(e) le {{ observation.date|date('d/m/Y') }}</b></p>'+
+                    '<p>par {{ observation.user.firstName }} {{ observation.user.lastName }}.</p>'+
+                    '<p><u>Coordonnées GPS</u> :</p>'+
+                    '<p>Latitude {{ observation.latitude }} - Longitude {{ observation.longitude }}</p>'+
+                    '</div>'+
+                    '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                var mark = [
+                    {lat: latitude, lng: longitude}
+                ];
+
+                var latLng = new google.maps.LatLng(latitude, longitude);
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
             };
+        </script>
+    {% else%}
+        <script>
+            function initMap() {
+                var latitude = {{ observation.latitude }};
+                var longitude = {{ observation.longitude }};
+                var center = {
+                    lat: latitude + 0.1,
+                    lng: longitude + 0.1
+                };
 
-            var mapOptions = {
-                center: center,
-                zoom: 10
+                var mapOptions = {
+                    center: center,
+                    zoom: 9
+                };
+
+                var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
+
+                var opt = { minZoom: 6, maxZoom: 9 };
+                map.setOptions(opt);
+
+                for (var observation in map) {
+                    var observationCircle = new google.maps.Circle({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.01,
+                        map: map,
+                        center: center,
+                        radius: 5000
+                    });
+                }
             };
-
-            var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
-
-            var mark = [
-                {lat: latitude, lng: longitude, title: "Lieu de l'observation"}
-            ];
-
-            var latLng = new google.maps.LatLng(latitude, longitude);
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map
-            });
-        };
-    </script>
+        </script>
+    {% endif %}
 {% endblock %}
