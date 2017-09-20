@@ -4,7 +4,27 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('chosen/chosen.css')}}">
+
     <style>
+        body {
+            background: url({{ asset('img/consultation.jpg') }}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+        }
+
+        .bodyContent {
+            margin-top: 20px;
+            min-height: 77vh;
+        }
+
+        .titlePage {
+            margin-bottom: 40px;
+        }
+
         #search {
             background-color: rgba(231,231,231,0.75);
             padding-top: 20px;
@@ -13,7 +33,7 @@
 
         #google-maps {
             position: relative;
-            padding-bottom: 125%;
+            padding-bottom: 100%;
             height: 0;
             overflow: hidden;
         }
@@ -29,7 +49,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container bodyContent">
         <div class="row">
 
             {% for flashMessage in app.session.flashbag.get('info') %}
@@ -38,18 +58,21 @@
                 </div>
             {% endfor %}
 
-            <div class="col-lg-6 col-md-6" id="search">
+            <div class="titlePage" style="text-align: center;"><h1><strong>Partagez vos observations</strong></h1></div>
+
+            <div class="col-lg-4 col-md-4" id="search">
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
                 <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.taxref) }}</span>
                 <div class="form-group">
                     <div class="col-sm-12" style="text-align: center;">
                         {{ form_label(form.taxref, "Espèce recherchée :", {'label_attr': {'class': 'control-label',
-                            'style': 'font-size: 1.25em;'}}) }}
-                        <br /><br />
-                        {{ form_widget(form.taxref, {'attr': {'class': 'form-control',
-                            'style': 'color: black; min-width: 300px; margin: auto;'
+                            'style': 'font-size: 1.25em;'}}) }}<br />
+                        <i>Nom scientifique - Nom vernaculaire</i>
+                        {{ form_widget(form.taxref, {'attr': {'class': 'chosen-select',
+                            'style': 'color: black; max-width: 97%; margin: auto;'
                         }}) }}
+                        <p><u>NB</u> : <i>(NC) signifie qu'il n'existe pas de nom vernaculaire français pour cette espèce.</i></p>
                     </div>
                 </div>
                 <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.latitude) }}</span>
@@ -57,7 +80,7 @@
                     <div class="col-sm-12" style="text-align: center;">
                         {{ form_label(form.latitude, "Latitude :", {'label_attr': {'class': 'control-label',
                             'style': 'font-size: 1.25em;'}}) }}
-                        <br /><br />
+                        <br />
                         {{ form_widget(form.latitude, {'attr': {'class': 'form-control',
                             'style': 'color: black; min-width: 300px; margin: auto;'
                         }}) }}
@@ -68,7 +91,7 @@
                     <div class="col-sm-12" style="text-align: center;">
                         {{ form_label(form.longitude, "Longitude :", {'label_attr': {'class': 'control-label',
                             'style': 'font-size: 1.25em;'}}) }}
-                        <br /><br />
+                        <br />
                         {{ form_widget(form.longitude, {'attr': {'class': 'form-control',
                             'style': 'color: black; min-width: 300px; margin: auto;'
                         }}) }}
@@ -107,7 +130,7 @@
                             'style': 'text-align: center; font-size: 1.25em;'}}) }}
                         {{ form_widget(form.comment, {'attr': {'class': 'form-control',
                             'rows': '5',
-                            'style': 'color: black; min-width: 400px; margin: auto;'
+                            'style': 'color: black; min-width: 300px; margin: auto;'
                         }}) }}
                     </div>
                 </div>
@@ -117,9 +140,9 @@
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-8 col-md-8">
                 <div id="google-maps">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="1000" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -128,8 +151,10 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
-            type="text/javascript"></script>
+
+    <script src="{{ asset('chosen/chosen.jquery.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('chosen/docsupport/prism.js')}}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script>
 
     <script>
         function initMap() {
@@ -170,4 +195,8 @@
             }
         }
     </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
+            type="text/javascript"></script>
+
 {% endblock %}
