@@ -16,6 +16,8 @@ use OC\PlatformBundle\Entity\Observation;
 use OC\PlatformBundle\Form\ObservationType;
 use OC\PlatformBundle\Entity\Taxref;
 use OC\PlatformBundle\Form\TaxrefType;
+use OC\PlatformBundle\Entity\Search;
+use OC\PlatformBundle\Form\SearchType;
 
 
 class PlatformController extends Controller
@@ -47,7 +49,7 @@ class PlatformController extends Controller
     			'form' => $form->createView(),
     			'bird' => $bird,
     			'observs' => $observs,
-                'observsToValid' => $observsToValid
+    			'observsToValid' => $observsToValid
     		));
     	}
 
@@ -61,13 +63,13 @@ class PlatformController extends Controller
      */
     public function consultSingleAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getManager();
 
-        $observation = $em->getRepository('OCPlatformBundle:Observation')->find($id);
+    	$observation = $em->getRepository('OCPlatformBundle:Observation')->find($id);
 
-        return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
-            'observation' => $observation,
-        ));
+    	return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
+    		'observation' => $observation,
+    	));
     }
 
     /**
@@ -91,24 +93,24 @@ class PlatformController extends Controller
     			$em->persist($picture);
     		}
 
-            if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
+    		if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
 
-    		    $observation->setValidated(true);
-                $em->flush();
-                $request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
+    			$observation->setValidated(true);
+    			$em->flush();
+    			$request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
 
-            } else {
-                $observation->setValidated(false);
-                $em->flush();
-                $request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée mais doit être validée par un naturaliste.');
-            }
+    		} else {
+    			$observation->setValidated(false);
+    			$em->flush();
+    			$request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée mais doit être validée par un naturaliste.');
+    		}
 
-            $observation = new Observation();
-            $form = $this->get('form.factory')->create(ObservationType::class , $observation);
+    		$observation = new Observation();
+    		$form = $this->get('form.factory')->create(ObservationType::class , $observation);
 
-            return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
-                'form' => $form->createView()
-            ));
+    		return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
+    			'form' => $form->createView()
+    		));
     	}
 
     	return $this->render('OCPlatformBundle:Default:observ.html.twig', array(
@@ -121,14 +123,14 @@ class PlatformController extends Controller
      */
     public function validObservAction(Request $request, Observation $observation, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getManager();
 
-        $observation->setValidated(true);
-        $em->flush();
+    	$observation->setValidated(true);
+    	$em->flush();
 
-        $request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été validée.');
+    	$request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été validée.');
 
-        return $this->redirectToRoute('oc_platform_single_consult', array('id' => $id));
+    	return $this->redirectToRoute('oc_platform_single_consult', array('id' => $id));
 
     }
 
@@ -137,28 +139,45 @@ class PlatformController extends Controller
      */
     public function supprObservAction(Request $request, Observation $observation, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getManager();
 
-        $em->remove($observation);
-        $em->flush();
+    	$em->remove($observation);
+    	$em->flush();
 
-        $request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été suprimée.');
+    	$request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été suprimée.');
 
-        return $this->redirectToRoute('oc_platform_homepage');
+    	return $this->redirectToRoute('oc_platform_homepage');
 
     }
 
 	/**
      * @Route("/blog", name="oc_platform_blog")
      */
-	public function blogAction()
+	public function blogAction(Request $request)
 	{
+
+		$search = new Search();
+		$form   = $this->get('form.factory')->create(SearchType::class, $search);
+
 		$em = $this->getDoctrine()->getManager();
 
-		$articles = $em->getRepository('OCPlatformBundle:Article')->findAll();
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+			$content = $search->getContent();
+
+			$articles = $em->getRepository('OCPlatformBundle:Article')->complexFind($content);
+
+			$search = new Search();
+			$form   = $this->get('form.factory')->create(SearchType::class, $search);
+
+		} 
+		else {
+			$articles = $em->getRepository('OCPlatformBundle:Article')->classicFind();
+		}
 
 		return $this->render('OCPlatformBundle:Default:blog.html.twig', array(
 			'articles' => $articles,
+			'form' => $form->createView(),
 		));
 	}
 
@@ -192,7 +211,7 @@ class PlatformController extends Controller
 				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistrée.');
 
 				$article = new Article();
-			$form   = $this->get('form.factory')->create(ArticleType::class, $article);
+				$form   = $this->get('form.factory')->create(ArticleType::class, $article);
 
 			}
 

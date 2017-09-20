@@ -452,3 +452,15 @@
 .comment{
     margin-top: 20px;
 }
+.blogContainer form{
+    margin-bottom: 20px;
+}
+
+.blogContainer .input-group .btn{
+    background-color: #017a74;
+    color: white;
+    border: 0;
+}
+.blogButton .input-group .btn:hover{
+    background-color: red;
+}

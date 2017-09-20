@@ -10,4 +10,53 @@ namespace OC\PlatformBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function classicFind()
+	{
+		$qb =  $this->createQueryBuilder('a')->orderBy('a.id', 'DESC');
+		return $qb
+		->getQuery()
+		->getResult()
+		;
+	}
+
+	public function complexFind($content)
+	{
+		$qb =  $this->createQueryBuilder('a');
+
+		// transforme les caractère spéciaux (accents etc) en caractère html
+		$content = htmlentities($content);
+
+		$words = explode(" ", $content);
+
+		$request = 'a.content LIKE :word OR a.title LIKE :word';
+
+		for($i = 1; $i < count($words); ++$i) {
+
+			$request = $request . ' OR a.content LIKE :word' . $i . ' OR a.title LIKE :word' . $i;
+			
+		}
+		
+		$qb
+		->where($request)
+		->setParameter('word', "%$words[0]%")
+		;
+
+		for($i = 1; $i < count($words); ++$i) {
+
+			$qb
+			->setParameter('word'. $i, "%$words[$i]%")
+			;
+			
+		}
+
+		$qb
+		->orderBy('a.id', 'DESC')
+		;
+
+		return $qb
+		->getQuery()
+		->getResult()
+		;
+	}
 }
+
