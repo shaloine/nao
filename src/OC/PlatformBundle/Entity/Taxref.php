@@ -1056,7 +1056,11 @@ class Taxref
 
     public function speciesToSearch()
     {
-        $speciesToSearch = $this->nomVern . '  -  ' . $this->lbNom;
+        if(($this->nomVern != null) && ($this->nomVern != "")){
+            $speciesToSearch = $this->lbNom . '  -  ' . $this->nomVern;
+        } else {
+            $speciesToSearch = $this->lbNom . ' - (NC)';
+        }
         return $speciesToSearch;
     }
 }

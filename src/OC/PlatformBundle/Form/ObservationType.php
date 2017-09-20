@@ -24,13 +24,10 @@ class ObservationType extends AbstractType
                 'class' => 'OCPlatformBundle:Taxref',
                 'query_builder' => function (EntityRepository $er){
                     $qb = $er->createQueryBuilder('t');
-                    $qb
-                        ->where("t.nomVern IS NOT NULL")
-                        ->andWhere("t.nomVern != ''")
-                        ->orderBy("t.nomVern", "ASC");
+                    $qb->orderBy("t.nomVern", "ASC");
                     return $qb;
                 },
-                'placeholder' => 'Sélectionnez une espèce ci-dessous ou saisissez son nom',
+                'placeholder' => '',
                 'choice_label' => 'speciesToSearch',
             ))
             ->add('latitude', TextType::class)
