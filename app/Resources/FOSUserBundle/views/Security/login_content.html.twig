@@ -1,22 +1,43 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+    <div class="container">
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    {% if csrf_token %}
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    {% endif %}
+        <h2 class="titlePage mt-30 mb-50">Se connecter</h2>
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 login">
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" />
+                <p class="center mb-30">Connectez-vous pour accéder à votre profil et ajouter vos observation</p>
 
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-</form>
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+                    <div class="form-group col-sm-5 col-sm-offset-2">
+                        <label for="username">{{ 'security.login.username'|trans }}</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control loginInput"/>
+                    </div>
+                    <div class="form-group col-sm-5 col-sm-offset-2">
+                        <label for="password">{{ 'security.login.password'|trans }}</label>
+                        <input type="password" id="password" name="_password" required="required" class="form-control loginInput" />
+                    </div>
+                    
+                        <div class="col-sm-5 col-sm-offset-2">
+                            <p><a href="#" class="green">Mot de passe oublié</a></p>
+                            <div class="form-group mb-0">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 col-sm-offset-1">
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-default button" />
+                    </div>
+                </form>
+                <p class="col-sm-10 col-sm-offset-2 mt-20">Pas encore inscrit ? <a href="#" class="green">C'est par ici</a></p>
+            </div>
+        </div>
+    </div>
