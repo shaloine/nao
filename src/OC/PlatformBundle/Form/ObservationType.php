@@ -37,12 +37,14 @@ class ObservationType extends AbstractType
                 'format' => 'dd/MM/yyyy'
             ))
             ->add('picture', PictureType::class, array(
-                'required' => false))
+                'required' => false
+            ))
             ->add('flying', CheckboxType::class, array(
                 'required' => false
             ))
             ->add('comment', TextareaType::class, array(
-                'required' => false));
+                'required' => false
+            ));
     }
     
     /**

@@ -18,10 +18,8 @@ class PictureType extends AbstractType
             ->add('file', FileType::class, array(
                 'label' => 'Photo (facultative) :',
                 'label_attr' => array(
-                    'style' => 'font-size: 1.25em;'
-                ),
-                'attr' => array(
-                    'style' => 'margin: auto;'
+                    'style' => 'font-size: 0.9em;',
+                    'class' => 'test2'
                 )
             ));
     }

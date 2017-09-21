@@ -1,3 +1,33 @@
+/*************** Général / Layout / Index / Media Queries ***************/
+
+textarea {
+    resize: vertical;
+}
+
+::selection{
+  background-color: #FFA340;
+  color: #38001C;
+}
+
+::-moz-selection {
+  background-color: #FFA340;
+  color: #38001C;
+}
+
+.bodyContent {
+    margin-top: 20px;
+    min-height: 77vh;
+}
+
+.btnNaoGreen {
+    background-color: #017a74;
+    color: #fff;
+}
+.btnNaoGreen:hover {
+    background-color: #046a65;
+    color: #fff;
+}
+
 .navbar {
     margin-bottom: 0px;
 }
@@ -58,7 +88,7 @@
     color: #fff;
     font-family: 'Quicksand', sans-serif;
     font-weight: 300;
-    text-shadow: 1px 1px 2px #3e3e3e;
+    text-shadow: 1px 1px 2px #2d2d2d;
 }
 
 #catchword span {
@@ -244,12 +274,6 @@
     margin-right: 10px;
 }
 
-@media screen and (max-width: 1200px) {
-    .panel {
-        height: 350px;
-    }
-}
-
 @media screen and (max-width: 992px) {
     .navbar-default {
         font-size: 1em;
@@ -272,7 +296,7 @@
         top: 60%;
     }
     .panel {
-        height: 400px;
+        height: 350px;
     }
 }
 
@@ -287,7 +311,10 @@
         font-size: 2em;
     }
     .panel {
-        height: 450px;
+        height: 380px;
+    }
+    .panel-heading h3 {
+        font-size: 1.3em;
     }
 }
 
@@ -312,6 +339,12 @@
     #navCollapse {
         height: 280px;
         width: 100%;
+    }
+    #bgNav {
+        background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+        background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+        background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+        background: -o-linear-gradient(top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
     }
     #imgAccueil {
         margin-top: -49px;
@@ -342,6 +375,9 @@
     .panel-heading {
         border-radius: 0px;
     }
+    .panel-heading h3 {
+        font-size: 1.5em;
+    }
     .backTop {
         margin-top: 30px;
     }
@@ -349,6 +385,10 @@
     #copyright,
     #networks {
         padding: 0px;
+    }
+    .search {
+        margin-right: 5px;
+        margin-left: 5px;
     }
 }
 
@@ -397,15 +437,62 @@
     #discover {
         font-size: 1em;        
     }
-    .panel {
-        height: 400px;
-    }
     .indexPanel {
         bottom: 20px;
         right: 20px;
     }
-    
 }
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.mt-100 {
+    margin-top: 100px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.mb-50 {
+    margin-bottom: 50px;
+}
+
+.mb-100 {
+    margin-bottom: 100px;
+}
+
+.formErrorMess {
+    text-align: center;
+    font-size: 0.85em;
+    font-weight: 500;
+    color: firebrick;   
+}
+
+
+
+/*************** Blog ***************/
 
 .blogContainer{
     margin-top: 30px;
@@ -463,4 +550,88 @@
 }
 .blogButton .input-group .btn:hover{
     background-color: red;
+}
+
+
+
+/*************** Observation ***************/
+
+.titlePage {
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    color: #38001C;
+    font-weight: 700;
+}
+
+.search {
+    background-color: rgba(255, 255, 255,0.5);
+    padding-top: 20px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow:  0px 0px 7px #5f5f5f;
+    color: #555;
+    font-size: 1.1em;
+}
+
+#oc_platformbundle_observation_date {
+    width: 100%;
+    height: 34px;
+    border-radius: 4px;
+    padding-left: 12px;
+    font-size: 0.9em;
+    border: 1px solid #ccc;
+}
+
+.upload .browse input[type='file']{
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 3px;
+    height: 1px;
+    width: 1px;
+    z-index: -5;
+}
+
+.fileSelectButton {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px;
+    color: #017a74;
+    font-size: 3em;
+    margin-top: -20px;
+    margin-left: -20px;
+    padding-left: 20px;
+    
+}
+
+.fileSelectButton:hover {
+    color: #046a65;
+}
+
+.myCheckbox {
+    margin-top: -20px;
+}
+
+.myCheckbox input {
+    height: 18px;
+    width: 18px;
+    margin-left: 5px;
+    vertical-align: text-bottom;
+}
+
+#google-maps {
+    position: relative;
+    padding-bottom: 100%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow:  0px 0px 7px #5f5f5f;
+
+}
+
+#google-maps iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
 }
