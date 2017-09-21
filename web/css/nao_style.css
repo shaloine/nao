@@ -618,6 +618,10 @@ textarea {
 }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> maj css
 /*************** Observation ***************/
 
 .titlePage {
@@ -700,6 +704,7 @@ textarea {
     height: 100% !important;
 }
 
+
 /*************** profil ***************/
 
 .profilCaseTitle{
@@ -732,5 +737,9 @@ textarea {
 .blogMaxHeight{
     max-height: 300px;
     overflow: auto;
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> maj css
