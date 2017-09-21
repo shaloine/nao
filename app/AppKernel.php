@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new OC\PlatformBundle\OCPlatformBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Vihuvac\Bundle\RecaptchaBundle\VihuvacRecaptchaBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

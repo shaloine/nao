@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f371c5179c143755e293512a8d0c6830",
+    "content-hash": "bd252667b8fa2fefdb70397a1ca6da6a",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2381,6 +2381,64 @@
                 "templating"
             ],
             "time": "2017-07-04T13:19:31+00:00"
+        },
+        {
+            "name": "vihuvac/recaptcha-bundle",
+            "version": "v2.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vihuvac/recaptcha-bundle.git",
+                "reference": "59bd198e8177874f68ae6fbfb8e510b4012610e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vihuvac/recaptcha-bundle/zipball/59bd198e8177874f68ae6fbfb8e510b4012610e2",
+                "reference": "59bd198e8177874f68ae6fbfb8e510b4012610e2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0",
+                "symfony/symfony": "^2.3 || ^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^3.7 || ^6.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vihuvac\\Bundle\\RecaptchaBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Open Source Community",
+                    "homepage": "https://github.com/vihuvac/recaptcha-bundle/contributors"
+                },
+                {
+                    "name": "Víctor Hugo Valle Castillo",
+                    "email": "victouk@gmail.com",
+                    "homepage": "https://vihuvac.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This bundle provides an easy reCAPTCHA form field integration into a Symfony Project",
+            "homepage": "https://github.com/vihuvac/recaptcha-bundle",
+            "keywords": [
+                "Symfony Bundle",
+                "Vihuvac",
+                "google",
+                "recaptcha"
+            ],
+            "time": "2017-04-22T19:16:04+00:00"
         }
     ],
     "packages-dev": [

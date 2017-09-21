@@ -6,6 +6,7 @@ namespace OC\PlatformBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vihuvac\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
  * @ORM\Entity
@@ -55,6 +56,11 @@ class User extends BaseUser
     * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="user")
     */
     private $comments;
+
+    /**
+    * @Recaptcha\IsTrue
+    */
+    public $recaptcha;
 
     public function __construct()
     {
@@ -228,5 +234,39 @@ class User extends BaseUser
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \OC\PlatformBundle\Entity\Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(\OC\PlatformBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \OC\PlatformBundle\Entity\Comment $comment
+     */
+    public function removeComment(\OC\PlatformBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
