@@ -24,8 +24,8 @@
                     {% set route = app.request.attributes.get('_route') %}
                     <ul class="nav navbar-nav navbar-right">
                         <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
-                        <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
                         <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Consultation</a></li>
+                        <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
                         <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
                         {% if is_granted('ROLE_USER') %}
                             <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
@@ -60,8 +60,8 @@
                     {% set route = app.request.attributes.get('_route') %}
                     <ul class="nav navbar-nav navbar-right">
                         <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
-                        <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
                         <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Consultation</a></li>
+                        <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
                         <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
                         {% if is_granted('ROLE_USER') %}
                             <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
