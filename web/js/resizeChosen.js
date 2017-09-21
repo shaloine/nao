@@ -5,6 +5,6 @@ $(document).ready(function(){
 
 function resizeChosen() {
     $(".chosen-container").each(function() {
-        $(this).attr('style', 'width: 97%');
+        $(this).attr('style', 'width: 100%');
     });
 }

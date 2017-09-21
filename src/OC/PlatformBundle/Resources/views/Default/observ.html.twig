@@ -1,3 +1,5 @@
+{# src/OC/PlatformBundle/Resources/views/Default/observ.html.twig #}
+
 {% extends 'OCPlatformBundle::layout.html.twig'%}
 
 {% block title %}{{ parent() }} - Observation{% endblock %}
@@ -6,46 +8,8 @@
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('chosen/chosen.css')}}">
+	<link href="{{ asset('css/nao_obs.css') }}" rel="stylesheet">
 
-    <style>
-        body {
-            background: url({{ asset('img/consultation.jpg') }}) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            background-size: cover;
-            -o-background-size: cover;
-        }
-
-        .bodyContent {
-            margin-top: 20px;
-            min-height: 77vh;
-        }
-
-        .titlePage {
-            margin-bottom: 40px;
-        }
-
-        #search {
-            background-color: rgba(231,231,231,0.75);
-            padding-top: 20px;
-            margin-bottom: 40px;
-        }
-
-        #google-maps {
-            position: relative;
-            padding-bottom: 100%;
-            height: 0;
-            overflow: hidden;
-        }
-
-        #google-maps iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100% !important;
-            height: 100% !important;
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
@@ -53,96 +17,101 @@
         <div class="row">
 
             {% for flashMessage in app.session.flashbag.get('info') %}
-                <div class="alert alert-success text-center">
+                <div class="container alert alert-success alert-dismissible mt-30 mb-30">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ flashMessage }}
                 </div>
             {% endfor %}
+            
+            <h1 class="titlePage mt-30 mb-50">Partagez vos observations</h1>
 
-            <div class="titlePage" style="text-align: center;"><h1><strong>Partagez vos observations</strong></h1></div>
-
-            <div class="col-lg-4 col-md-4" id="search">
+            <div class="col-lg-4 col-md-4 search">
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.taxref) }}</span>
+                <span class="formErrorMess">{{ form_errors(form.taxref) }}</span>
+                
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_label(form.taxref, "Espèce recherchée :", {'label_attr': {'class': 'control-label',
-                            'style': 'font-size: 1.25em;'}}) }}<br />
-                        <i>Nom scientifique - Nom vernaculaire</i>
-                        {{ form_widget(form.taxref, {'attr': {'class': 'chosen-select',
-                            'style': 'color: black; max-width: 97%; margin: auto;'
+                    <div class="col-sm-12">
+                        {{ form_label(form.taxref, "Choix de l'espèce observée :", {'label_attr': {'class': 'control-label'
                         }}) }}
-                        <p><u>NB</u> : <i>(NC) signifie qu'il n'existe pas de nom vernaculaire français pour cette espèce.</i></p>
+                        {{ form_widget(form.taxref, {'attr': {'class': 'chosen-select'
+                        }}) }}
+                        <small>(NC) : Pas de nom vernaculaire français pour cette espèce.</small>
                     </div>
                 </div>
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.latitude) }}</span>
+                
+                <span class="formErrorMess">{{ form_errors(form.latitude) }}</span>
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_label(form.latitude, "Latitude :", {'label_attr': {'class': 'control-label',
-                            'style': 'font-size: 1.25em;'}}) }}
-                        <br />
+                    <div class="col-sm-12">
+                        {{ form_label(form.latitude, "Latitude :", {'label_attr': {'class': 'control-label'}}) }}
                         {{ form_widget(form.latitude, {'attr': {'class': 'form-control',
-                            'style': 'color: black; min-width: 300px; margin: auto;'
+                            'placeholder': 'Coordonnées GPS : cliquez sur la carte'
                         }}) }}
                     </div>
                 </div>
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.longitude) }}</span>
+                
+                <span class="formErrorMess">{{ form_errors(form.longitude) }}</span>
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_label(form.longitude, "Longitude :", {'label_attr': {'class': 'control-label',
-                            'style': 'font-size: 1.25em;'}}) }}
-                        <br />
+                    <div class="col-sm-12">
+                        {{ form_label(form.longitude, "Longitude :", {'label_attr': {'class': 'control-label'
+                        }}) }}
                         {{ form_widget(form.longitude, {'attr': {'class': 'form-control',
-                            'style': 'color: black; min-width: 300px; margin: auto;'
+                            'placeholder': 'Coordonnées GPS : cliquez sur la carte'
                         }}) }}
                     </div>
                 </div>
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.date) }}</span>
+                
+                <span class="formErrorMess">{{ form_errors(form.date) }}</span>
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_label(form.date, "Date de l'observation :", {'label_attr': {'class': 'col-sm-12 control-label',
-                            'style': 'text-align: center; font-size: 1.25em;'}}) }}
-                        {{ form_widget(form.date, {'attr': {'class': 'col-sm-12 form-control',
+                    <div class="col-sm-12">
+                        {{ form_label(form.date, "Date de l'observation :", {'label_attr': {'class': 'control-label'
+                        }}) }}
+                        {{ form_widget(form.date, {'attr': {'class': 'form-control',
                             'class': 'js-datepicker',
-                            'style': 'color: black; text-align: center;'
+                            'placeholder': 'jj/mm/aaaa'
                         }}) }}
                     </div>
                 </div>
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.picture) }}</span>
+                
+                <span class="formErrorMess">{{ form_errors(form.picture) }}</span>
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_widget(form.picture, {'attr': {'style': 'margin: auto;'}}) }}
+                    <div class="col-sm-12 upload">
+                        {{ form_widget(form.picture, {'attr': {'class': 'browse'
+                        }}) }}
+                        <span type="button" class="btn fileSelectButton glyphicon glyphicon-camera"></span>
                     </div>
                 </div>
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.flying) }}</span>
+                
+                <span class="formErrorMess">{{ form_errors(form.flying) }}</span>
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_label(form.flying, "En vol :", {'label_attr': {'class': 'control-label',
-                            'style': 'text-align: center; font-size: 1.25em;'}}) }}
-                        {{ form_widget(form.flying, {'attr': {'class': 'form-control',
-                            'style': 'text-align: center; font-size: 1.25em;'}}) }}
+                    <div class="col-sm-12 myCheckbox">
+                        {{ form_label(form.flying, "En vol : ", {'label_attr': {'class': 'control-label'
+                        }}) }}
+                        {{ form_widget(form.flying) }}
                     </div>
                 </div>
-                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.comment) }}</span>
+                
+                <span class="formErrorMess">{{ form_errors(form.comment) }}</span>
                 <div class="form-group">
-                    <div class="col-sm-12" style="text-align: center;">
-                        {{ form_label(form.comment, "Commentaire (facultatif) :", {'label_attr': {'class': 'col-sm-12 control-label',
-                            'style': 'text-align: center; font-size: 1.25em;'}}) }}
+                    <div class="col-sm-12">
+                        {{ form_label(form.comment, "Commentaire (facultatif) :", {'label_attr': {'class': 'control-label'
+                        }}) }}
                         {{ form_widget(form.comment, {'attr': {'class': 'form-control',
-                            'rows': '5',
-                            'style': 'color: black; min-width: 300px; margin: auto;'
+                            'rows': '8'
                         }}) }}
                     </div>
                 </div>
-                <div class="form-group" style="text-align: center;">
-                    <button type="submit" class="btn btn-primary" style="font-weight: bold; font-size: 1em;">Valider</button>
+                
+                <div class="form-group container">
+                    <button type="submit" class="btn btnNaoGreen">Valider</button>
                 </div>
+                
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
             <div class="col-lg-8 col-md-8">
                 <div id="google-maps">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0;" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -152,6 +121,7 @@
 {% block javascripts %}
     {{ parent() }}
 
+    <script src="{{ asset('js/resizeChosen.js')}}" type="text/javascript"></script>
     <script src="{{ asset('chosen/chosen.jquery.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('chosen/docsupport/prism.js')}}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script>
