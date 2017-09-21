@@ -618,7 +618,6 @@ textarea {
 }
 
 
-
 /*************** Observation ***************/
 
 .titlePage {
@@ -700,3 +699,38 @@ textarea {
     width: 100% !important;
     height: 100% !important;
 }
+
+/*************** profil ***************/
+
+.profilCaseTitle{
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.erase{
+    border:0;
+    background: none;
+}
+.modal{
+    z-index:2001;
+}
+.black{
+    color: black;
+}
+.tableMaxHeight{
+    max-height: 540px;
+    overflow: auto;
+}
+.profilNav li a{
+    background-color: rgba(255, 255,255, 0.8);
+    color: #017a74;
+}
+.profilNav .active a{
+    background-color: #017a74 !important;
+    color: white;
+}
+.blogMaxHeight{
+    max-height: 300px;
+    overflow: auto;
+}
+
