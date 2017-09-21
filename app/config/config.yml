@@ -79,3 +79,9 @@ fos_user:
     registration:
         form:
             type: OC\PlatformBundle\Form\RegistrationType
+
+vihuvac_recaptcha:
+    site_key:   6LfckjEUAAAAANTyZeOOeVj6kUfqaBFHhCI-ROq5
+    secret_key: 6LfckjEUAAAAADugNlwkxO_Z48-RfwxGbYx0W6-O
+    locale_key: kernel.default_locale
+    enabled: true

@@ -1,8 +1,71 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans }}" />
-    </div>
-{{ form_end(form) }}
+	<div class="container">
+
+		<h1 class="titlePage mt-30 mb-50">Créer un compte</h1>
+		<div class="login col-sm-6 col-sm-offset-3">
+			{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+			<div class="row">
+
+				<div class="form-group col-sm-6">
+					{{ form_label(form.username) }}
+					{{ form_errors(form.username) }}
+					{{ form_widget(form.username, {'attr': {'class': 'form-control loginInput'}}) }}
+				</div>
+				<div class="form-group col-sm-6">
+					{{ form_label(form.email) }}
+					{{ form_errors(form.email) }}
+					{{ form_widget(form.email, {'attr': {'class': 'form-control loginInput'}}) }}
+				</div>
+
+				<div class="form-group col-sm-6">
+					{{ form_label(form.firstName) }}
+					{{ form_errors(form.firstName) }}
+					{{ form_widget(form.firstName, {'attr': {'class': 'form-control loginInput'}}) }}
+				</div>
+				<div class="form-group col-sm-6">
+					{{ form_label(form.lastName) }}
+					{{ form_errors(form.lastName) }}
+					{{ form_widget(form.lastName, {'attr': {'class': 'form-control loginInput'}}) }}
+				</div>
+
+				<div class="form-group col-sm-6">
+					{{ form_label(form.plainPassword.first) }}
+					{{ form_errors(form.plainPassword.first) }}
+					{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control loginInput'}}) }}
+				</div>
+
+				<div class="form-group col-sm-6">
+					{{ form_label(form.plainPassword.second) }}
+					{{ form_errors(form.plainPassword.second) }}
+					{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control loginInput'}}) }}
+				</div>
+
+				<div class="checkox col-sm-6 center">
+					{{ form_label(form.naturalist) }}
+					{{ form_errors(form.naturalist) }}
+					{{ form_widget(form.naturalist) }}
+				</div>
+				<div class="checkox col-sm-6 center">
+					<label for="subscribeNews">S'abonner à la newsletter ?</label>
+					<input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter">
+				</div>
+
+			</div>
+			
+			<div class="center mt-30 mb-30">
+				{{ form_errors(form.recaptcha) }}
+				{{ form_widget(form.recaptcha) }}
+			</div>
+
+			{{ form_widget(form) }}
+
+			<div class="col-sm-12 center">
+				<input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-default button" />
+			</div>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+
