@@ -1,178 +1,145 @@
 {% extends 'OCPlatformBundle::layout.html.twig'%}
 
+{% set consultPage = true %}
+
 {% block title %}{{ parent() }} - Consultation{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('chosen/chosen.css')}}">
+	<link href="{{ asset('css/nao_consult.css') }}" rel="stylesheet">
 
-    <style>
-        body {
-            background: url({{ asset('img/consultation.jpg') }}) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            background-size: cover;
-            -o-background-size: cover;
-        }
-
-        .bodyContent {
-            margin-top: 30px;
-            min-height: 77vh;
-        }
-
-        .titlePage {
-            margin-bottom: 40px;
-        }
-
-        #search {
-            background-color: rgba(255,255,255,0.75);
-            padding-top: 20px;
-        }
-
-        #google-maps {
-            position: relative;
-            padding-bottom: 100%;
-            height: 0;
-            overflow: hidden;
-        }
-
-        #google-maps iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100% !important;
-            height: 100% !important;
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
     <div class="container bodyContent">
         <div class="row">
-            <div class="titlePage" style="text-align: center;"><h1><strong>Consultation des contributions</strong></h1></div>
-            <div class="col-lg-4 col-md-4" id="search">
-                <h2 style="text-align: center;">Trouver un oiseau</h2>
-                <p style="text-align: justify;">Choisissez l'oiseau pour lequel vous souhaitez avoir des informations
-                    et visualisez sur la carte les zones géographiques dans lesquelles il a été observé par nos contributeurs.</p>
-                <p>Vous pouvez sélectionner l'espèce recherchée dans la liste déroulante, ou saisir les premières lettres
-                du nom de cette espèce pour accéder plus rapidement aux résultats correspondants.</p>
+           
+            <h1 class="titlePage mt-30 mb-50">Consultation des contributions</h1>
+            
+            <div class="col-lg-4 col-md-4 search mb-20">
+                <h2 class="subTitle">Trouver un oiseau</h2><br>
+                <p>Choisissez l'oiseau pour lequel vous souhaitez avoir des informations et visualisez sur la carte les zones géographiques dans lesquelles il a été observé par nos contributeurs.</p>
+                <p>Vous pouvez sélectionner l'espèce recherchée dans la liste déroulante, ou saisir les premières lettres du nom de cette espèce pour accéder plus rapidement aux résultats correspondants.</p>
+                
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
-                    <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.nomVern) }}</span>
-                    <div class="form-group">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                            {{ form_label(form.nomVern, "Espèce recherchée :", {'label_attr': {'class': 'control-label',
-                                'style': 'font-size: 1.25em;'}}) }}<br />
-                            <i>Nom scientifique - Nom vernaculaire</i><br />
-                            {{ form_widget(form.nomVern, {'attr': {'class': 'chosen-select',
-                                'style': 'color: black; max-width: 97%; margin: auto;'
-                            }}) }}
-                            <p><u>NB</u> : <i>(NC) signifie qu'il n'existe pas de nom vernaculaire français pour cette espèce.</i></p>
-                        </div>
+                   
+                <span class="formErrorMess">{{ form_errors(form.nomVern) }}</span>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {{ form_label(form.nomVern, "Espèce recherchée :", {'label_attr': {'class': 'control-label'
+                        }}) }}
+                        {{ form_widget(form.nomVern, {'attr': {'class': 'chosen-select'
+                        }}) }}
+                        <small>(NC) : Pas de nom vernaculaire français pour cette espèce.</small>
                     </div>
-                    <br />
-                    <div class="form-group" style="text-align: center;">
-                        <button type="submit" class="btn btn-primary" style="font-weight: bold; font-size: 1em;">Rechercher</button>
-                    </div>
-                    {{ form_rest(form) }}
-                    {{ form_end(form) }}
+                </div>
+
+                <div class="container form-group">
+                    <button type="submit" class="btn btnNaoGreen">Rechercher</button>
+                </div>
+
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
 
                 {% if bird is defined %}
-                    <br />
-                    <div style="text-align: center;">
-                        <h4><u>Fiche détaillée :</u></h4>
-                        <i>Nom</i> : {{ bird.nomVern }}
+                    <hr class="greenHr" />
+                    <div>
+                        <h2 class="subTitle">Fiche oiseau</h2>
+                        <b>Nom courant:</b><br>
+                        {{ bird.nomVern }}
                         <br /><br />
-                        <i>Nom scientifique (et "auteur")</i> :<br/>
+                        
+                        <b>Nom scientifique (et "auteur") :</b><br/>
                         {{ bird.lbNom }} ({{ bird.lbAuteur }})
                         <br /><br />
-                        <i>Ordre</i> : {{ bird.ordre }}
+                        
+                        <b>Ordre :</b><br>
+                        {{ bird.ordre }}
                         <br /><br />
-                        <i>Famille</i> : {{ bird.famille }}
+                        
+                        <b>Famille :</b><br>
+                        {{ bird.famille }}
                         <br /><br />
-                        <p>Vous trouverez des informations complètes sur cet oiseau en suivant l'un de ces liens :</p>
+                        
+                        <b>Retrouvez des informations complètes sur :</b>
+                        
                         {% if bird.nomVern == "" %}
+                           
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                    <img src="{{ asset('img/wiki.png') }}" />
+                                <div class="col-sm-12">
+                                    <a class="naoLink" href="https://fr.wikipedia.org/wiki/{{ bird.lbNom }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.lbNom }}</a>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                    <br /><a href="https://fr.wikipedia.org/wiki/{{ bird.lbNom }}" target="_blank">
-                                        {{ bird.lbNom }}</a>
+                            </div><br>
+                            
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="naoLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img src="{{ asset('img/INPN.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.lbNom }}</a>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                    <img src="{{ asset('img/INPN.png') }}" />
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                    <a href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank">
-                                        {{ bird.lbNom }}</a>
-                                </div>
-                            </div>
+                            
                         {% else %}
+                           
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                    <img src="{{ asset('img/wiki.png') }}" />
+                                <div class="col-sm-12">
+                                    <a class="naoLink" href="https://fr.wikipedia.org/wiki/{{ bird.nomVern }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.nomVern }}</a>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <br /><a href="https://fr.wikipedia.org/wiki/{{ bird.nomVern }}" target="_blank">
-                                        {{ bird.nomVern }}</a>
+                            </div><br>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="naoLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img src="{{ asset('img/INPN.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.nomVern }}</a>
                                 </div>
                             </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                    <img src="{{ asset('img/INPN.png') }}" />
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                   <a href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank">
-                                        {{ bird.nomVern }}</a>
-                                </div>
-                            </div>
+
                         {% endif %}
-                    <br />
+                    <br /><hr class="greenHr">
                     </div>
                     {% if observs or observsToValid %}
                         {% if observs %}
-                            <div style="text-align: center;">
-                                <h4><u>Observations</u> :</h4>
+                            <div>
+                                <h2 class="subTitle">Observations</h2>
                                 {% for observ in observs %}
                                     {% if observ.validated == true %}
                                         <p>
-                                            <a href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
+                                            <a class="naoLink" href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
                                         </p>
                                     {% endif %}
                                 {% endfor %}
                             </div>
                         {% endif %}
+                        <br /><hr class="greenHr">
 
                         {% if observsToValid and is_granted('ROLE_NATURALIST')%}
-                            <div style="text-align: center;">
-                                <h4><u>En attente de validation</u> :</h4>
+                            <div>
+                                <h2 class="subTitle">En attente de validation</h2>
                                 {% for observ in observsToValid %}
                                         <p>
-                                            <a href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
+                                            <a class="naoLink" href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
                                         </p>
                                 {% endfor %}
                             </div>
                         {% endif %}
 
                         {% if observsToValid and is_granted('ROLE_NATURALIST') == false %}
-                            <div style="text-align: center;">
-                                <h4><i>Il y a une (ou plusieurs) observation(s) de cet oiseau en attente de validation.</i></h4>
+                            <div>
+                                <h2 class="subTitle">En attente de validation</h2>
+                                {% for observ in observsToValid %}
+                                        <p>Le {{ observ.date|date('d/m/Y') }}</p>
+                                {% endfor %}
                             </div>
                         {% endif %}
                     {% else %}
                         <div style="text-align: center;">
-                            <h4><i>Aucune observation de cet oiseau n'a été effectuée pour l'instant.</i></h4>
+                            <h2 class="subTitle">Pas d'observation à ce jour</h2>
                         </div>
                     {% endif %}
                 {% endif %}
             </div>
-            <div class="col-lg-8 col-md-8">
-                <div id="google-maps">
+            <div class="col-lg-8 col-md-8 mapContainer">
+                <div id="google-maps" class="google-maps">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>

@@ -1,17 +1,21 @@
 /*************** Général / Layout / Index / Media Queries ***************/
 
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 textarea {
     resize: vertical;
 }
 
 ::selection{
-  background-color: #FFA340;
-  color: #38001C;
+  background-color: #017a74;
+  color: #fff;
 }
 
 ::-moz-selection {
-  background-color: #FFA340;
-  color: #38001C;
+  background-color: #017a74;
+  color: #fff;
 }
 
 .bodyContent {
@@ -102,8 +106,6 @@ textarea {
     color: #fff;
     border: 0px;
     box-shadow: 1px 1px 2px #3e3e3e;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
     font-size: 1.2em;
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -145,7 +147,6 @@ textarea {
 
 .panel-content {
     padding: 20px;
-    font-family: 'Roboto', sans-serif;
     font-size: 1.3em;
     color: #046a65;
 }
@@ -298,6 +299,10 @@ textarea {
     .panel {
         height: 350px;
     }
+    .mapContainer {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
 }
 
 @media screen and (max-width: 850px) {
@@ -390,6 +395,10 @@ textarea {
         margin-right: 5px;
         margin-left: 5px;
     }
+    .mapContainer {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -443,6 +452,10 @@ textarea {
     }
 }
 
+.mt-0 {
+    margin-top: 0px;
+}
+
 .mt-10 {
     margin-top: 10px;
 }
@@ -461,6 +474,10 @@ textarea {
 
 .mt-100 {
     margin-top: 100px;
+}
+
+.mb-0 {
+    margin-bottom: 0px;
 }
 
 .mb-10 {
@@ -496,10 +513,11 @@ textarea {
 
 /*************** Blog ***************/
 
-.blogContainer{
+.blogContainer {
     margin-top: 30px;
 }
-.blogArticle{
+
+.blogArticle {
     padding: 20px;
     background-color: rgba(255, 255,255, 0.8);
     margin-bottom: 30px;
@@ -507,70 +525,86 @@ textarea {
     box-shadow: 0px 0px 13px #9F9F9F;
     clear: both;
 }
-.blogArticle .blogTitle{
+
+.blogArticle .blogTitle {
     margin-top: 0px;
     color: #017a74;
 }
 
-.blogArticle a{
+.blogArticle a {
     color: #017a74;
 }
-.blogButton{
+
+.blogButton {
     text-align: right;
     margin-bottom: 0px;
     margin-top: 20px;
 }
-.blogButton .btn{
+
+.blogButton .btn {
     background-color: #017a74;
     color: white;
     border: 0;
 }
-.blogButton .btn:hover{
+
+.blogButton .btn:hover {
     background-color: #046a65;
 }
-.blogContent{
+
+.blogContent {
     margin-top: 20px;
 }
-.blogComment, .blogCommentList{
-   margin-top: 30px;
+
+.blogComment, .blogCommentList {
+ margin-top: 30px;
 }
-.blogCommentList b{
-   color: #017a74;
+
+.blogCommentList b {
+ color: #017a74;
 }
-.comment{
+
+.comment {
     margin-top: 20px;
 }
-.blogContainer form{
+
+.blogContainer form {
     margin-bottom: 20px;
 }
 
-.blogContainer .input-group .btn{
+.blogContainer .input-group .btn {
     background-color: #017a74;
     color: white;
     border: 0;
 }
-.blogButton .input-group .btn:hover{
+
+.blogButton .input-group .btn:hover {
     background-color: red;
 }
-.blogDate{
+
+.blogDate {
     margin-bottom: 25px;
 }
-.blogArticle .row div{
+
+.blogArticle .row div {
     padding: 0px 15px;
 }
-.blogArticle .row img{
+
+.blogArticle .row img {
     margin-bottom: 10px;
 }
-.buttonArticle, .button{
+
+.buttonArticle, .button {
     margin-top: 10px;
     background-color: #017a74;
     color: white !important;
     border: 0;
 }
-.buttonArticle:hover, .button:hover{
+
+.buttonArticle:hover, .button:hover {
     background-color: #046a65;
 }
-.blogContainer .input-group{
+
+.blogContainer .input-group {
     margin-bottom: 20px;
 }
 
@@ -579,34 +613,38 @@ textarea {
     padding: 0;
     text-align: right;
 }
+
 .pageTitle {
     color: #38001C;
     text-align: center;
 }
-.login{
+
+.login {
     background-color: rgba(255, 255,255, 0.8);
     border-radius: 9px;
     border: 1px solid #017a74;
     padding: 20px;
 }
-.center{
+
+.center {
     text-align: center;
 }
+
 .button {
     min-width: 90px;
     height: 40px;
     box-shadow: 1px 1px 7px #515151;
 }
-.loginInput{
+
+.loginInput {
     border-radius: 9px;
     border-color: #017a74;
 }
+
 .green {
     color: #017a74;
 }
-.mb-0{
-    margin-bottom: 0px;
-}
+
 @media screen and (max-width: 400px){ 
     #rc-imageselect, .g-recaptcha {
         transform:scale(0.77);
@@ -615,9 +653,11 @@ textarea {
         -webkit-transform-origin:0 0;
     } 
 }
+
 .g-recaptcha {
     display: inline-block;
 }
+
 
 
 /*************** Observation ***************/
@@ -630,14 +670,17 @@ textarea {
 }
 
 .search {
-    background-color: rgba(255, 255, 255,0.5);
+    background-color: rgba(255, 255, 255,0.7);
     padding-top: 20px;
     padding-bottom: 15px;
-    margin-bottom: 20px;
     border-radius: 8px;
     box-shadow:  0px 0px 7px #5f5f5f;
     color: #555;
     font-size: 1.1em;
+}
+
+.search p {
+    text-align: justify;
 }
 
 #oc_platformbundle_observation_date {
@@ -684,9 +727,10 @@ textarea {
     vertical-align: text-bottom;
 }
 
-#google-maps {
+.google-maps {
     position: relative;
     padding-bottom: 100%;
+    margin-bottom: 20px;
     height: 0;
     overflow: hidden;
     border-radius: 8px;
@@ -694,7 +738,7 @@ textarea {
 
 }
 
-#google-maps iframe {
+.google-maps iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -703,36 +747,43 @@ textarea {
 }
 
 
-/*************** profil ***************/
+/*************** Profil ***************/
 
-.profilCaseTitle{
+.profilCaseTitle {
     margin-top: 0;
     text-align: center;
     margin-bottom: 25px;
 }
-.erase{
+
+.erase {
     border:0;
     background: none;
 }
-.modal{
+
+.modal {
     z-index:2001;
 }
-.black{
+
+.black {
     color: black;
 }
-.tableMaxHeight{
+
+.tableMaxHeight {
     max-height: 540px;
     overflow: auto;
 }
-.profilNav li a{
+
+.profilNav li a {
     background-color: rgba(255, 255,255, 0.8);
     color: #017a74;
 }
-.profilNav .active a{
+
+.profilNav .active a {
     background-color: #017a74 !important;
     color: white;
 }
-.blogMaxHeight{
+
+.blogMaxHeight {
     max-height: 300px;
     overflow: auto;
 }
@@ -740,4 +791,29 @@ textarea {
     max-width: 60px;
     max-height: 60px;
     display: inline-block;
+}
+
+
+    
+/*************** Observation ***************/
+
+.greenHr {
+    border: 1px solid #017a74;
+}
+
+.subTitle {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: #017a74;
+    text-align: center;
+}
+
+.naoLink {
+    color: #017a74;
+}
+
+.naoLink:hover {
+    color: #046a65;
+    text-decoration: none;
 }
