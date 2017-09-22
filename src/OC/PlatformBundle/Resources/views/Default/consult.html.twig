@@ -183,6 +183,7 @@
 {% block javascripts %}
     {{ parent() }}
 
+    <script src="{{ asset('js/resizeChosen.js')}}" type="text/javascript"></script>
     <script src="{{ asset('chosen/chosen.jquery.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('chosen/docsupport/prism.js')}}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script>
@@ -232,8 +233,8 @@
                         var latitude = {{ observ.latitude }};
                         var longitude = {{ observ.longitude }};
                         var center = {
-                            lat: latitude + 0.1,
-                            lng: longitude + 0.1
+                            lat: latitude + 0.05,
+                            lng: longitude + 0.05
                         };
 
                         var mapOptions = {
