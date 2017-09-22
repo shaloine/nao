@@ -25,11 +25,11 @@
             
             <h1 class="titlePage mt-30 mb-50">Partagez vos observations</h1>
 
-            <div class="col-lg-4 col-md-4 search">
+            <div class="col-lg-4 col-md-4 search mb-20">
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
-                <span class="formErrorMess">{{ form_errors(form.taxref) }}</span>
                 
+                <span class="formErrorMess">{{ form_errors(form.taxref) }}</span>
                 <div class="form-group">
                     <div class="col-sm-12">
                         {{ form_label(form.taxref, "Choix de l'espèce observée :", {'label_attr': {'class': 'control-label'
@@ -102,15 +102,15 @@
                     </div>
                 </div>
                 
-                <div class="form-group container">
+                <div class="container form-group">
                     <button type="submit" class="btn btnNaoGreen">Valider</button>
                 </div>
                 
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
             </div>
-            <div class="col-lg-8 col-md-8">
-                <div id="google-maps">
+            <div class="col-lg-8 col-md-8 mapContainer">
+                <div id="google-maps" class="google-maps">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0;" allowfullscreen></iframe>
                 </div>
             </div>

@@ -24,15 +24,15 @@
                     {% set route = app.request.attributes.get('_route') %}
                     <ul class="nav navbar-nav navbar-right">
                         <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
-                        <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Consultation</a></li>
+                        <li class="{% if consultPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_consultation') }}">Consultation</a></li>
                         <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
                         <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
                         {% if is_granted('ROLE_USER') %}
-                            <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
+                            <li {{ route == 'fos_user_security_show' ? 'class="active"' }}><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
                         {% else %}    
-                            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
-                            <li><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
+                            <li {{ route == 'fos_user_security_login' ? 'class="active"' }}><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                            <li {{ route == 'fos_user_registration_register' ? 'class="active"' }}><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
                         {% endif %}
                     </ul>
             </div>
@@ -60,7 +60,7 @@
                     {% set route = app.request.attributes.get('_route') %}
                     <ul class="nav navbar-nav navbar-right">
                         <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
-                        <li {{ route == 'oc_platform_' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Consultation</a></li>
+                        <li class="{% if consultPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_consultation') }}">Consultation</a></li>
                         <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
                         <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
                         {% if is_granted('ROLE_USER') %}
@@ -83,6 +83,7 @@
             <div class="container">
                 <div id="mentions" class="col-xs-12 col-sm-4">
                     <a href="{{ path('oc_platform_homepage') }}">Mentions légales | </a>
+                    <a href="{{ path('oc_platform_homepage') }}">À propos | </a>
                     <a href="{{ path('oc_platform_homepage') }}"> Contact | </a>
                     <a href="{{ path('oc_platform_homepage') }}"> Admin</a>
                 </div>
