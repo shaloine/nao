@@ -23,16 +23,16 @@
             <div class="container-fluid">
                     {% set route = app.request.attributes.get('_route') %}
                     <ul class="nav navbar-nav navbar-right">
-                        <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
+                        <li class="{% if homePage is defined %}active{% endif %}"><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
                         <li class="{% if consultPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_consultation') }}">Consultation</a></li>
-                        <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
-                        <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
+                        <li class="{% if observPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
+                        <li class="{% if blogPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
                         {% if is_granted('ROLE_USER') %}
-                            <li {{ route == 'fos_user_security_show' ? 'class="active"' }}><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
+                            <li class="{% if profilePage is defined %}active{% endif %}"><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
                         {% else %}    
-                            <li {{ route == 'fos_user_security_login' ? 'class="active"' }}><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
-                            <li {{ route == 'fos_user_registration_register' ? 'class="active"' }}><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
+                            <li class="{% if loginPage is defined %}active{% endif %}"><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                            <li class="{% if registerPage is defined %}active{% endif %}"><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
                         {% endif %}
                     </ul>
             </div>
@@ -59,16 +59,16 @@
                 <div id="bgNav" class="container-fluid">
                     {% set route = app.request.attributes.get('_route') %}
                     <ul class="nav navbar-nav navbar-right">
-                        <li {{ route == 'oc_platform_homepage' ? 'class="active"' }}><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
+                        <li class="{% if homePage is defined %}active{% endif %}"><a href="{{ path('oc_platform_homepage') }}">Accueil</a></li>
                         <li class="{% if consultPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_consultation') }}">Consultation</a></li>
-                        <li {{ route == 'oc_platform_observation' ? 'class="active"' }}><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
-                        <li {{ route == 'oc_platform_blog' ? 'class="active"' }}><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
+                        <li class="{% if observPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_observation') }}">Observation</a></li>
+                        <li class="{% if blogPage is defined %}active{% endif %}"><a href="{{ path('oc_platform_blog') }}">Actualités</a></li>
                         {% if is_granted('ROLE_USER') %}
                             <li class="{% if profilePage is defined %}active{% endif %}"><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
                         {% else %}    
-                            <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
-                            <li><a href="{{ path('fos_user_registration_register')}}">S'inscrire</a></li>
+                            <li class="{% if loginPage is defined %}active{% endif %}"><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                            <li class="{% if registerPage is defined %}active{% endif %}"><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -159,6 +159,7 @@
             <script>
                 $(function() {
                     $('.search').niceScroll({
+                        cursoropacitymin: 1,
                         cursorcolor:'#017a74',
                         cursorwidth: 6,
                         cursorfixedheight: 50,
