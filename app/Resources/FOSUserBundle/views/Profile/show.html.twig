@@ -1,5 +1,7 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
+{% block title %}{{ parent() }} - Mon profil{% endblock %}
+
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{ asset('css/nao_connexion.css') }}" rel="stylesheet">

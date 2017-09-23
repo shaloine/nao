@@ -1,6 +1,8 @@
 {# src/OC/PlatformBundle/Resources/views/Default/edition.html.twig #}
 {% extends "OCPlatformBundle::layout.html.twig" %}
 
+{% block title %}{{ parent() }} - Edition{% endblock %}
+
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{ asset('css/nao_blog.css') }}" rel="stylesheet">
