@@ -1,76 +1,79 @@
 {# src/OC/PlatformBundle/Resources/views/Default/article.html.twig #}
 {% extends "OCPlatformBundle::layout.html.twig" %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	<link href="{{ asset('css/nao_blog.css') }}" rel="stylesheet">
-{% endblock %}
+{% block title %}{{ parent() }} - Article{% endblock %}
 
-{% block body %}
+	{% block stylesheets %}
+		{{ parent() }}
+		<link href="{{ asset('css/nao_blog.css') }}" rel="stylesheet">
+	{% endblock %}
 
-	<div class="container bodyContent">
-		<h1 class="titlePage mt-30 mb-50">Actualités</h1>
-		<div class="blogArticle blogContainer">
-			<h3 class="blogTitle">{{ article.title }}</h3>
-			<p class="blogDate">{{ article.datePost|date('d-m-Y') }}</p>
+	{% block body %}
 
-			{% if article.articlePicture is not null %}
-				<div class="row">
-					<img src="{{  asset('uploads/articlesPictures/'~article.articlePicture.path) }}" alt="{{ article.articlePicture.alt }}" class="img-responsive col-sm-5" />
-					<div style="padding-left: 15px; padding-right: 15px;">{{ article.content|raw }}</div>
-				</div>
-			{% else %}
-				{{ article.content|raw }}
-			{% endif %}
+		<div class="container bodyContent">
+			<h1 class="titlePage mt-30 mb-50">Actualités</h1>
+			<div class="blogArticle blogContainer">
+				<h3 class="blogTitle">{{ article.title }}</h3>
+				<p class="blogDate">{{ article.datePost|date('d-m-Y') }}</p>
 
-
-
-			<!--	<p class="blogContent">{{ article.content|raw }}</p>-->
-
-			<div class="blogComment">
-				{% if is_granted('ROLE_USER') %}
-
-					{{ form_start(form) }}
-
-					{{ form_errors(form) }}
-
-					<div class="form-group">
-						{{ form_label(form.content) }}
-						{{ form_errors(form.content) }}
-						{{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+				{% if article.articlePicture is not null %}
+					<div class="row">
+						<img src="{{  asset('uploads/articlesPictures/'~article.articlePicture.path) }}" alt="{{ article.articlePicture.alt }}" class="img-responsive col-sm-5" />
+						<div style="padding-left: 15px; padding-right: 15px;">{{ article.content|raw }}</div>
 					</div>
-
-					<input type="submit" value="enregistrer" class="btn  btn-default">
-
-					{{ form_rest(form) }}
-
-					{{ form_end(form) }}
-
 				{% else %}
-					<p><a href="{{ path('fos_user_security_login') }}" >Connectez-vous</a> ou <a href="{{ path('fos_user_registration_register')}}">inscrivez-vous</a> pour poster un commentaire</p>
+					{{ article.content|raw }}
 				{% endif %}
-			</div>
 
-			<div class="blogCommentList">
-				<h4>Commentaires</h4>
-				{% if comments is not empty %}
-					{% for comment in comments %}
-						<div class="comment">
-							<p>Par <b>{{ comment.user.username }}</b> le {{ comment.datePost|date('d/m/Y à H:i') }}</p>
-							<p>{{ comment.content }}</p>
-							<p><a href="{{ path('oc_platform_signalComment', { 'id': comment.id })}}">signaler</a></p>
+
+
+				<!--	<p class="blogContent">{{ article.content|raw }}</p>-->
+
+				<div class="blogComment">
+					{% if is_granted('ROLE_USER') %}
+
+						{{ form_start(form) }}
+
+						{{ form_errors(form) }}
+
+						<div class="form-group">
+							{{ form_label(form.content) }}
+							{{ form_errors(form.content) }}
+							{{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
 						</div>
-					{% endfor %}
-				{% else %}
-					<p>Aucun commentaire n'a été posté</p>
-				{% endif %}
+
+						<input type="submit" value="enregistrer" class="btn  btn-default">
+
+						{{ form_rest(form) }}
+
+						{{ form_end(form) }}
+
+					{% else %}
+						<p><a href="{{ path('fos_user_security_login') }}" >Connectez-vous</a> ou <a href="{{ path('fos_user_registration_register')}}">inscrivez-vous</a> pour poster un commentaire</p>
+					{% endif %}
+				</div>
+
+				<div class="blogCommentList">
+					<h4>Commentaires</h4>
+					{% if comments is not empty %}
+						{% for comment in comments %}
+							<div class="comment">
+								<p>Par <b>{{ comment.user.username }}</b> le {{ comment.datePost|date('d/m/Y à H:i') }}</p>
+								<p>{{ comment.content }}</p>
+								<p><a href="{{ path('oc_platform_signalComment', { 'id': comment.id })}}">signaler</a></p>
+							</div>
+						{% endfor %}
+					{% else %}
+						<p>Aucun commentaire n'a été posté</p>
+					{% endif %}
+				</div>
+				<div class="right">
+					<a href="{{ path('oc_platform_blog') }}" class="btn btn-default buttonArticle"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
+				</div>
 			</div>
-
-			<a href="{{ path('oc_platform_blog') }}" class="btn btn-default buttonArticle pull-right"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
 		</div>
-	</div>
 
-{% endblock %}
+	{% endblock %}
 
 
 
