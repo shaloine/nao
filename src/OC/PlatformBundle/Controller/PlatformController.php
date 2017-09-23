@@ -151,7 +151,7 @@ class PlatformController extends Controller
     }
 
 	/**
-     * @Route("/blog", name="oc_platform_blog")
+     * @Route("/actualites", name="oc_platform_blog")
      */
 	public function blogAction(Request $request)
 	{
@@ -182,7 +182,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/creation", name="oc_platform_creation")
+     * @Route("/actualites/creation", name="oc_platform_creation")
      */
 	public function creationAction(Request $request)
 	{
@@ -224,7 +224,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/edition/{id}", name="oc_platform_edition")
+     * @Route("/actualites/edition/{id}", name="oc_platform_edition")
      */
 	public function editionAction(Request $request, Article $article, $id)
 	{
@@ -261,7 +261,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/article/{id}", name="oc_platform_article")
+     * @Route("/actualites/article/{id}", name="oc_platform_article")
      */
 	public function articleAction(Request $request, Article $article, $id)
 	{
@@ -292,7 +292,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/comment/{id}", name="oc_platform_signalComment")
+     * @Route("/actualites/comment/{id}", name="oc_platform_signalComment")
      */
 	public function signalCommentAction(Request $request, Comment $comment, $id)
 	{
@@ -308,7 +308,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/suppression/{id}", name="oc_platform_suppression")
+     * @Route("/actualites/suppression/{id}", name="oc_platform_suppression")
      */
 	public function suppressionAction(Request $request, Article $article, $id)
 	{
@@ -328,7 +328,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/commentValidation/{id}", name="oc_platform_commentValidation")
+     * @Route("/actualites/commentValidation/{id}", name="oc_platform_commentValidation")
      */
 	public function commentValidationAction(Request $request, Comment $comment, $id)
 	{
@@ -349,7 +349,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/commentSuppression/{id}", name="oc_platform_commentSuppression")
+     * @Route("/actualites/commentSuppression/{id}", name="oc_platform_commentSuppression")
      */
 	public function commentSuppressionAction(Request $request, Comment $comment, $id)
 	{
@@ -370,7 +370,7 @@ class PlatformController extends Controller
 	}
 
 	/**
-     * @Route("/blog/pictureSuppression/{id}/{articleId}", name="oc_platform_pictureSuppression")
+     * @Route("/actualites/pictureSuppression/{id}/{articleId}", name="oc_platform_pictureSuppression")
      */
 	public function pictureSuppressionAction(Request $request, ArticlePicture $articlePicture, $id, $articleId)
 	{
