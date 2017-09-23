@@ -1,0 +1,20 @@
+{# src/OC/PlatformBundle/Resources/views/Default/edition.html.twig #}
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Qui sommes-nous ?{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('css/nao_home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+	<div class="container bodyContent">
+		<h1 class="titlePage mt-30 mb-50">Qui sommes-nous?</h1>
+		<div class="login">
+			<p>Nos amis les oiseaux est une association regroupant des passionnés d'ornithologie. Elle compte, à ce jour, plus de 800 adhérents qui contribuent chaque jour à la faire vivre. Notre site participatif a pour objectif de collecter des informations qui permettront d'étudier les effets du climat, de l'urbanisation et de l'agriculture sur la biodiversité. Grâce à vous, adhérents ou simples contributeurs, nous souhaitons recueillir un maximum d’observations.</p>
+			<p>Ensemble préservons la biodiversité et contribuons à la protection des oiseaux.</p>
+		</div>
+	</div>
+{% endblock %}
