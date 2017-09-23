@@ -390,4 +390,12 @@ class PlatformController extends Controller
 
 	}
 
+	/**
+     * @Route("/Qui-sommes-nous", name="oc_platform_qsn")
+     */
+	public function qsnAction()
+	{
+		return $this->render('OCPlatformBundle:Default:qsn.html.twig');
+	}
+
 }
