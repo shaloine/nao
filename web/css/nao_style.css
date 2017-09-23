@@ -64,6 +64,10 @@ textarea {
     border-bottom: 0px;
 }
 
+.navbar-brand {
+    padding-right: 0px;
+}
+
 #burgerBtn {
     border: 0px;
 }
@@ -73,6 +77,10 @@ textarea {
     margin-top: 10px;
     margin-right: 5px;
     z-index: 2000;
+}
+
+#navH .container-fluid {
+    padding-left: 0px;
 }
 
 #imgAccueil {
@@ -670,6 +678,9 @@ textarea {
 }
 
 .search {
+    height: 750px;
+    overflow-y: auto;
+    overflow-x: hidden !important;
     background-color: rgba(255, 255, 255,0.7);
     padding-top: 20px;
     padding-bottom: 15px;
