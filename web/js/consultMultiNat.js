@@ -21,9 +21,9 @@ function initMap() {
             '</b></p><br>'+
             '<h5><b>COORDONÉES GPS :</b></h5>'+
             '<p>Latitude <b>'+
-            lati+
+            latit+
             '</b> - Longitude <b>'+
-            long+
+            longi+
             '</b></p>'+
             '</div>'+
             '</div>';
