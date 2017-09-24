@@ -26,7 +26,7 @@
             {% endfor %}
             
             <h1 class="titlePage mt-30 mb-50">Partagez vos observations</h1>
-
+            
             <div class="col-lg-4 col-md-4 search mb-20">
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
@@ -60,9 +60,9 @@
                         {{ form_widget(form.longitude, {'attr': {'class': 'form-control',
                             'placeholder': 'Coordonnées GPS : cliquez sur la carte'
                         }}) }}
+                        <small>Si la géolocalisation de votre appareil est désactivée, vous devez saisir les coordonnées GPS de votre observation manuellement.</small>
                     </div>
                 </div>
-                
                 <span class="formErrorMess">{{ form_errors(form.date) }}</span>
                 <div class="form-group">
                     <div class="col-sm-12">
