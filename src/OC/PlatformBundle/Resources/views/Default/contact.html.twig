@@ -1,0 +1,86 @@
+{% extends 'OCPlatformBundle::layout.html.twig'%}
+
+{% block title %}{{ parent() }} - Contact{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    {% for flashMessage in app.session.flashbag.get('info') %}
+        <div class="alert alert-success text-center">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="container">
+        <div class="row">
+
+            <h1 class="titlePage mt-30 mb-50">Formulaire de contact</h1>
+
+            <div class="col-lg-12 search mb-20">
+                <br />
+                <p>Si vous souhaitez nous contacter, vous pouvez le faire en nous laissant un message au moyen du formulaire ci-dessous,
+                    message qui nous sera immédiatement transmis (avec vos coordonnées bien sûr) par courriel. Nous vous répondrons dès que possible.</p>
+
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_errors(form) }}
+
+                    <br />
+
+                    <div class="row">
+
+                        <div class="form-group col-lg-12 text-center">
+                            <label for="firstName">Prénom :</label>
+                            {{ form_errors(form.firstName) }}
+                            {{ form_widget(form.firstName, {'attr': {'class': 'form-control',
+                                'style': 'color: black; max-width: 400px; margin: auto; text-align: center;'
+                            }}) }}
+                        </div>
+
+                        <div class="form-group col-lg-12 text-center">
+                            <label for="firstName">Nom :</label>
+                            {{ form_errors(form.lastName) }}
+                            {{ form_widget(form.lastName, {'attr': {'class': 'form-control',
+                                'style': 'color: black; max-width: 400px; margin: auto; text-align: center;'
+                            }}) }}
+                        </div>
+
+                        <div class="form-group col-lg-12 text-center">
+                            <label for="email">Adresse email :</label>
+                            {{ form_errors(form.email) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control',
+                                'style': 'color: black; max-width: 400px; margin: auto; text-align: center;'
+                            }}) }}
+                        </div>
+
+                        <div class="form-group text-center">
+                            <label for="message">Message :</label>
+                            <div class="col-lg-12">
+                                {{ form_errors(form.message) }}
+                                {{ form_widget(form.message, {'attr': {'class': 'form-control',
+                                    'rows': '10',
+                                    'style': 'margin: auto;'
+                                }}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" class="btn btn-success" style="border: 1px solid; border-radius: 5px; color: black"
+                                   value="Envoyer" />
+                        </div>
+
+                    </div>
+
+                    {{ form_rest(form) }}
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+

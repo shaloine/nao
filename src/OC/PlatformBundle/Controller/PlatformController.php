@@ -2,9 +2,11 @@
 
 namespace OC\PlatformBundle\Controller;
 
+use OC\PlatformBundle\Form\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swift_Message;
 
 use OC\PlatformBundle\Entity\Article;
 use OC\PlatformBundle\Entity\ArticlePicture;
@@ -398,4 +400,37 @@ class PlatformController extends Controller
 		return $this->render('OCPlatformBundle:Default:qsn.html.twig');
 	}
 
+    /**
+     * @Route("/contact", name="oc_platform_contact")
+     */
+    public function contactAction(Request $request)
+    {
+        $form = $this->get('form.factory')->create(ContactType::class);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $post = $request->request->get('oc_platformbundle_contact_form');
+            $message = new Swift_Message();
+            $message->setSubject('Nouveau message pour "Nos amis les oiseaux"')
+            ->setFrom(array('adresse de l\'expéditeur' => 'nao.fr'))
+                ->setTo('adresse du destinataire')
+                ->setContentType('text/html')
+                ->setCharset('utf-8')
+                ->setBody(
+                    $this->renderView('OCPlatformBundle:Default:email.html.twig',
+                        array('post' => $post)));
+            $this->get('mailer')->send($message);
+
+            $form = $this->get('form.factory')->create(ContactType::class);
+
+            $request->getSession()->getFlashBag()->add('info', 'Votre message a bien été envoyé.');
+            return $this->render('OCPlatformBundle:Default:contact.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
+
+        return $this->render('OCPlatformBundle:Default:contact.html.twig', array(
+            'form' => $form->createView(),
+        ));
+
+    }
 }
