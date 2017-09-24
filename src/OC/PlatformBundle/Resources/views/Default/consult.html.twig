@@ -8,24 +8,24 @@
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('chosen/chosen.css')}}">
-    <link href="{{ asset('css/nao_consult.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/nao_consult.css') }}" rel="stylesheet">
 
 {% endblock %}
 
 {% block body %}
     <div class="container bodyContent">
         <div class="row">
-
+           
             <h1 class="titlePage mt-30 mb-50">Consultation des contributions</h1>
-
+            
             <div class="col-lg-4 col-md-4 search mb-20">
                 <h2 class="subTitle">Trouver un oiseau</h2><br>
                 <p>Choisissez l'oiseau pour lequel vous souhaitez avoir des informations et visualisez sur la carte les zones géographiques dans lesquelles il a été observé par nos contributeurs.</p>
                 <p>Vous pouvez sélectionner l'espèce recherchée dans la liste déroulante, ou saisir les premières lettres du nom de cette espèce pour accéder plus rapidement aux résultats correspondants.</p>
-
+                
                 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                 {{ form_errors(form) }}
-
+                   
                 <span class="formErrorMess">{{ form_errors(form.nomVern) }}</span>
                 <div class="form-group">
                     <div class="col-sm-12">
@@ -49,33 +49,33 @@
                     <div>
                         <h2 class="subTitle">Fiche oiseau</h2>
                         <p><b>Nom courant :</b><br>
-                            {{ bird.nomVern }}</p>
-
+                        {{ bird.nomVern }}</p>
+                        
                         <p class="mt-10"><b>Nom scientifique (et "auteur") :</b><br>
-                            {{ bird.lbNom }} ({{ bird.lbAuteur }})</p>
-
+                        {{ bird.lbNom }} ({{ bird.lbAuteur }})</p>
+                        
                         <p class="mt-10"><b>Ordre :</b><br>
-                            {{ bird.ordre }}</p>
-
+                        {{ bird.ordre }}</p>
+                        
                         <p class="mt-10"><b>Famille :</b><br>
-                            {{ bird.famille }}</p>
-
+                        {{ bird.famille }}</p>
+                        
                         <p class="mt-10"><b>Retrouvez des informations complètes sur :</b></p>
-
+                        
                         {% if bird.nomVern == "" %}
-
+                           
                             <div class="row mt-10">
                                 <div class="col-sm-6 text-center">
                                     <a class="naoLink wikiLink" href="https://fr.wikipedia.org/wiki/{{ bird.lbNom }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" /><p class="mt-10" >{{ bird.lbNom }}</p></a>
                                 </div>
-
+                            
                                 <div class="col-sm-6 text-center">
                                     <a class="naoLink wikiLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img class="logoInpn" src="{{ asset('img/INPN.png') }}" /><p class="mt-10" >{{ bird.lbNom }}</p></a>
                                 </div>
                             </div>
-
+                            
                         {% else %}
-
+                           
                             <div class="row mt-10">
                                 <div class="col-sm-6 text-center">
                                     <a class="naoLink wikiLink" href="https://fr.wikipedia.org/wiki/{{ bird.nomVern }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" /><p class="mt-10" >{{ bird.nomVern }}</p></a>
@@ -86,14 +86,15 @@
                                 </div>
                             </div>
                         {% endif %}
-
-                        <br /><hr class="greenHr">
+                        
+                    <br />
                     </div>
-
+                    
                     {% if observs or observsToValid %}
                         {% if observs %}
                             <div>
-                                <h2 class="subTitle">Observations</h2>
+                                <hr class="greenHr">
+                                <h2 class="subTitle">Observation(s)</h2>
                                 {% for observ in observs %}
                                     {% if observ.validated == true %}
                                         <p>
@@ -104,36 +105,38 @@
                             </div>
                         {% endif %}
 
-                        <br /><hr class="greenHr">
-
                         {% if observsToValid and is_granted('ROLE_NATURALIST')%}
                             <div>
-                                <h2 class="subTitle">En attente de validation</h2>
+                                <hr class="greenHr">
+                                <h2 class="subTitle">Observation(s)<br>en attente de validation</h2>
                                 {% for observ in observsToValid %}
-                                    <p>
-                                        <a class="naoLink" href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
-                                    </p>
+                                        <p>
+                                            <a class="naoLink" href="{{ path('oc_platform_single_consult', { 'id': observ.id })}}">Le {{ observ.date|date('d/m/Y') }}</a>
+                                        </p>
                                 {% endfor %}
                             </div>
                         {% endif %}
 
                         {% if observsToValid and is_granted('ROLE_NATURALIST') == false %}
                             <div>
-                                <h2 class="subTitle">En attente de validation</h2>
+                                <hr class="greenHr">
+                                <h2 class="subTitle">Observation(s)<br>en attente de validation</h2>
                                 {% for observ in observsToValid %}
-                                    <p>Le {{ observ.date|date('d/m/Y') }}</p>
+                                        <p>Le {{ observ.date|date('d/m/Y') }}</p>
                                 {% endfor %}
                             </div>
                         {% endif %}
-
+                        
                     {% else %}
                         <div>
+                            <hr class="greenHr">
                             <h2 class="subTitle">Pas d'observation à ce jour</h2>
+                            <br />
                         </div>
                     {% endif %}
                 {% endif %}
             </div>
-
+            
             <div class="col-lg-8 col-md-8 mapContainer">
                 <div id="google-maps" class="google-maps">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
