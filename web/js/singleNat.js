@@ -10,26 +10,26 @@ function initMap() {
     };
 
     var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
-
-    var contentString = '<div id="content" class="text-center">'+
-        '<h1 id="firstHeading" class="firstHeading">'+
+    
+        var contentString = '<div id="content" class="text-center">'+
+        '<h3 id="firstHeading" class="firstHeading mb-20">'+
         nomVern+
-        '</h1>'+
+        '</h3>'+
         '<div id="bodyContent">'+
-        '<p><b>Observé(e) le '+
+        '<h5><b>OBSERVATION</b></h5><p>Le <b>'+
         date+
-        '</b></p>'+
-        '<p>par '+
+        '</b>'+
+        ' par <b>'+
         firstName+
         ' '+
         lastName+
-        '</p>'+
-        '<p><u>Coordonnées GPS</u> :</p>'+
-        '<p>Latitude '+
+        '</b></p><br>'+
+        '<h5><b>COORDONÉES GPS :</b></h5>'+
+        '<p>Latitude <b>'+
         lati+
-        ' - Longitude '+
+        '</b> - Longitude <b>'+
         long+
-        '</p>'+
+        '</b></p>'+
         '</div>'+
         '</div>';
 

@@ -48,55 +48,48 @@
                     <hr class="greenHr" />
                     <div>
                         <h2 class="subTitle">Fiche oiseau</h2>
-                        <b>Nom courant :</b><br>
-                        {{ bird.nomVern }}
-                        <br /><br />
+                        <p><b>Nom courant :</b><br>
+                        {{ bird.nomVern }}</p>
                         
-                        <b>Nom scientifique (et "auteur") :</b><br/>
-                        {{ bird.lbNom }} ({{ bird.lbAuteur }})
-                        <br /><br />
+                        <p class="mt-10"><b>Nom scientifique (et "auteur") :</b><br>
+                        {{ bird.lbNom }} ({{ bird.lbAuteur }})</p>
                         
-                        <b>Ordre :</b><br>
-                        {{ bird.ordre }}
-                        <br /><br />
+                        <p class="mt-10"><b>Ordre :</b><br>
+                        {{ bird.ordre }}</p>
                         
-                        <b>Famille :</b><br>
-                        {{ bird.famille }}
-                        <br /><br />
+                        <p class="mt-10"><b>Famille :</b><br>
+                        {{ bird.famille }}</p>
                         
-                        <b>Retrouvez des informations complètes sur :</b>
+                        <p class="mt-10"><b>Retrouvez des informations complètes sur :</b></p>
                         
                         {% if bird.nomVern == "" %}
                            
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="naoLink" href="https://fr.wikipedia.org/wiki/{{ bird.lbNom }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.lbNom }}</a>
+                            <div class="row mt-10">
+                                <div class="col-sm-6 text-center">
+                                    <a class="naoLink wikiLink" href="https://fr.wikipedia.org/wiki/{{ bird.lbNom }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" /><p class="mt-10" >{{ bird.lbNom }}</p></a>
                                 </div>
-                            </div><br>
                             
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="naoLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img src="{{ asset('img/INPN.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.lbNom }}</a>
+                                <div class="col-sm-6 text-center">
+                                    <a class="naoLink wikiLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img class="logoInpn" src="{{ asset('img/INPN.png') }}" /><p class="mt-10" >{{ bird.lbNom }}</p></a>
                                 </div>
                             </div>
                             
                         {% else %}
                            
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="naoLink" href="https://fr.wikipedia.org/wiki/{{ bird.nomVern }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.nomVern }}</a>
+                            <div class="row mt-10">
+                                <div class="col-sm-6 text-center">
+                                    <a class="naoLink wikiLink" href="https://fr.wikipedia.org/wiki/{{ bird.nomVern }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" /><p class="mt-10" >{{ bird.nomVern }}</p></a>
                                 </div>
-                            </div><br>
 
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="naoLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img src="{{ asset('img/INPN.png') }}" />&nbsp;&nbsp;&nbsp;&nbsp;{{ bird.nomVern }}</a>
+                                <div class="col-sm-6 text-center">
+                                    <a class="naoLink wikiLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ bird.cdNom }}" target="_blank"><img class="logoInpn" src="{{ asset('img/INPN.png') }}" /><p class="mt-10" >{{ bird.nomVern }}</p></a>
                                 </div>
                             </div>
-
                         {% endif %}
+                        
                     <br /><hr class="greenHr">
                     </div>
+                    
                     {% if observs or observsToValid %}
                         {% if observs %}
                             <div>
@@ -110,6 +103,7 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
+                        
                         <br /><hr class="greenHr">
 
                         {% if observsToValid and is_granted('ROLE_NATURALIST')%}
@@ -131,13 +125,15 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
+                        
                     {% else %}
-                        <div style="text-align: center;">
+                        <div>
                             <h2 class="subTitle">Pas d'observation à ce jour</h2>
                         </div>
                     {% endif %}
                 {% endif %}
             </div>
+            
             <div class="col-lg-8 col-md-8 mapContainer">
                 <div id="google-maps" class="google-maps">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>

@@ -13,112 +13,110 @@
         <div class="row">
 
             {% for flashMessage in app.session.flashbag.get('info') %}
-                <div class="alert alert-success text-center">
+                <div class="container alert alert-success alert-dismissible mt-30 mb-30">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ flashMessage }}
                 </div>
             {% endfor %}
 
-            <div class="titlePage" style="text-align: center;"><h1><strong>Consultation des contributions</strong></h1></div>
-            <div class="col-lg-4 col-md-4 search" style="text-align: center;">
-                <h4><u>Observation</u> :</h4>
-                <h5><u><i><strong>Date</strong></i></u> : {{ observation.date|date('d/m/Y') }}</h5>
+            <h1 class="titlePage">Consultation des contributions</h1>
+            
+            <div class="col-lg-4 col-md-4 search mb-20">
+                <h2 class="subTitle">Observation</h2>
+                <p><b>Date : </b><br>
+                {{ observation.date|date('d/m/Y') }}</p>
+                
                 {% if is_granted('ROLE_NATURALIST') %}
-                    <i>Coordonnées GPS</i> : <br />
-                        Latitude : {{ observation.latitude }} - Longitude : {{ observation.longitude }}
-                    <br /><br />
+                    <p class="mt-10"><b>Coordonnées GPS :</b><br>
+                    <small>Latitude : <b>{{ observation.latitude }}</b> - Longitude : <b>{{ observation.longitude }}</b></small></p>
                 {% endif %}
-                <i>Auteur de l'observation</i> : {{ observation.user.firstName }} {{ observation.user.lastName }}
-                <br /><br />
+                
+                <p class="mt-10"><b>Auteur de l'observation : </b><br>
+                {{ observation.user.firstName }} {{ observation.user.lastName }}</p>
+                
                 {% if observation.picture %}
                     <a href="{{ asset(observation.picture.AssetPath) }}" alt="{{ observation.picture.alt }}" target="_blank">
-                        <img src="{{ asset(observation.picture.AssetPath) }}" style="max-height: 200px;" />
+                        <img src="{{ asset(observation.picture.AssetPath) }}" style="max-height: 200px;"/>
                     </a>
-                    <br /><br />
                 {% endif %}
+                
                 {% if observation.flying == true %}
-                    <i>Oiseau en vol</i><br /><br />
+                    <p class="mt-10"><b>L'oiseau était en vol</b></p>
                 {% endif %}
+                
                 {% if observation.comment %}
-                    <i>Commentaire</i> :
-                    {{ observation.comment }}
+                    <p class="mt-10"><b>Commentaire :</b><br>
+                        {{ observation.comment }}</p>
                 {% endif %}
-                <div style="text-align: center;">
-                    <br />
-                    <h4><u>Fiche détaillée :</u></h4>
-                    <i>Nom</i> : {{ observation.taxref.nomVern }}
-                    <br /><br />
-                    <i>Nom scientifique (et "auteur")</i> : {{ observation.taxref.lbNom }} ({{ observation.taxref.lbAuteur }})
-                    <br /><br />
-                    <i>Ordre</i> : {{ observation.taxref.ordre }}
-                    <br /><br />
-                    <i>Famille</i> : {{ observation.taxref.famille }}
-                    <br /><br />
-                    <p>Vous trouverez des informations complètes sur cet oiseau en suivant l'un de ces liens :</p>
+                
+                
+                <hr class="greenHr" />
+                <div>
+                    <h2 class="subTitle">Fiche oiseau</h2>
+                    <p><b>Nom courant :</b><br>
+                    {{ observation.taxref.nomVern }}</p>
+
+                    <p class="mt-10"><b>Nom scientifique (et "auteur") :</b><br/>
+                    {{ observation.taxref.lbNom }} ({{ observation.taxref.lbAuteur }})</p>
+
+                    <p class="mt-10"><b>Ordre :</b><br>
+                    {{ observation.taxref.ordre }}</p>
+
+                    <p class="mt-10"><b>Famille :</b><br>
+                    {{ observation.taxref.famille }}</p>
+
+                    <p class="mt-10"><b>Retrouvez des informations complètes sur :</b></p>
+
                     {% if observation.taxref.nomVern == "" %}
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <img src="{{ asset('img/wiki.png') }}" />
+
+                        <div class="row mt-10">
+                            <div class="col-sm-6 text-center">
+                                <a class="naoLink wikiLink" href="https://fr.wikipedia.org/wiki/{{ observation.taxref.lbNom }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" /><p class="mt-10" >{{ observation.taxref.lbNom }}</p></a>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <br /><a href="https://fr.wikipedia.org/wiki/{{ observation.taxref.lbNom }}" target="_blank">
-                                    {{ observation.taxref.lbNom }}</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <img src="{{ asset('img/INPN.png') }}" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
-                                    {{ observation.taxref.lbNom }}</a>
+
+                            <div class="col-sm-6 text-center">
+                                <a class="naoLink wikiLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank"><img class="logoInpn" src="{{ asset('img/INPN.png') }}" /><p class="mt-10" >{{ observation.taxref.lbNom }}</p></a>
                             </div>
                         </div>
+
                     {% else %}
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <img src="{{ asset('img/wiki.png') }}" />
+
+                        <div class="row mt-10">
+                            <div class="col-sm-6 text-center">
+                                <a class="naoLink wikiLink" href="https://fr.wikipedia.org/wiki/{{ observation.taxref.nomVern }}" target="_blank"><img src="{{ asset('img/wiki.png') }}" /><p class="mt-10" >{{ observation.taxref.nomVern }}</p></a>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <br /><a href="https://fr.wikipedia.org/wiki/{{ observation.taxref.nomVern }}" target="_blank">
-                                    {{ observation.taxref.nomVern }}</a>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <img src="{{ asset('img/INPN.png') }}" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                <a href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank">
-                                    {{ observation.taxref.nomVern }}</a>
+
+                            <div class="col-sm-6 text-center">
+                                <a class="naoLink wikiLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank"><img class="logoInpn" src="{{ asset('img/INPN.png') }}" /><p class="mt-10" >{{ observation.taxref.nomVern }}</p></a>
                             </div>
                         </div>
                     {% endif %}
-                    <br /><br />
                 </div>
-                <br />
+
                 {% if (observation.validated == false) and (is_granted('ROLE_NATURALIST')) %}
-                    <br />
-                    <p>
+
+                    <div class="col-sm-12 mt-20">
                         <form action="{{ path('oc_platform_observValidation', { 'id': observation.id }) }}">
-                            <input type="submit" class="btn btn-success" style="float: left;" value="Valider"
+                            <input type="submit" class="btn btnNaoGreen col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-4 mb-20 mt-20" value="Valider"
                                    onClick="{{ path('oc_platform_observValidation', { 'id': observation.id }) }}">
                         </form>
+                        
                         <form action="{{ path('oc_platform_observSuppression', { 'id': observation.id }) }}">
-                            <input type="submit" class="btn btn-danger" style="float: right;" value="Supprimer"
+                            <input type="submit" class="btn btnNaoRed col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-4 mb-20" value="Supprimer"
                                    onClick="{{ path('oc_platform_observSuppression', { 'id': observation.id }) }}">
                         </form>
-                    </p>
-                    <br /><br />
+                    </div>
                 {% endif %}
             </div>
-        <div class="col-lg-8 col-md-8">
-            <div id="google-maps" class="google-maps">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
+            
+            <div class="col-lg-8 col-md-8 mapContainer">
+                <div id="google-maps" class="google-maps">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5661311.975415188!2d-2.4349789918864757!3d46.14452325106444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1504695126093" width="800" height="800" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
             </div>
+
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block javascripts %}
