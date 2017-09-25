@@ -182,13 +182,10 @@
                         var markersTable = [];
                         {% for observ in observs %}
                         var nomVern     = '{{ observ.taxref.nomVern }}',
-                            date        = '{{ observ.date|date('d/m/Y') }}',
-                            firstName   = '{{ observ.user.firstName }}',
-                            lastName    = '{{ observ.user.lastName }}',
                             lati        = {{ observ.latitude }},
                             long        = {{ observ.longitude }};
 
-                        markersTable.push({nomVern, date, firstName, lastName, lat:lati, lng:long });
+                        markersTable.push({lat:lati, lng:long });
                         {% endfor %}
                     </script>
                     <script src="{{ asset('js/consultMultiNat.js') }}" type="text/javascript"></script>
