@@ -11,15 +11,7 @@ function initMap() {
             nomVern+
             '</h3>'+
             '<div id="bodyContent">'+
-            '<h5><b>OBSERVATION</b></h5><p>Le <b>'+
-            date+
-            '</b>'+
-            ' par <b>'+
-            firstName+
-            ' '+
-            lastName+
-            '</b></p><br>'+
-            '<h5><b>COORDONÉES GPS :</b></h5>'+
+            '<h5><b>COORDONNÉES GPS :</b></h5>'+
             '<p>Latitude <b>'+
             latit+
             '</b> - Longitude <b>'+

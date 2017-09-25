@@ -24,7 +24,7 @@ function initMap() {
         ' '+
         lastName+
         '</b></p><br>'+
-        '<h5><b>COORDONÉES GPS :</b></h5>'+
+        '<h5><b>COORDONNÉES GPS :</b></h5>'+
         '<p>Latitude <b>'+
         lati+
         '</b> - Longitude <b>'+
