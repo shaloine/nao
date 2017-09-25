@@ -26,14 +26,17 @@
                         <input type="password" id="password" name="_password" required="required" class="form-control loginInput" />
                     </div>
                     
-                        <div class="col-sm-5 col-sm-offset-2">
-                            <p><a href="{{ path('fos_user_resetting_request')}}" class="green">Mot de passe oublié</a></p>
-                            <div class="form-group mb-0">
-                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-                            </div>
+                    <div class="col-sm-5 col-sm-offset-2">
+                        <p><a href="{{ path('fos_user_resetting_request')}}" class="green">Mot de passe oublié</a></p>
+                        <div class="form-group mb-0">
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
                         </div>
-                        <div class="col-sm-2 col-sm-offset-1">
+                    </div>
+                    {% if app.request.get('_route') != app.request.headers.get('referer') %}   
+                        <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
+                    {% endif %}
+                    <div class="col-sm-2 col-sm-offset-1">
                         <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-default button" />
                     </div>
                 </form>
