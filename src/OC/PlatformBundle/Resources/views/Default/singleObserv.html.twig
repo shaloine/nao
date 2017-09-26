@@ -130,14 +130,20 @@
         var nomVern = '{{ observation.taxref.nomVern }}',
             date = '{{ observation.date|date('d/m/Y') }}',
             firstName = '{{ observation.user.firstName }}',
-            lastName = '{{ observation.user.lastName }}',
-            lati = {{ observation.latitude }},
-            long = {{ observation.longitude }};
+            lastName = '{{ observation.user.lastName }}';
     </script>
 
     {% if is_granted('ROLE_NATURALIST') %}
+        <script type="text/javascript">
+            var lati = {{ observation.latitude }},
+                long = {{ observation.longitude }};
+        </script>
         <script src="{{ asset('js/singleNat.js') }}" type="text/javascript"></script>
     {% else%}
+        <script type="text/javascript">
+            var lati = {{ coords[0] }},
+                long = {{ coords[1] }};
+        </script>
         <script src="{{ asset('js/singleUser.js') }}" type="text/javascript"></script>
     {% endif %}
 {% endblock %}

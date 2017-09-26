@@ -7,8 +7,8 @@ function initMap() {
     map.setOptions(opt);
 
     circlesTable.forEach(function (latlng) {
-        var latit = latlng.lat + 0.05,
-            longi = latlng.lng + 0.05;
+        var latit = latlng.lat,
+            longi = latlng.lng;
         var center = new google.maps.LatLng(latit, longi);
         var circleOptions = {
             strokeColor: '#FF0000',

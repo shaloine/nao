@@ -29,4 +29,16 @@ class ObservationRepository extends EntityRepository
             ->getResult()
             ;
     }
+
+    public function getLocations($id)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.latitude')
+            ->addSelect('o.longitude')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace OC\PlatformBundle\Controller;
 
-use OC\PlatformBundle\Form\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,6 +13,7 @@ use OC\PlatformBundle\Entity\User;
 use OC\PlatformBundle\Form\ArticleType;
 use OC\PlatformBundle\Entity\Comment;
 use OC\PlatformBundle\Form\CommentType;
+use OC\PlatformBundle\Form\ContactType;
 use OC\PlatformBundle\Entity\Observation;
 use OC\PlatformBundle\Form\ObservationType;
 use OC\PlatformBundle\Entity\Taxref;
@@ -37,23 +37,41 @@ class PlatformController extends Controller
      */
     public function consultAction(Request $request)
     {
-    	$search = new Taxref();
-    	$form   = $this->get('form.factory')->create(TaxrefType::class, $search);
+        $search = new Taxref();
+        $form = $this->get('form.factory')->create(TaxrefType::class, $search);
 
-    	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-    		$id = $search->getNomVern()->getId();
-    		$em = $this->getDoctrine()->getManager();
-    		$bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
-    		$observs = $em->getRepository('OCPlatformBundle:Observation')->getObservsValidated($id);
-    		$observsToValid = $em->getRepository('OCPlatformBundle:Observation')->getObservsToValid($id);
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $id = $search->getNomVern()->getId();
+            $em = $this->getDoctrine()->getManager();
+            $bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
+            $observs = $em->getRepository('OCPlatformBundle:Observation')->getObservsValidated($id);
+            $observsToValid = $em->getRepository('OCPlatformBundle:Observation')->getObservsToValid($id);
 
-    		return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
-    			'form' => $form->createView(),
-    			'bird' => $bird,
-    			'observs' => $observs,
-    			'observsToValid' => $observsToValid
-    		));
-    	}
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
+                return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
+                    'form' => $form->createView(),
+                    'bird' => $bird,
+                    'observs' => $observs,
+                    'observsToValid' => $observsToValid
+                ));
+            } else {
+                $coords = array();
+                foreach ($observs as $observ) {
+                    $obsId = $observ->getId();
+                    $coordinates = $em->getRepository('OCPlatformBundle:Observation')->getLocations($obsId);
+                    $lat = $coordinates[0]['latitude'] + 0.05;
+                    $lng = $coordinates[0]['longitude'] + 0.05;
+                    array_push($coords, [$lat, $lng]);
+                }
+                return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
+                    'form' => $form->createView(),
+                    'bird' => $bird,
+                    'observs' => $observs,
+                    'observsToValid' => $observsToValid,
+                    'coords' => $coords
+                ));
+            }
+        }
 
     	return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
     		'form' => $form->createView(),
@@ -69,9 +87,21 @@ class PlatformController extends Controller
 
     	$observation = $em->getRepository('OCPlatformBundle:Observation')->find($id);
 
-    	return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
-    		'observation' => $observation,
-    	));
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
+            return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
+                'observation' => $observation
+            ));
+        } else {
+            $coordinates = $em->getRepository('OCPlatformBundle:Observation')->getLocations($id);
+            $lat = $coordinates[0]['latitude'] + 0.05;
+            $lng = $coordinates[0]['longitude'] + 0.05;
+            $coords = [$lat, $lng];
+
+            return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
+                'observation' => $observation,
+                'coords' => $coords
+            ));
+        }
     }
 
     /**
@@ -411,8 +441,8 @@ class PlatformController extends Controller
             $post = $request->request->get('oc_platformbundle_contact_form');
             $message = new Swift_Message();
             $message->setSubject('Nouveau message pour "Nos amis les oiseaux"')
-            ->setFrom(array('adresse de l\'expéditeur' => 'nao.fr'))
-                ->setTo('adresse du destinataire')
+            ->setFrom(array('fabrice.loubier@gmail.com' => 'nao.fr'))
+                ->setTo('ocr@loubier.fr')
                 ->setContentType('text/html')
                 ->setCharset('utf-8')
                 ->setBody(
