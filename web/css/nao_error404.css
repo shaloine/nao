@@ -1,0 +1,5 @@
+body{
+    background:url('../img/erreur-404.jpg') no-repeat center fixed;
+    -webkit-background-size:cover;
+    background-size:cover;
+}
