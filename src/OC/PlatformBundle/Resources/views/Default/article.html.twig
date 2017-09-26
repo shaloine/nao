@@ -11,6 +11,13 @@
 	{% block body %}
 
 		<div class="container bodyContent">
+
+			{% for flashMessage in app.session.flashbag.get('info') %}
+				<div class="alert alert-success text-center">
+					{{ flashMessage }}
+				</div>
+			{% endfor %}
+
 			<h1 class="titlePage mt-30 mb-50">Actualités</h1>
 			<div class="blogArticle blogContainer">
 				<h3 class="blogTitle">{{ article.title }}</h3>
@@ -25,10 +32,6 @@
 					{{ article.content|raw }}
 				{% endif %}
 
-
-
-				<!--	<p class="blogContent">{{ article.content|raw }}</p>-->
-
 				<div class="blogComment">
 					{% if is_granted('ROLE_USER') %}
 
@@ -42,7 +45,7 @@
 							{{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
 						</div>
 
-						<input type="submit" value="enregistrer" class="btn  btn-default">
+						<input type="submit" value="enregistrer" class="btn btnNaoGreen">
 
 						{{ form_rest(form) }}
 
@@ -68,7 +71,7 @@
 					{% endif %}
 				</div>
 				<div class="right">
-					<a href="{{ path('oc_platform_blog') }}" class="btn btn-default buttonArticle"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
+					<a href="{{ path('oc_platform_blog') }}" class="btn btnNaoGreen buttonArticle"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
 				</div>
 			</div>
 		</div>

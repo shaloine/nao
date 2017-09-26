@@ -48,7 +48,7 @@
 					{% else %}
 						{{ article.content|truncate(400, true)|raw }}
 					{% endif %}
-					<p class="blogButton"><a href="{{ path('oc_platform_article', { 'id': article.id }) }}" class="btn btn-default">Lire la suite</a></p>
+					<p class="blogButton"><a href="{{ path('oc_platform_article', { 'id': article.id }) }}" class="btn btnNaoGreen">Lire la suite</a></p>
 				</div>
 			{% endfor %}
 		{% endif %}

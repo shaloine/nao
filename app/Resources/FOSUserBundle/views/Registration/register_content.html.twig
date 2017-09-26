@@ -10,35 +10,35 @@
 				<div class="form-group col-sm-6">
 					{{ form_label(form.username) }}
 					{{ form_errors(form.username) }}
-					{{ form_widget(form.username, {'attr': {'class': 'form-control loginInput'}}) }}
+					{{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
 				</div>
 				<div class="form-group col-sm-6">
 					{{ form_label(form.email) }}
 					{{ form_errors(form.email) }}
-					{{ form_widget(form.email, {'attr': {'class': 'form-control loginInput'}}) }}
+					{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
 				</div>
 
 				<div class="form-group col-sm-6">
 					{{ form_label(form.firstName) }}
 					{{ form_errors(form.firstName) }}
-					{{ form_widget(form.firstName, {'attr': {'class': 'form-control loginInput'}}) }}
+					{{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
 				</div>
 				<div class="form-group col-sm-6">
 					{{ form_label(form.lastName) }}
 					{{ form_errors(form.lastName) }}
-					{{ form_widget(form.lastName, {'attr': {'class': 'form-control loginInput'}}) }}
+					{{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
 				</div>
 
 				<div class="form-group col-sm-6">
 					{{ form_label(form.plainPassword.first) }}
 					{{ form_errors(form.plainPassword.first) }}
-					{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control loginInput'}}) }}
+					{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
 				</div>
 
 				<div class="form-group col-sm-6">
 					{{ form_label(form.plainPassword.second) }}
 					{{ form_errors(form.plainPassword.second) }}
-					{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control loginInput'}}) }}
+					{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
 				</div>
 
 				<div class="checkox col-sm-6 center">
@@ -61,7 +61,7 @@
 			{{ form_widget(form) }}
 
 			<div class="col-sm-12 center">
-				<input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-default button" />
+				<input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btnNaoGreen" />
 			</div>
 
 			{{ form_end(form) }}
