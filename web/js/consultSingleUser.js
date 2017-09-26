@@ -1,7 +1,7 @@
 function initMap() {
     var center = {
-        lat: lati + 0.05,
-        lng: long + 0.05
+        lat: lati,
+        lng: long
     };
 
     var mapOptions = {
