@@ -912,6 +912,16 @@ textarea {
     color: rgba(0, 0, 0, 0.2);
 }
 
+#allError {
+    font-size: 1.2em;
+    text-align: left;
+    line-height: normal;
+}
+
+#allError span {
+    font-size: 2em;
+}
+
 #katsankatre {
     display: inline-block;
     font-size: 13em;
@@ -927,6 +937,9 @@ textarea {
     .oups h1 {
         font-size: 4em;
     }
+    .oups h2 {
+        font-size: 1em;
+    }
     .oups p {
         padding-right: 7px;
         padding-left: 7px;
@@ -939,5 +952,11 @@ textarea {
         font-size: 6em;
         text-shadow: 2px 2px 5px #7f7f7f;
         margin-top: 15px;
+    }
+    #allError {
+        font-size: 0.8em;
+    }
+    #allError span {
+        font-size: 1.5em;
     }
 }
