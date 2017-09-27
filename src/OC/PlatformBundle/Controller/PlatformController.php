@@ -506,4 +506,13 @@ class PlatformController extends Controller
         return $this->redirectToRoute('oc_platform_homepage');
 
     }
+    
+	/**
+     * @Route("/Mentions-legales", name="oc_platform_mentions")
+     */
+	public function mentionsAction()
+	{
+		return $this->render('OCPlatformBundle:Default:mentions.html.twig');
+	}
+    
 }

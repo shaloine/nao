@@ -22,23 +22,8 @@
                     <div class="panel-content">
                         <P>"Nos Amis les Oiseaux" est une association regroupant les passionnés d'ornithologie. Elle compte à ce jour plus de 800 adhérents qui contribuent chaque jour...</P>
                         <div class="indexPanel pull-right">
-                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{# {{ path('oc_platform_about') }} #}" title="Lisez la suite" >
+                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{{ path('oc_platform_qsn') }}" title="Lisez la suite" >
                                 <div id="indexAbout"></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panelContain col-xs-12 col-sm-4">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Observation</h3>
-                    </div>
-                    <div class="panel-content">
-                        <P>Paricipez à notre étude en ajoutant les observations que vous avez faites dans votre jardin ou durant vos balades. N'attendez plus pour ajouter votre branche à l'édifice !</P>
-                        <div class="indexPanel pull-right">
-                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{# {{ path('oc_platform_about') }} #}" title="Renseignez une observation" >
-                                <div id="indexObs"></div>
                             </a>
                         </div>
                     </div>
@@ -52,8 +37,23 @@
                     <div class="panel-content">
                         <P>Consultez les observations faites par nos observateurs et ainsi savoir où et comment se déplacent telle ou telle espèce sur le territoire national métropolitain.</P>
                         <div class="indexPanel pull-right">
-                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{# {{ path('oc_platform_about') }} #}" title="Consultez les observations" >
+                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{{ path('oc_platform_consultation') }}" title="Consultez les observations" >
                                 <div id="indexConsult"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panelContain col-xs-12 col-sm-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Observation</h3>
+                    </div>
+                    <div class="panel-content">
+                        <P>Paricipez à notre étude en ajoutant les observations que vous avez faites dans votre jardin ou durant vos balades. N'attendez plus pour ajouter votre branche à l'édifice !</P>
+                        <div class="indexPanel pull-right">
+                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{{ path('oc_platform_observation') }}" title="Renseignez une observation" >
+                                <div id="indexObs"></div>
                             </a>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                     <div class="panel-content">
                         <P>"Aider nous à étudier les effet du climat, de l'urbanisation et de l'agriculture sur la biodiversité. Inscrivez-vous et partagez vos observations avec les autres utilisateurs.</P>
                         <div class="indexPanel pull-right">
-                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{# {{ path('oc_platform_about') }} #}" title="Inscrivez-vous" >
+                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{{ path('fos_user_registration_register') }}" title="Inscrivez-vous" >
                                 <div id="indexSubscribe"></div>
                             </a>
                         </div>
@@ -84,7 +84,7 @@
                     <div class="panel-content">
                         <P>Connectez-vous. Une fois connecté, vous pourrez consulter et compléter votre profil. Vous pourrez également saisir les observations que vous avez réalisées.</P>
                         <div class="indexPanel pull-right">
-                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{# {{ path('oc_platform_about') }} #}" title="Connectez-vous" >
+                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{{ path('fos_user_security_login') }}" title="Connectez-vous" >
                                 <div id="indexConnect"></div>
                             </a>
                         </div>
@@ -99,7 +99,7 @@
                     <div class="panel-content">
                         <P>Si vous voulez savoir ce qui ce passe dans le monde ornitologique, retrouvez tous nos articles sur la page d'actualités et faites nous part de vos commentaires.</P>
                         <div class="indexPanel pull-right">
-                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{# {{ path('oc_platform_about') }} #}" title="Lisez les articles" >
+                            <a class="infoBulle pull-right" data-toggle="tooltip" href="{{ path('oc_platform_blog') }}" title="Lisez les articles" >
                                 <div id="indexBlog"></div>
                             </a>
                         </div>
