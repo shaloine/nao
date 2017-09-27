@@ -441,8 +441,8 @@ class PlatformController extends Controller
             $post = $request->request->get('oc_platformbundle_contact_form');
             $message = new Swift_Message();
             $message->setSubject('Nouveau message pour "Nos amis les oiseaux"')
-            ->setFrom(array('fabrice.loubier@gmail.com' => 'nao.fr'))
-                ->setTo('ocr@loubier.fr')
+            ->setFrom(array('matt.halwani@gmail.com' => 'nao.fr'))
+                ->setTo('zedmatt@live.fr')
                 ->setContentType('text/html')
                 ->setCharset('utf-8')
                 ->setBody(
