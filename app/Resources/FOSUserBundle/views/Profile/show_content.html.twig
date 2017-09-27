@@ -14,6 +14,7 @@
 				<li><a data-toggle="tab" href="#valider">A valider</a></li>
 				{% if is_granted('ROLE_ADMIN') %}
 					<li><a data-toggle="tab" href="#blog">Blog</a></li>
+					<li><a data-toggle="tab" href="#naturalist">Naturalistes</a></li>
 				{% endif %}
 			</ul>
 		{% endif %}
@@ -145,10 +146,10 @@
 										<tr>
 											<td class="col-sm-9">{{ article.title }}</td>
 											<td class="col-sm-3">
-												<a href="{{ path('oc_platform_article', { 'id': article.id }) }}" title="Voir" class="col-sm-4 center"><i class="fa fa-eye fa-lg green" aria-hidden="true"></i></a>
-											
-												<a href="{{ path('oc_platform_edition', { 'id': article.id }) }}" title="Editer" class="col-sm-4 center"><i class="fa fa-pencil-square-o fa-lg green" aria-hidden="true"></i></a>
-										
+												<a href="{{ path('oc_platform_article', { 'id': article.id }) }}" title="Voir" class="col-sm-4 center"><i class="fa fa-eye fa-lg green profilIcon" aria-hidden="true"></i></a>
+
+												<a href="{{ path('oc_platform_edition', { 'id': article.id }) }}" title="Editer" class="col-sm-4 center"><i class="fa fa-pencil-square-o fa-lg green profilIcon" aria-hidden="true"></i></a>
+
 												<button type="button" title="Supprimer" class="erase col-sm-4 center" data-toggle="modal" data-target="#articleDialog{{ article.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
 											</td>
 										</tr>
@@ -189,8 +190,8 @@
 											<tr>
 												<td class="col-sm-9">{{ comment.content }}</td>
 												<td class="col-sm-3">
-													<a href="{{ path('oc_platform_article', { 'id': comment.article.id }) }}" title="Voir" class="col-sm-4 center"><i class="fa fa-eye fa-lg green" aria-hidden="true"></i></a>
-													<a href="{{ path('oc_platform_commentValidation', { 'id': comment.id }) }}" title="Valider" class="col-sm-4 center"><i class="fa fa-check fa-lg green" aria-hidden="true"></i></a>
+													<a href="{{ path('oc_platform_article', { 'id': comment.article.id }) }}" title="Voir" class="col-sm-4 center"><i class="fa fa-eye fa-lg green profilIcon" aria-hidden="true"></i></a>
+													<a href="{{ path('oc_platform_commentValidation', { 'id': comment.id }) }}" title="Valider" class="col-sm-4 center"><i class="fa fa-check fa-lg green profilIcon" aria-hidden="true"></i></a>
 													<button type="button" title="Supprimer" data-toggle="modal" class="erase col-sm-4 center" data-target="#articleDialog{{ comment.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
 												</td>
 											</tr>
@@ -216,6 +217,39 @@
 								</table>
 							{% endif %}
 						</div>
+					</div>
+				</div>
+				<div id="naturalist" class="tab-pane fade">
+					<div class="login">
+						<h3 class="profilCaseTitle green">Naturalistes</h3>
+						{% if UsersToValid is empty %}
+							<p class="center">Aucun naturaliste a valider</p>
+						{% else %}
+							<table class="table table-responsive">
+								<thead>
+										<tr>
+											<th>Pseudo</th>
+											<th>Nom</th>
+											<th>Prénom</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for user in UsersToValid %}
+											<tr>
+												<td>{{ user.username }}</td>
+												<td >{{ user.firstName }}</td>
+												<td>{{ user.lastName }}</td>
+												<td>
+													<a href="{{ path('oc_platform_userValidation', { 'id': user.id }) }}" title="Valider" class="center col-sm-6"><i class="fa fa-check fa-lg green profilIcon" aria-hidden="true"></i></a>
+													<a href="{{ path('oc_platform_userReset', { 'id': user.id }) }}" title="Ne pas valider"  class="center col-sm-6"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></a>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+						{% endif %}
+						
+						
 					</div>
 				</div>
 			{% endif %}
