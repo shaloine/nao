@@ -1,21 +1,33 @@
 function initMap() {
     var markersZone = new google.maps.LatLngBounds();
 
-    var mapDiv = new google.maps.Map( document.getElementById("google-maps"));
+    var map = new google.maps.Map(document.getElementById("google-maps"));
 
-    markersTable.forEach(function(latlng){
-        var latit = latlng.lat,
-            longi = latlng.lng;
+    for(var i = 0; i < markersTable.length; i++ ) {
+        var nomVern     = markersTable[i][0],
+            date        = markersTable[i][1],
+            firstName   = markersTable[i][2],
+            lastName    = markersTable[i][3],
+            lati        = markersTable[i][4],
+            long        = markersTable[i][5];
         var contentString = '<div id="content" class="text-center">'+
             '<h3 id="firstHeading" class="firstHeading mb-20">'+
             nomVern+
             '</h3>'+
             '<div id="bodyContent">'+
+            '<h5><b>OBSERVATION</b></h5><p>Le <b>'+
+            date+
+            '</b>'+
+            ' par <b>'+
+            firstName+
+            ' '+
+            lastName+
+            '</b></p><br>'+
             '<h5><b>COORDONNÉES GPS :</b></h5>'+
             '<p>Latitude <b>'+
-            latit+
+            lati+
             '</b> - Longitude <b>'+
-            longi+
+            long+
             '</b></p>'+
             '</div>'+
             '</div>';
@@ -23,16 +35,18 @@ function initMap() {
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
-
         var markerOptions = {
-            map: mapDiv,
-            position: new google.maps.LatLng(latit, longi)
+            map: map,
+            position: new google.maps.LatLng(lati, long),
+            info: contentString
         };
         var marker = new google.maps.Marker(markerOptions);
-        marker.addListener('click', function() {
-            infowindow.open(mapDiv, marker);
+        marker.addListener('click', function () {
+            infowindow.setContent( this.info );
+            infowindow.open(map, this);
         });
         markersZone.extend(marker.getPosition());
-    })
-    mapDiv.fitBounds(markersZone);
-};
+    }
+
+    map.fitBounds(markersZone);
+}
