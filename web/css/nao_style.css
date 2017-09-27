@@ -28,7 +28,9 @@ textarea {
     color: #fff;
 }
 
-.btnNaoGreen:hover {
+.btnNaoGreen:hover,
+.btnNaoGreen:active,
+.btnNaoGreen:focus {
     background-color: #046a65;
     color: #fff;
 }
@@ -962,5 +964,27 @@ textarea {
     }
     #allError span {
         font-size: 1.5em;
+    }
+}
+
+
+
+/*************** Contact ***************/
+
+#accrocheForm {
+    display: inline-block;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.paddHeight {
+    padding-right: 20px;
+    padding-left: 20px;
+    height: auto;
+}
+
+@media screen and (max-width: 490px) {
+    #accrocheForm {
+        font-size: 0.9em;
     }
 }

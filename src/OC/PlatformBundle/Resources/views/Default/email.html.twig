@@ -10,8 +10,7 @@
     {{ post.firstName|capitalize }} {{ post.lastName|upper }} vient de laisser un message sur votre site.<br /><br />
     En voici le contenu :<br /><br />
     <strong><em>{{ post.message|nl2br }}</em></strong><br/><br />
-    Vous pouvez lui répondre à cette adresse : {{ post.email }}
-    </a>
+    Vous pouvez lui répondre à cette adresse : <a href="mailto:{{ post.email }}">{{ post.email }}</a>
 </body>
 
 </html>
