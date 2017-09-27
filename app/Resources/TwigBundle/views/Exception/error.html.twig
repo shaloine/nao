@@ -1,0 +1,24 @@
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}{{ parent () }} - Erreur{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+	<link href="{{ asset('css/nao_error404.css') }}" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+
+<div id="error" class="container bodyContent">
+   <div class="oups col-xs-10 col-xs-offset-1">
+       <h1 class="col-md-6 col-sm-12">Oups !</h1>
+       <h2 class="col-sm-12">Le server retourne "{{ status_code }} {{ status_text }}".</h2>
+       <p id="allError" class="col-sm-12">Quelque chose est cassé.<br>
+       Merci de nous faire savoir comment cette erreur est survenue, nous la reparerons le plus vite possible.<br>
+       <span><b>Désolé du dérangement.</b></span></p>
+   </div>
+</div>
+
+{% endblock %}
