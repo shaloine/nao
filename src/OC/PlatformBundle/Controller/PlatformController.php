@@ -463,4 +463,47 @@ class PlatformController extends Controller
         ));
 
     }
+
+    /**
+     * @Route("/profil/userValidation/{id}", name="oc_platform_userValidation")
+     */
+    public function userValidationAction(Request $request, User $user, $id)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            
+            $em = $this->getDoctrine()->getManager();
+
+            $user->setNaturalist(0);
+            $user->addRole('ROLE_NATURALIST');
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', "Validation réussie");
+
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
+
+        return $this->redirectToRoute('oc_platform_homepage');
+
+    }
+
+    /**
+     * @Route("/profil/userReset/{id}", name="oc_platform_userReset")
+     */
+    public function userResetAction(Request $request, User $user, $id)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            
+            $em = $this->getDoctrine()->getManager();
+
+            $user->setNaturalist(0);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', "Mise à jour de l'utilisateur réussie");
+
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
+
+        return $this->redirectToRoute('oc_platform_homepage');
+
+    }
 }

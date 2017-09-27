@@ -24,13 +24,15 @@ class ProfileController extends BaseController
         $comments = $em->getRepository('OCPlatformBundle:Comment')->findBy(array('warning' => '1'));
         $userObservations = $em->getRepository('OCPlatformBundle:Observation')->findBy(array('user' => $this->getUser()), array('date' => 'desc'));
         $ObservsToValid = $em->getRepository('OCPlatformBundle:Observation')->findBy(array('validated' => false), array('date' => 'asc'));
+        $UsersToValid = $em->getRepository('OCPlatformBundle:User')->findBy(array('naturalist' => 1));
 
         return $this->render('@FOSUser/Profile/show.html.twig', array(
             'user' => $user,
             'articles' => $articles,
             'comments' => $comments,
             'userObservations' => $userObservations,
-            'ObservsToValid' => $ObservsToValid
+            'ObservsToValid' => $ObservsToValid,
+            'UsersToValid' => $UsersToValid
         ));
     }
 
