@@ -7,7 +7,6 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="{{ asset('chosen/chosen.css')}}">
 	<link href="{{ asset('css/nao_consult.css') }}" rel="stylesheet">
 
 {% endblock %}
@@ -31,7 +30,8 @@
                     <div class="col-sm-12">
                         {{ form_label(form.nomVern, "Espèce recherchée :", {'label_attr': {'class': 'control-label'
                         }}) }}
-                        {{ form_widget(form.nomVern, {'attr': {'class': 'chosen-select'
+                        {{ form_widget(form.nomVern, {'attr': {'class': 'js-select2',
+                            'style': 'width: 100%;'
                         }}) }}
                         <small>(NC) : Pas de nom vernaculaire français pour cette espèce.</small>
                     </div>
@@ -149,10 +149,7 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="{{ asset('js/resizeChosen.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('chosen/chosen.jquery.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('chosen/docsupport/prism.js')}}" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ asset('chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('js/extSelect2.js') }}" type="text/javascript"></script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
             type="text/javascript"></script>

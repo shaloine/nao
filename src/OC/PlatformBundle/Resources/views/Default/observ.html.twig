@@ -9,7 +9,6 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="{{ asset('chosen/chosen.css')}}">
 	<link href="{{ asset('css/nao_obs.css') }}" rel="stylesheet">
 
 {% endblock %}
@@ -36,7 +35,8 @@
                     <div class="col-sm-12">
                         {{ form_label(form.taxref, "Choix de l'espèce observée :", {'label_attr': {'class': 'control-label'
                         }}) }}
-                        {{ form_widget(form.taxref, {'attr': {'class': 'chosen-select'
+                        {{ form_widget(form.taxref, {'attr': {'class': 'js-select2',
+                            'style': 'width: 100%;'
                         }}) }}
                         <small>(NC) : Pas de nom vernaculaire français pour cette espèce.</small>
                     </div>
