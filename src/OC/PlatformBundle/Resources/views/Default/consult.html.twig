@@ -151,6 +151,8 @@
 
     <script src="{{ asset('js/extSelect2.js') }}" type="text/javascript"></script>
 
+    <script src="{{ asset('js/markerclusterer.js') }}"></script>
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
             type="text/javascript"></script>
 
@@ -177,10 +179,11 @@
                 {% if observs|length > 1 %}
                     <script type="text/javascript">
                         var markersTable = [
-                        {% for observ in observs %}
-                            ['{{ observ.taxref.nomVern }}', '{{ observ.date|date('d/m/Y') }}', '{{ observ.user.firstName }}',
-                                '{{ observ.user.lastName }}',{{ observ.latitude }},{{ observ.longitude }}],
-                        {% endfor %}
+                            {% for observ in observs %}
+                                ['{{ observ.taxref.nomVern }}', '{{ observ.date|date('d/m/Y') }}', '{{ observ.user.firstName }}',
+                                    '{{ observ.user.lastName }}',{{ observ.latitude }},{{ observ.longitude }},
+                                    '{{ path('oc_platform_single_consult', { 'id': observ.id })}}'],
+                            {% endfor %}
                         ];
                     </script>
                     <script src="{{ asset('js/consultMultiNat.js') }}" type="text/javascript"></script>
