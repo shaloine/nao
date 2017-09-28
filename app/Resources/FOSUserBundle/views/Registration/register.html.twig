@@ -13,3 +13,8 @@
 {% include "@FOSUser/Registration/register_content.html.twig" %}
 {% endblock fos_user_content %}
 
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="{{ asset('js/naturalist.js') }}"></script>
+{% endblock %}
