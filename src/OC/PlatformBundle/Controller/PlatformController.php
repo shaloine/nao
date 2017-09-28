@@ -240,7 +240,7 @@ class PlatformController extends Controller
 				
 				$em->flush();
 
-				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistrée.');
+				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistré.');
 
 				$article = new Article();
 				$form   = $this->get('form.factory')->create(ArticleType::class, $article);
@@ -280,7 +280,7 @@ class PlatformController extends Controller
 
 				$em->flush();
 
-				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistrée.');
+				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistré.');
 
 			}
 
@@ -351,7 +351,7 @@ class PlatformController extends Controller
 			$em->remove($article);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('info', "L'article a bien été supprimer");
+			$request->getSession()->getFlashBag()->add('info', "L'article a bien été supprimé");
 
 			return $this->redirectToRoute('fos_user_profile_show');
 		}
@@ -413,7 +413,7 @@ class PlatformController extends Controller
 			$em->remove($articlePicture);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('info', "L'image à été supprimé");
+			$request->getSession()->getFlashBag()->add('info', "L'image a été supprimé");
 
 			return $this->redirectToRoute('oc_platform_edition',  array('id' => $articleId));
 		}
