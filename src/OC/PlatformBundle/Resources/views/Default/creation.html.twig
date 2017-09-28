@@ -10,11 +10,14 @@
 
 {% block body %}
 	<div class="container bodyContent">
+		{% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="container alert alert-success alert-dismissible mt-30 mb-30">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
 		<h1 class="titlePage mt-30 mb-50">Créer un article</h1>
 		<div class="blogArticle">
-			{% for message in app.session.flashbag.get('info') %}
-				<p>{{ message }}</p>
-			{% endfor %}
 
 			{{ form_start(form) }}
 
