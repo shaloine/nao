@@ -2,7 +2,11 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #ccc;
+    background: -moz-linear-gradient(top, #fff, #ccc);
+    background: -webkit-linear-gradient(top, #fff, #ccc);
+    background: -ms-linear-gradient(top, #fff, #ccc);
+    background: -o-linear-gradient(top, #fff, #ccc);
+    
 }
 
 textarea {
@@ -44,10 +48,6 @@ textarea {
 .btnNaoRed:hover {
     background-color: #981717;
     color: #fff;
-}
-
-.btnSearch {
-    float: right;
 }
 
 .navbar {
@@ -313,6 +313,12 @@ textarea {
 
 #networks a {
     margin-right: 10px;
+}
+
+@media screen and (min-width: 993px) {
+    #btnSearch {
+        margin-right: 68.5%;
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -958,6 +964,20 @@ textarea {
     width: auto;
 }
 
+#searchReturn {
+    background: url('../img/retour.png');
+    width: 48px;
+    height: 48px;
+    margin: auto;
+}
+
+#searchReturn:hover {
+    background: url('../img/retour-h.png');
+}
+
+#searchReturnP{
+    text-align: center;
+}
 
 
 /*************** Error ***************/

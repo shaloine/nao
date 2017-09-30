@@ -109,13 +109,11 @@
                     </div>
                 {% endif %}
 
-                <div class="row mt-10">
-                    <div class="col-xs-9">
-                        <p class="mt-10"><a class="naoLink" href="{{ path('oc_platform_consultation') }}">Rechercher une autre espèce</a></p>
-                    </div>
-                    <div class="col-xs-3">
-                        <a class="naoLink" href="{{ path('oc_platform_consultation') }}"><img src="{{ asset('img/retour.png') }}" /></a>
-                    </div>
+                <div class="row mt-10 center">
+                        <a class="naoLink" href="{{ path('oc_platform_consultation') }}">
+                            <div id="searchReturn"></div>
+                            <p id="searchReturnP">Rechercher une autre espèce</p>
+                        </a>
                 </div>
             </div>
             
