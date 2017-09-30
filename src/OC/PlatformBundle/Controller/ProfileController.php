@@ -20,6 +20,7 @@ class ProfileController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
 
+        // Get back and returns all data associated with an user
         $articles = $em->getRepository('OCPlatformBundle:Article')->findAll();
         $comments = $em->getRepository('OCPlatformBundle:Comment')->findBy(array('warning' => '1'));
         $userObservations = $em->getRepository('OCPlatformBundle:Observation')->findBy(array('user' => $this->getUser()), array('date' => 'desc'));
