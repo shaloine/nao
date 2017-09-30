@@ -43,11 +43,15 @@ class PlatformController extends Controller
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $id = $search->getNomVern()->getId();
             $em = $this->getDoctrine()->getManager();
+            // Get back the id of the sought specie
             $bird = $em->getRepository('OCPlatformBundle:Taxref')->findOneBy(array('id' => $id));
+            // Get back the list of validated observations for this specie
             $observs = $em->getRepository('OCPlatformBundle:Observation')->getObservsValidated($id);
+            // Get back the list of observations awaiting validation for this specie
             $observsToValid = $em->getRepository('OCPlatformBundle:Observation')->getObservsToValid($id);
 
             if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
+                // If user is a naturalist, returns original data
                 return $this->render('OCPlatformBundle:Default:consult.html.twig', array(
                     'form' => $form->createView(),
                     'bird' => $bird,
@@ -55,6 +59,7 @@ class PlatformController extends Controller
                     'observsToValid' => $observsToValid
                 ));
             } else {
+                // If user is not a naturalist, modify GPS coordinates and returns modified data
                 $coords = array();
                 foreach ($observs as $observ) {
                     $obsId = $observ->getId();
@@ -85,13 +90,16 @@ class PlatformController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
 
+        // Get back the requested observation
     	$observation = $em->getRepository('OCPlatformBundle:Observation')->find($id);
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
+            // If user is a naturalist, returns original data
             return $this->render('OCPlatformBundle:Default:singleObserv.html.twig', array(
                 'observation' => $observation
             ));
         } else {
+            // If user is not a naturalist, modifies GPS coordinates and returns modified data
             $coordinates = $em->getRepository('OCPlatformBundle:Observation')->getLocations($id);
             $lat = $coordinates[0]['latitude'] + 0.05;
             $lng = $coordinates[0]['longitude'] + 0.05;
@@ -109,6 +117,7 @@ class PlatformController extends Controller
      */
     public function observAction(Request $request)
     {
+        // Creation of a new observation
     	$observation = new Observation();
     	$user = $this->getUser();
     	$form = $this->get('form.factory')->create(ObservationType::class , $observation);
@@ -116,9 +125,11 @@ class PlatformController extends Controller
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
     		$em = $this->getDoctrine()->getManager();
 
+    		// Retrieves the user who is making the observation
     		$observation->setUser($user);
     		$em->persist($observation);
 
+    		// If picture's observation, sets the "alt" for it
     		$picture = $observation->getPicture();
     		if ($picture !== null) {
     			$picture->setAlt($observation->getTaxref()->getNomVern());
@@ -126,17 +137,19 @@ class PlatformController extends Controller
     		}
 
     		if ($this->get('security.authorization_checker')->isGranted('ROLE_NATURALIST')) {
-
+                // If user is a naturalist, the observation is automatically validated
     			$observation->setValidated(true);
     			$em->flush();
     			$request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée.');
 
     		} else {
+                // If user is not a naturalist, the observation is put awaiting validation by a naturalist
     			$observation->setValidated(false);
     			$em->flush();
     			$request->getSession()->getFlashBag()->add('info', 'Votre observation a bien été enregistrée mais doit être validée par un naturaliste.');
     		}
 
+    		// Clears the form
     		$observation = new Observation();
     		$form = $this->get('form.factory')->create(ObservationType::class , $observation);
 
@@ -157,6 +170,7 @@ class PlatformController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
 
+    	// Validation of an observation awaiting
     	$observation->setValidated(true);
     	$em->flush();
 
@@ -173,6 +187,7 @@ class PlatformController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
 
+    	// Removes an observation from the database
     	$em->remove($observation);
     	$em->flush();
 
@@ -187,14 +202,14 @@ class PlatformController extends Controller
      */
 	public function blogAction(Request $request)
 	{
-
+        // Creates the search type for the blog
 		$search = new Search();
 		$form   = $this->get('form.factory')->create(SearchType::class, $search);
 
 		$em = $this->getDoctrine()->getManager();
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
+            // If a search has been submitted, shows items matching the search
 			$content = $search->getContent();
 
 			$articles = $em->getRepository('OCPlatformBundle:Article')->complexFind($content);
@@ -204,6 +219,7 @@ class PlatformController extends Controller
 
 		} 
 		else {
+		    // Shows all articles
 			$articles = $em->getRepository('OCPlatformBundle:Article')->classicFind();
 		}
 
@@ -219,12 +235,12 @@ class PlatformController extends Controller
 	public function creationAction(Request $request)
 	{
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-
+            // Creation of a new blog's article
 			$article = new Article();
 			$form   = $this->get('form.factory')->create(ArticleType::class, $article);
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
+                // Records the new article in the database
 				$em = $this->getDoctrine()->getManager();
 				$article->setUser( $this->getUser());
 				$em->persist($article);
@@ -261,7 +277,7 @@ class PlatformController extends Controller
 	public function editionAction(Request $request, Article $article, $id)
 	{
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-
+            // Modification of the article of id "$id" (already present in the database)
 			$form   = $this->get('form.factory')->create(ArticleType::class, $article);
 
 			if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -278,6 +294,7 @@ class PlatformController extends Controller
 					$em->persist($articlePicture);
 				}
 
+				// Saves the modified article in the database
 				$em->flush();
 
 				$request->getSession()->getFlashBag()->add('info', 'Votre article a bien été enregistré.');
@@ -297,19 +314,20 @@ class PlatformController extends Controller
      */
 	public function articleAction(Request $request, Article $article, $id)
 	{
+	    // Creates a new comment
 		$comment = new Comment();
 		$form   = $this->get('form.factory')->create(CommentType::class, $comment);
 
 		$em = $this->getDoctrine()->getManager();
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
+            // If a new comment is entered, saves it in the database
 			$comment->setUser($this->getUser());
 			$comment->setArticle($article);
 			$em->persist($comment);
 			$em->flush();
 			
-			// to clear the form
+			// Clears the form
 			$comment = new Comment();
 			$form   = $this->get('form.factory')->create(CommentType::class, $comment);
 		}
@@ -329,7 +347,7 @@ class PlatformController extends Controller
 	public function signalCommentAction(Request $request, Comment $comment, $id)
 	{
 		$em = $this->getDoctrine()->getManager();
-
+        // Registers a warning in the database when a comment is reported
 		$comment->setWarning(true);
 		$em->flush();
 
@@ -347,7 +365,7 @@ class PlatformController extends Controller
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			
 			$em = $this->getDoctrine()->getManager();
-
+            // Removes an article already present in the database from it
 			$em->remove($article);
 			$em->flush();
 
@@ -367,7 +385,7 @@ class PlatformController extends Controller
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			
 			$em = $this->getDoctrine()->getManager();
-
+            // If a warning has been register on a comment but is not justified, deletes this warning
 			$comment->setWarning(false);
 			$em->flush();
 
@@ -388,7 +406,7 @@ class PlatformController extends Controller
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			
 			$em = $this->getDoctrine()->getManager();
-
+            // If a warning has been register on a comment and is justified, deletes the comment from the database
 			$em->remove($comment);
 			$em->flush();
 
@@ -409,7 +427,7 @@ class PlatformController extends Controller
 		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			
 			$em = $this->getDoctrine()->getManager();
-
+            // Removes from the database a picture associated with an article
 			$em->remove($articlePicture);
 			$em->flush();
 
@@ -422,14 +440,6 @@ class PlatformController extends Controller
 
 	}
 
-	/**
-     * @Route("/Qui-sommes-nous", name="oc_platform_qsn")
-     */
-	public function qsnAction()
-	{
-		return $this->render('OCPlatformBundle:Default:qsn.html.twig');
-	}
-
     /**
      * @Route("/contact", name="oc_platform_contact")
      */
@@ -440,6 +450,7 @@ class PlatformController extends Controller
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $post = $request->request->get('oc_platformbundle_contact_form');
             $message = new Swift_Message();
+            // Defines the parameters of the message
             $message->setSubject('Nouveau message pour "Nos amis les oiseaux"')
             ->setFrom(array('matt.halwani@gmail.com' => 'nao.fr'))
                 ->setTo('zedmatt@live.fr')
@@ -448,6 +459,7 @@ class PlatformController extends Controller
                 ->setBody(
                     $this->renderView('OCPlatformBundle:Default:email.html.twig',
                         array('post' => $post)));
+            // Sends the message
             $this->get('mailer')->send($message);
 
             $form = $this->get('form.factory')->create(ContactType::class);
@@ -473,6 +485,7 @@ class PlatformController extends Controller
             
             $em = $this->getDoctrine()->getManager();
 
+            // Promotes an user as naturalist
             $user->setNaturalist(0);
             $user->addRole('ROLE_NATURALIST');
             $em->flush();
@@ -495,6 +508,7 @@ class PlatformController extends Controller
             
             $em = $this->getDoctrine()->getManager();
 
+            // Refuses the status of naturalist and deletes hold
             $user->setNaturalist(0);
             $em->flush();
 
@@ -505,6 +519,14 @@ class PlatformController extends Controller
 
         return $this->redirectToRoute('oc_platform_homepage');
 
+    }
+
+    /**
+     * @Route("/Qui-sommes-nous", name="oc_platform_qsn")
+     */
+    public function qsnAction()
+    {
+        return $this->render('OCPlatformBundle:Default:qsn.html.twig');
     }
     
 	/**
