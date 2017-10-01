@@ -729,6 +729,12 @@ textarea {
     text-align: justify;
 }
 
+@media screen and (max-width: 1200px) {
+    .search {
+        height: 617px;
+    }
+}
+
 @media screen and (max-width: 490px) {
 
     .search {

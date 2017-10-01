@@ -104,12 +104,12 @@
 
                     <div class="col-sm-12 mt-20">
                         <form action="{{ path('oc_platform_observValidation', { 'id': observation.id }) }}">
-                            <input type="submit" class="btn btnNaoGreen col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-4 mb-20 mt-20" value="Valider"
+                            <input type="submit" class="btn btnNaoGreen col-md-8 col-md-offset-2 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 mb-20 mt-20" value="Valider"
                                    onClick="{{ path('oc_platform_observValidation', { 'id': observation.id }) }}">
                         </form>
                         
                         <form action="{{ path('oc_platform_observSuppression', { 'id': observation.id }) }}">
-                            <input type="submit" class="btn btnNaoRed col-md-8 col-md-offset-2 col-xs-4 col-xs-offset-4 mb-20" value="Supprimer"
+                            <input type="submit" class="btn btnNaoRed col-md-8 col-md-offset-2 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 mb-20" value="Supprimer"
                                    onClick="{{ path('oc_platform_observSuppression', { 'id': observation.id }) }}">
                         </form>
                     </div>
