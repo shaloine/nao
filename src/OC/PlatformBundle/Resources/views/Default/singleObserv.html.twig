@@ -91,6 +91,12 @@
                                 <a class="naoLink wikiLink" href="https://inpn.mnhn.fr/espece/cd_nom/{{ observation.taxref.cdNom }}" target="_blank"><img class="logoInpn" src="{{ asset('img/INPN.png') }}" /><p class="mt-10" >{{ observation.taxref.nomVern }}</p></a>
                             </div>
                         </div>
+                        <div class="row mt-10 center">
+                                <a class="naoLink" href="{{ path('oc_platform_consultation') }}">
+                                    <div id="searchReturn"></div>
+                                    <p id="searchReturnP">Rechercher une autre espèce</p>
+                                </a>
+                        </div>
                     {% endif %}
                 </div>
 
@@ -109,12 +115,6 @@
                     </div>
                 {% endif %}
 
-                <div class="row mt-10 center">
-                        <a class="naoLink" href="{{ path('oc_platform_consultation') }}">
-                            <div id="searchReturn"></div>
-                            <p id="searchReturnP">Rechercher une autre espèce</p>
-                        </a>
-                </div>
             </div>
             
             <div class="col-lg-8 col-md-8 mapContainer">
