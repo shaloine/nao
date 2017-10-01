@@ -6,14 +6,14 @@
             <h1 class="titlePage mt-30 mb-50">Mon profil</h1>
 
             {% for message in app.session.flashbag.get('info') %}
-                <div class="row alert alert-success alert-dismissible mt-30 mb-30">
+                <div class="container alert alert-success alert-dismissible mt-30 mb-30">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ message }}
                 </div>
             {% endfor %}
 
             {% if is_granted('ROLE_NATURALIST') %}
-                <div class="row">
+                <div class="container row">
                     <ul class="nav nav-pills mb-20 profilNav">
                         <li class="active btnProfil"><a data-toggle="tab" href="#profil" aria-controls="profil">Profil</a></li>
                         <li class="btnProfil"><a data-toggle="tab" href="#valider" aria-controls="valider">A valider</a></li>
@@ -25,7 +25,7 @@
                 </div>
             {% endif %}
 
-            <div class="row">
+            <div class="container row">
                 <div class="tab-content">
                     <div id="profil" class="tab-pane fade in active">
                         <div class="col-sm-6 login mr-20 boxProfil">
