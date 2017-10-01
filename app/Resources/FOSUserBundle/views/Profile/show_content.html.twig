@@ -6,7 +6,7 @@
             <h1 class="titlePage mt-30 mb-50">Mon profil</h1>
 
             {% for message in app.session.flashbag.get('info') %}
-                <div class="container alert alert-success alert-dismissible mt-30 mb-30">
+                <div class="row alert alert-success alert-dismissible mt-30 mb-30">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ message }}
                 </div>
