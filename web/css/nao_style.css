@@ -315,13 +315,13 @@ textarea {
     margin-right: 10px;
 }
 
-@media screen and (min-width: 993px) {
+@media screen and (min-width: 992px) {
     #btnSearch {
         margin-right: 68.5%;
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px) {
     .navbar-default {
         font-size: 1em;
     }
@@ -965,6 +965,19 @@ textarea {
     color: #017a74;
 }
 
+@media screen and (max-width: 991px) {
+    .consult .search {
+        height: auto;
+        max-height: 617px;
+    }
+}
+@media screen and (max-width: 490px) {
+
+    .consult .search {
+        max-height: none;
+        overflow-y: visible;
+    }
+}
 
 
 /*************** SingleObs ***************/
