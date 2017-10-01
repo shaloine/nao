@@ -890,7 +890,7 @@ textarea {
 }
 
 .tableMaxHeight {
-    height: 180px;
+    height: 220px;
     overflow-y: auto;
     overflow-x: hidden !important;
 }
@@ -906,7 +906,7 @@ textarea {
 }
 
 .blogMaxHeight {
-    max-height: 300px;
+    max-height: 260px;
     overflow: auto;
 }
 .editImage{
