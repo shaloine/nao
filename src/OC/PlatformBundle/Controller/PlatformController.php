@@ -191,9 +191,9 @@ class PlatformController extends Controller
     	$em->remove($observation);
     	$em->flush();
 
-    	$request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été suprimée.');
+    	$request->getSession()->getFlashBag()->add('info', 'L\'observation a bien été supprimée.');
 
-    	return $this->redirectToRoute('oc_platform_homepage');
+        return $this->redirectToRoute('fos_user_profile_show');
 
     }
 
