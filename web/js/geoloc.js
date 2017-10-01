@@ -20,10 +20,10 @@ function initMap() {
 
             var marker;
             function placeMarker(location) {
-                if(marker){ //on vérifie si le marqueur existe
-                    marker.setPosition(location); //on change sa position
+                if(marker){                             // Checks if marker exists
+                    marker.setPosition(location);       // If marker exists, changes its position
                 }else{
-                    marker = new google.maps.Marker({ //on créé le marqueur
+                    marker = new google.maps.Marker({   // Creates marker
                         position: location,
                         map: map
                     });
