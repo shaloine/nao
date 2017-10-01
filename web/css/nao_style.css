@@ -919,6 +919,10 @@ textarea {
         margin-bottom: 15px;
     } 
 }
+.modal .btn-danger, .modal .btn-danger:hover {
+    color: white;
+}
+
 
 
     
