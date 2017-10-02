@@ -153,9 +153,6 @@
 
     <script src="{{ asset('js/markerclusterer.js') }}"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
-            type="text/javascript"></script>
-
     {% if observs is defined %}
         {% if not is_granted('ROLE_NATURALIST') and observs is not empty %}
             {% if observs|length > 1 %}
@@ -200,4 +197,7 @@
                 {% endif %}
         {% endif %}
     {% endif %}
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcgno_3O4dB6m99zL-yT-mpD07g2TD30&callback=initMap"
+            type="text/javascript"></script>
 {% endblock %}
