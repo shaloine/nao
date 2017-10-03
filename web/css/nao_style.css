@@ -52,10 +52,10 @@ textarea {
     color: #fff !important;
 }
 
-.btn,
-.btn:hover,
-.btn:focus,
-.btn:active {
+#btnRed,
+#btnRed:hover,
+#btnRed:focus,
+#btnRed:active {
     color: #fff !important;
 }
 
