@@ -37,14 +37,14 @@
                                 <p>Prénom :<br/><b>{{ user.firstname }}</b></p>
                             </div>
                             <div  class="col-md-6">
-                                <p><a href="{{ path('fos_user_profile_edit') }}" class="green mt-30"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Modifier mes informations</a></p>
-                                <p><a href="{{ path('fos_user_change_password') }}" class="green"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Modifier mon mot de passe</a></p>
+                                <p><a href="{{ path('fos_user_profile_edit') }}" class="naoLink mt-30"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Modifier mes informations</a></p>
+                                <p><a href="{{ path('fos_user_change_password') }}" class="naoLink "><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Modifier mon mot de passe</a></p>
                             </div>
                         </div>
                         <div class="col-sm-6 login boxProfil">
                             <h3 class="profilCaseTitle green">Mes observations</h3>
                             <div class="center mb-20">
-                                <a href="{{ path('oc_platform_observation') }}" class="black"><i class="fa fa-map-marker fa-2x green" aria-hidden="true"></i> Ajouter une observation</a>
+                                <a href="{{ path('oc_platform_observation') }}" class="naoLink"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i> Ajouter une observation</a>
                             </div>
                             {% if userObservations is not empty %}
                                 <div class="tableMaxHeight">
@@ -54,10 +54,10 @@
                                                 <tr>
                                                     <td>{{ observation.date|date('d/m/Y') }}</td>
                                                     <td>
-                                                        <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}"  title="Voir"><i class="fa fa-eye fa-lg green" aria-hidden="true"></i></a>
+                                                        <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}"  title="Voir" class="naoLink"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
                                                     </td>
                                                     <td class="center">
-                                                        <button type="button" title="Supprimer" class="erase" data-toggle="modal" data-target="#observationDialog{{ observation.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
+                                                        <button type="button" title="Supprimer" class="erase naoLink" data-toggle="modal" data-target="#observationDialog{{ observation.id }}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
                                                     </td>
                                                 </tr>
                                                 <div class="modal fade" id="observationDialog{{ observation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -98,10 +98,10 @@
                                                     <tr>
                                                         <td>{{ observation.date|date('d/m/Y') }} - <strong>{{ observation.taxref.nomVern }}</strong> observé(e) par <em>{{ observation.user.firstName }} {{ observation.user.lastName }}</em></td>
                                                         <td>
-                                                            <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}" target="_blank" title="Voir"><i class="fa fa-eye fa-lg green" aria-hidden="true"></i></a>
+                                                            <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}" target="_blank" title="Voir" class="naoLink"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
                                                         </td>
                                                         <td class="center">
-                                                            <button type="button" title="Supprimer" class="erase" data-toggle="modal" data-target="#validationDialog{{ observation.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
+                                                            <button type="button" title="Supprimer" class="erase naoLink" data-toggle="modal" data-target="#validationDialog{{ observation.id }}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
                                                         </td>
                                                     </tr>
                                                     <div class="modal fade" id="validationDialog{{ observation.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -136,7 +136,7 @@
                             <div class="col-sm-6 login mr-20 boxProfil">
                                 <h3 class="profilCaseTitle green">Articles</h3>
                                 <div class="center mb-20">
-                                    <a href="{{ path('oc_platform_creation') }}" class="black"><i class="fa fa-plus fa-lg green" aria-hidden="true"></i> Créer un article</a>
+                                    <a href="{{ path('oc_platform_creation') }}" class="naoLink"><i class="fa fa-plus fa-lg" aria-hidden="true"></i> Créer un article</a>
                                 </div>
                                 <div class="tableMaxHeight">
                                     <table class="table table-responsive">
@@ -150,11 +150,11 @@
                                                 <tr>
                                                     <td class="col-sm-9">{{ article.title }}</td>
                                                     <td class="col-sm-3">
-                                                        <a href="{{ path('oc_platform_article', { 'id': article.id }) }}" title="Voir" class="col-sm-4 center"><i class="fa fa-eye fa-lg green profilIcon" aria-hidden="true"></i></a>
+                                                        <a href="{{ path('oc_platform_article', { 'id': article.id }) }}" title="Voir" class="col-sm-4 center naoLink"><i class="fa fa-eye fa-lg profilIcon" aria-hidden="true"></i></a>
 
-                                                        <a href="{{ path('oc_platform_edition', { 'id': article.id }) }}" title="Editer" class="col-sm-4 center"><i class="fa fa-pencil-square-o fa-lg green profilIcon" aria-hidden="true"></i></a>
+                                                        <a href="{{ path('oc_platform_edition', { 'id': article.id }) }}" title="Editer" class="col-sm-4 center naoLink"><i class="fa fa-pencil-square-o fa-lg profilIcon" aria-hidden="true"></i></a>
 
-                                                        <button type="button" title="Supprimer" class="erase col-sm-4 center" data-toggle="modal" data-target="#articleDialog{{ article.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
+                                                        <button type="button" title="Supprimer" class="erase col-sm-4 center naoLink" data-toggle="modal" data-target="#articleDialog{{ article.id }}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
                                                     </td>
                                                 </tr>
                                                 <div class="modal fade" id="articleDialog{{ article.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -196,9 +196,9 @@
                                                     <tr>
                                                         <td class="col-sm-9">{{ comment.content }}</td>
                                                         <td class="col-sm-3">
-                                                            <a href="{{ path('oc_platform_article', { 'id': comment.article.id }) }}" title="Voir" class="col-sm-4 center"><i class="fa fa-eye fa-lg green profilIcon" aria-hidden="true"></i></a>
-                                                            <a href="{{ path('oc_platform_commentValidation', { 'id': comment.id }) }}" title="Valider" class="col-sm-4 center"><i class="fa fa-check fa-lg green profilIcon" aria-hidden="true"></i></a>
-                                                            <button type="button" title="Supprimer" data-toggle="modal" class="erase col-sm-4 center" data-target="#commentDialog{{ comment.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
+                                                            <a href="{{ path('oc_platform_article', { 'id': comment.article.id }) }}" title="Voir" class="col-sm-4 center naoLink"><i class="fa fa-eye fa-lg profilIcon" aria-hidden="true"></i></a>
+                                                            <a href="{{ path('oc_platform_commentValidation', { 'id': comment.id }) }}" title="Valider" class="col-sm-4 center naoLink"><i class="fa fa-check fa-lg profilIcon" aria-hidden="true"></i></a>
+                                                            <button type="button" title="Supprimer" data-toggle="modal" class="erase col-sm-4 center naoLink" data-target="#commentDialog{{ comment.id }}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
                                                         </td>
                                                     </tr>
                                                     <div class="modal fade" id="commentDialog{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -247,8 +247,8 @@
                                                         <td >{{ user.firstName }}</td>
                                                         <td>{{ user.lastName }}</td>
                                                         <td>
-                                                            <a href="{{ path('oc_platform_userValidation', { 'id': user.id }) }}" title="Valider" class="center col-sm-6"><i class="fa fa-check fa-lg green profilIcon" aria-hidden="true"></i></a>
-                                                            <a href="{{ path('oc_platform_userReset', { 'id': user.id }) }}" title="Ne pas valider"  class="center col-sm-6"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></a>
+                                                            <a href="{{ path('oc_platform_userValidation', { 'id': user.id }) }}" title="Valider" class="center col-sm-6 naoLink"><i class="fa fa-check fa-lg profilIcon" aria-hidden="true"></i></a>
+                                                            <a href="{{ path('oc_platform_userReset', { 'id': user.id }) }}" title="Ne pas valider"  class="center col-sm-6 naoLink"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
