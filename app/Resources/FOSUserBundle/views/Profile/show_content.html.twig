@@ -96,7 +96,14 @@
                                             <tbody>
                                                 {% for observation in ObservsToValid %}
                                                     <tr>
-                                                        <td>{{ observation.date|date('d/m/Y') }} - <strong>{{ observation.taxref.nomVern }}</strong> observé(e) par <em>{{ observation.user.firstName }} {{ observation.user.lastName }}</em></td>
+                                                        <td>{{ observation.date|date('d/m/Y') }} - 
+                                                            <strong>
+                                                                {% if observation.taxref.nomVern is empty %}
+                                                                    {{ observation.taxref.lbNom }}
+                                                                {% else %}
+                                                                    {{ observation.taxref.nomVern }}
+                                                                {% endif %}
+                                                            </strong> observé(e) par <em>{{ observation.user.firstName }} {{ observation.user.lastName }}</em></td>
                                                         <td>
                                                             <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}" target="_blank" title="Voir" class="naoLink"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
                                                         </td>
