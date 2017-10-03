@@ -96,9 +96,9 @@
                                             <tbody>
                                                 {% for observation in ObservsToValid %}
                                                     <tr>
-                                                        <td>{{ observation.date|date('d/m/Y') }}</td>
+                                                        <td>{{ observation.date|date('d/m/Y') }} - <strong>{{ observation.taxref.nomVern }}</strong> observé(e) par <em>{{ observation.user.firstName }} {{ observation.user.lastName }}</em></td>
                                                         <td>
-                                                            <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}"  title="Voir"><i class="fa fa-eye fa-lg green" aria-hidden="true"></i></a>
+                                                            <a href="{{ path('oc_platform_single_consult', { 'id': observation.id }) }}" target="_blank" title="Voir"><i class="fa fa-eye fa-lg green" aria-hidden="true"></i></a>
                                                         </td>
                                                         <td class="center">
                                                             <button type="button" title="Supprimer" class="erase" data-toggle="modal" data-target="#validationDialog{{ observation.id }}"><i class="fa fa-times-circle fa-lg green" aria-hidden="true"></i></button>
