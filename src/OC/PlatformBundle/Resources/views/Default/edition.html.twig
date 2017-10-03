@@ -49,7 +49,7 @@
 			{% if article.articlePicture is not null %}
 				<div>
 					<img src="{{  asset('uploads/articlesPictures/'~article.articlePicture.path) }}" alt="{{ article.articlePicture.alt }}" class="img-responsive editImage" />
-					<a href="{{ path('oc_platform_pictureSuppression', { 'id': article.articlePicture.id , 'articleId': article.id })}}"><i class="fa fa-trash-o fa-lg green" aria-hidden="true"></i> Supprimer l'image</a>
+					<a href="{{ path('oc_platform_pictureSuppression', { 'id': article.articlePicture.id , 'articleId': article.id })}}" class="naoLink"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Supprimer l'image</a>
 				</div>
 			{% endif %}
 

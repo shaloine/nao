@@ -64,7 +64,7 @@
 							<div class="comment">
 								<p>Par <b>{{ comment.user.username }}</b> le {{ comment.datePost|date('d/m/Y à H:i') }}</p>
 								<p>{{ comment.content }}</p>
-								<p><a aria-hidden="true" data-toggle="modal" data-target="#signalDialog{{ comment.id }}" href="#">Signaler</a></p>
+								<p><a aria-hidden="true" data-toggle="modal" data-target="#signalDialog{{ comment.id }}" href="#" class="naoLink">Signaler</a></p>
 							</div>
 							<div class="modal fade" id="signalDialog{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
