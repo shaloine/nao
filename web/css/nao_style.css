@@ -45,7 +45,9 @@ textarea {
     color: #fff;
 }
 
-.btnNaoRed:hover {
+.btnNaoRed:hover,
+.btnNaoRed:active,
+.btnNaoRed:focus {
     background-color: #981717;
     color: #fff;
 }
