@@ -49,7 +49,14 @@ textarea {
 .btnNaoRed:active,
 .btnNaoRed:focus {
     background-color: #981717;
-    color: #fff;
+    color: #fff !important;
+}
+
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
+    color: #fff !important;
 }
 
 .navbar {
