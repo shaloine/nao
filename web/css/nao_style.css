@@ -146,7 +146,7 @@ textarea {
 #cookieChoiceInfo > a {
     padding: 4px 7px;
     background-color: #017a74;
-    border-radius: 3px 3px 3px 3px;
+    border-radius: 3px;
 }
 
 #cookieChoiceInfo > a:hover {
