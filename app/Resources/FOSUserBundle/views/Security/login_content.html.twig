@@ -9,7 +9,7 @@
             <p class="center mb-30">Connectez-vous pour accéder à votre profil et ajouter vos observations</p>
 
             {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
             <form action="{{ path("fos_user_security_check") }}" method="post">

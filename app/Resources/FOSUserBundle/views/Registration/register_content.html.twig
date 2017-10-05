@@ -3,54 +3,53 @@
 	<div class="container bodyContent">
 
 		<h1 class="titlePage mt-30 mb-50">Créer un compte</h1>
-		<div class="login col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 mb-30">
+		<div class="login col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 mb-30 ulError">
 			{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+			{{ form_errors(form.username) }}
+			{{ form_errors(form.email) }}
+			{{ form_errors(form.lastName) }}
+			{{ form_errors(form.plainPassword.first) }}
+			{{ form_errors(form.plainPassword.second) }}
+			{{ form_errors(form.naturalist) }}
 			<div class="row">
-
 				<div class="form-group col-sm-6">
 					{{ form_label(form.username) }}
-					{{ form_errors(form.username) }}
 					{{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
 				</div>
 				<div class="form-group col-sm-6">
 					{{ form_label(form.email) }}
-					{{ form_errors(form.email) }}
 					{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
 				</div>
-
+			</div>
+			<div class="row">
 				<div class="form-group col-sm-6">
 					{{ form_label(form.firstName) }}
-					{{ form_errors(form.firstName) }}
 					{{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
 				</div>
 				<div class="form-group col-sm-6">
 					{{ form_label(form.lastName) }}
-					{{ form_errors(form.lastName) }}
 					{{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
 				</div>
-
+			</div>
+			<div class="row">
 				<div class="form-group col-sm-6">
 					{{ form_label(form.plainPassword.first) }}
-					{{ form_errors(form.plainPassword.first) }}
 					{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
 				</div>
-
-				<div class="form-group col-sm-6 mb-50">
+				<div class="form-group col-sm-6 mb-30">
 					{{ form_label(form.plainPassword.second) }}
-					{{ form_errors(form.plainPassword.second) }}
 					{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
 				</div>
-
-				<div class="checkox col-sm-6 myCheckbox">
+			</div>
+			<div class="row">
+				<div class="checkox col-sm-6">
 					{{ form_label(form.naturalist) }}
-					{{ form_errors(form.naturalist) }}
 					{{ form_widget(form.naturalist, {'attr': {'onClick': 'display()'}}) }}
 				</div>
-				<div class="checkox col-sm-6 myCheckbox">
+				<div class="checkox col-sm-6">
 					<label for="subscribeNews">S'abonner à la newsletter ?</label>
 					<input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter">
 				</div>
-
 			</div>
 
 			<div class="center mt-30 mb-30">
