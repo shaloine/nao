@@ -151,6 +151,10 @@ textarea {
     border-radius: 3px 3px 3px 3px;
 }
 
+#cookieChoiceInfo > a:hover {
+    background-color: #046a65;
+}
+
 #discover {
     position: absolute;
     top: 60%;
