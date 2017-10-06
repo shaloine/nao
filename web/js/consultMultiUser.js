@@ -11,10 +11,10 @@ function initMap() {
             longi = latlng.lng;
         var center = new google.maps.LatLng(latit, longi);
         var circleOptions = {
-            strokeColor: '#FF0000',
+            strokeColor: '#017A74',
             strokeOpacity: 0.5,
             strokeWeight: 2,
-            fillColor: '#FF0000',
+            fillColor: '#017A74',
             fillOpacity: 0.5,
             map: map,
             center: center,

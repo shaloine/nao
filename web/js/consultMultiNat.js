@@ -42,9 +42,13 @@ function initMap() {
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
+        var image = {
+            url: '../img/marker.png'
+        };
         var markerOptions = {
             map: map,
             position: new google.maps.LatLng(lati, long),
+            icon: image,
             info: contentString
         };
         var marker = new google.maps.Marker(markerOptions);

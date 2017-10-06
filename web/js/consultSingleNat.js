@@ -10,7 +10,7 @@ function initMap() {
     };
 
     var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
-    
+
     var contentString = '<div id="content" class="text-center">'+
         '<h3 id="firstHeading" class="firstHeading mb-20">'+
         nomVern+
@@ -30,8 +30,12 @@ function initMap() {
         '</b> - Longitude <b>'+
         long+
         '</b></p>'+
-        '</div>'+
-        '</div>';
+        '<br />'+
+        '<p><a class="naoLink" href="'+
+        path+
+        '">Accéder à la fiche détaillée de cette observation</a></p>'
+    '</div>'+
+    '</div>';
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString
@@ -42,10 +46,15 @@ function initMap() {
     ];
 
     var latLng = new google.maps.LatLng(lati, long);
+    var image = {
+        url: '../img/marker.png',
+    };
     var marker = new google.maps.Marker({
         position: latLng,
-        map: map
+        map: map,
+        icon: image
     });
+
     marker.addListener('click', function() {
         infowindow.open(map, marker);
     });

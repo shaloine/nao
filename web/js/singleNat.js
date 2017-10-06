@@ -10,8 +10,8 @@ function initMap() {
     };
 
     var map = new google.maps.Map(document.getElementById('google-maps'), mapOptions);
-    
-        var contentString = '<div id="content" class="text-center">'+
+
+    var contentString = '<div id="content" class="text-center">'+
         '<h3 id="firstHeading" class="firstHeading mb-20">'+
         nomVern+
         '</h3>'+
@@ -42,9 +42,13 @@ function initMap() {
     ];
 
     var latLng = new google.maps.LatLng(lati, long);
+    var image = {
+        url: '../../../web/img/marker.png',
+    };
     var marker = new google.maps.Marker({
         position: latLng,
-        map: map
+        map: map,
+        icon: image
     });
 
     marker.addListener('click', function() {
