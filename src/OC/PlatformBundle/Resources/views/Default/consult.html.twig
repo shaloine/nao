@@ -191,9 +191,10 @@
                             firstName   = '{{ observs|first.user.firstName }}',
                             lastName    = '{{ observs|first.user.lastName }}',
                             lati        = {{ observs|first.latitude }},
-                            long        = {{ observs|first.longitude }};
+                            long        = {{ observs|first.longitude }},
+                            path        = '{{ path('oc_platform_single_consult', { 'id': observs|first.id })}}';
                     </script>
-                    <script src="{{ asset('js/consultSingleNat.js') }}" type="text/javascript"></script>
+                    <script src="{{ asset('js/consultMultiNatSingle.js') }}" type="text/javascript"></script>
                 {% endif %}
         {% endif %}
     {% endif %}
