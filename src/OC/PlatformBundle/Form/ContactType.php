@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
+use Vihuvac\Bundle\RecaptchaBundle\Form\Type\VihuvacRecaptchaType;
 
 
 class ContactType extends AbstractType
@@ -21,7 +21,8 @@ class ContactType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName',  TextType::class)
             ->add('email', EmailType::class)
-            ->add('message', TextareaType::class);
+            ->add('message', TextareaType::class)
+            ->add('recaptcha', VihuvacRecaptchaType::class);
     }
 
     /**
