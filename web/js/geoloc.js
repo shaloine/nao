@@ -9,9 +9,13 @@ function initMap() {
                 },
                 mapDiv = document.getElementById("google-maps"),
                 map = new google.maps.Map(mapDiv, myOptions),
+                image = {
+                    url: '../img/marker.png',
+                    };
                 marker = new google.maps.Marker({
                     position: point,
-                    map: map
+                    map: map,
+                    icon: image
                 });
 
             google.maps.event.addListener(map, 'click', function(event) {
