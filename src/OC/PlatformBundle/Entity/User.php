@@ -57,10 +57,6 @@ class User extends BaseUser
     */
     private $comments;
 
-    /**
-    * @Recaptcha\IsTrue
-    */
-    public $recaptcha;
 
     public function __construct()
     {

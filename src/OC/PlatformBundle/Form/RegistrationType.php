@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vihuvac\Bundle\RecaptchaBundle\Form\Type\VihuvacRecaptchaType;
+use Vihuvac\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 
 class RegistrationType extends AbstractType
@@ -14,13 +15,20 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, array('label' => 'Prénom'))
-            ->add('lastName', TextType::class, array('label' => 'Nom'))
-            ->add('naturalist', CheckboxType::class, array(
-                'label'    => 'Naturaliste',
-                'required' => false,
-            ))
-            ->add("recaptcha", VihuvacRecaptchaType::class);
+        ->add('firstName', TextType::class, array('label' => 'Prénom'))
+        ->add('lastName', TextType::class, array('label' => 'Nom'))
+        ->add('naturalist', CheckboxType::class, array(
+            'label'    => 'Naturaliste',
+            'required' => false,
+        ))
+        ->add('recaptcha', VihuvacRecaptchaType::class,
+            array(
+                "mapped"      => false,
+                "constraints" => array(
+                    new RecaptchaTrue()
+                )
+            )
+        );
     }
 
     public function getParent()
