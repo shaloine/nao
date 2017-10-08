@@ -37,7 +37,7 @@
                 
                 {% if observation.picture %}
                     <a href="{{ asset(observation.picture.AssetPath) }}" alt="{{ observation.picture.alt }}" target="_blank">
-                        <img src="{{ asset(observation.picture.AssetPath) }}" style="max-height: 200px;"/>
+                        <img src="{{ asset(observation.picture.AssetPath) }}" style="max-height: 200px;" class="img-responsive"/>
                     </a>
                 {% endif %}
                 
