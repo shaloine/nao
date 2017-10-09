@@ -876,7 +876,7 @@ textarea {
 
 @media screen and (max-width: 992px){ 
     .btnProfil {
-        width: 20%;
+        width: 17.5%;
     } 
     .boxProfil {
         width: 100%;
@@ -884,10 +884,17 @@ textarea {
     }
 }
 
+@media screen and (max-width: 767px) {
+    .btnProfil {
+        font-size: 0.75em;
+    }
+}
+
 @media screen and (max-width: 490px){ 
     .btnProfil {
         width: 100%;
         margin-bottom: 10px;
+        font-size: 1em;
     } 
 }
 

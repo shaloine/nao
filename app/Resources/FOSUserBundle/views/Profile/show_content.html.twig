@@ -20,6 +20,7 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="btnProfil"><a data-toggle="tab" href="#blog" aria-controls="blog">Blog</a></li>
                             <li class="btnProfil"><a data-toggle="tab" href="#naturalist" aria-controls="naturalist">Naturalistes</a></li>
+                            <li class="btnProfil"><a data-toggle="tab" href="#member" aria-controls="member">Membres</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -262,6 +263,61 @@
                                             </tbody>
                                         </table>
                                     {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="member" class="tab-pane fade">
+                            <div class="login boxProfilDble">
+                                <h3 class="profilCaseTitle green">Membres</h3>
+                                <div class="blogMaxHeight">
+                                    <table class="table table-responsive">
+                                        <thead>
+                                        <tr>
+                                            <th>Pseudo</th>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Rôle</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for user in users %}
+                                            <tr>
+                                                <td>{{ user.username }}</td>
+                                                <td>{{ user.lastName }}</td>
+                                                <td >{{ user.firstName }}</td>
+                                                <td >
+                                                    {% if 'ROLE_ADMIN' in user.roles %}
+                                                        Administrateur
+                                                    {% elseif 'ROLE_NATURALIST' in user.roles %}
+                                                        Naturaliste
+                                                    {% else %}
+                                                        Utilisateur
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <button type="button" title="Supprimer" data-toggle="modal" class="erase col-sm-4 center naoLink" data-target="#memberDialog{{ user.id }}"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                                                </td>
+                                            </tr>
+                                            <div class="modal fade" id="memberDialog{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Confirmation requise</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Voulez-vous supprimer cet utilisateur ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                            <a href="{{ path('oc_platform_userDelete', { 'id': user.id }) }}" class="btn btn-danger">Confirmer</a>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
