@@ -36,7 +36,7 @@ class User extends BaseUser
     private $lastName;
 
     /**
-    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Observation", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Observation", mappedBy="user", cascade={"remove"})
     */
     private $observations;
 
@@ -48,15 +48,14 @@ class User extends BaseUser
     private $naturalist;
 
     /**
-    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Article", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Article", mappedBy="user", cascade={"remove"})
     */
     private $articles;
 
     /**
-    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="OC\PlatformBundle\Entity\Comment", mappedBy="user", cascade={"remove"})
     */
     private $comments;
-
 
     public function __construct()
     {

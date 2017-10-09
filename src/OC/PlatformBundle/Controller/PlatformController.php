@@ -452,8 +452,8 @@ class PlatformController extends Controller
             $message = new Swift_Message();
             // Defines the parameters of the message
             $message->setSubject('Nouveau message pour "Nos amis les oiseaux"')
-            ->setFrom(array('matt.halwani@gmail.com' => 'nao.fr'))
-                ->setTo('zedmatt@live.fr')
+            ->setFrom(array('fabrice.loubier@gmail.com' => 'nao.fr'))
+                ->setTo('ocr@loubier.fr')
                 ->setContentType('text/html')
                 ->setCharset('utf-8')
                 ->setBody(
@@ -513,6 +513,29 @@ class PlatformController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('info', "Mise à jour de l'utilisateur réussie");
+
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
+
+        return $this->redirectToRoute('oc_platform_homepage');
+
+    }
+
+    /**
+     * @Route("/profil/userDelete/{id}", name="oc_platform_userDelete")
+     */
+    public function userDeleteAction(Request $request, User $user, $id)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+
+            $em = $this->getDoctrine()->getManager();
+            $userToRemove = $em->getRepository('OCPlatformBundle:User')->find($id);
+
+            // Removes user with id "$id" from the database
+            $em->remove($userToRemove);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', "Suppression de l'utilisateur réussie");
 
             return $this->redirectToRoute('fos_user_profile_show');
         }
