@@ -452,8 +452,8 @@ class PlatformController extends Controller
             $message = new Swift_Message();
             // Defines the parameters of the message
             $message->setSubject('Nouveau message pour "Nos amis les oiseaux"')
-            ->setFrom(array('fabrice.loubier@gmail.com' => 'nao.fr'))
-                ->setTo('ocr@loubier.fr')
+            ->setFrom(array('contact@nicolasmicallef.com' => 'nao.fr'))
+                ->setTo('shaloine2@hotmail.com')
                 ->setContentType('text/html')
                 ->setCharset('utf-8')
                 ->setBody(

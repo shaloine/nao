@@ -43,7 +43,7 @@ function initMap() {
 
     var latLng = new google.maps.LatLng(lati, long);
     var image = {
-        url: '../../../web/img/marker.png',
+        url: '../img/marker.png',
     };
     var marker = new google.maps.Marker({
         position: latLng,
